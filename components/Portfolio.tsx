@@ -11,6 +11,7 @@
 
 import { motion } from 'framer-motion';
 import { ArrowUpRight, ExternalLink } from 'lucide-react';
+import { useTheme } from "@/context/ThemeContext";
 
 // Featured projects with verified working images
 const projects = [
@@ -53,8 +54,10 @@ const projects = [
 ];
 
 export default function Portfolio() {
+  const { isDark } = useTheme();
+  
   return (
-    <section id="portfolio" className="py-20 bg-white">
+    <section id="portfolio" className={`py-20 ${isDark ? 'bg-[#001a1f]' : 'bg-white'}`}>
       <div className="container mx-auto px-6 md:px-12 lg:px-20">
         {/* Header */}
         <div className="flex flex-col md:flex-row justify-between items-start md:items-end mb-12 gap-6">
@@ -63,16 +66,16 @@ export default function Portfolio() {
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
-              className="text-3xl md:text-4xl font-bold text-[#1A1A1A] mb-3"
+              className={`text-3xl md:text-4xl font-bold ${isDark ? 'text-white' : 'text-[#003942]'} mb-3`}
             >
-              Selected <span className="text-[#C9A227]">Works</span>
+              Selected <span className={`${isDark ? 'text-white' : 'text-[#003942]'} underline decoration-[#f6ff82] decoration-4 underline-offset-4`}>Works</span>
             </motion.h2>
             <motion.p 
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ delay: 0.1 }}
-              className="text-gray-600 max-w-md"
+              className={`${isDark ? 'text-gray-400' : 'text-gray-600'} max-w-md`}
             >
               Our finest digital transformations in the luxury real estate sector.
             </motion.p>
@@ -82,7 +85,7 @@ export default function Portfolio() {
             initial={{ opacity: 0, x: 20 }}
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true }}
-            className="flex items-center gap-2 px-5 py-2.5 bg-[#1A1A1A] text-white text-sm font-medium rounded-lg hover:bg-[#2A2A2A] transition-colors"
+            className="flex items-center gap-2 px-5 py-2.5 bg-[#003942] text-white text-sm font-medium rounded-lg hover:bg-[#004d59] transition-colors"
           >
             View All <ExternalLink size={16} />
           </motion.a>
@@ -103,7 +106,7 @@ export default function Portfolio() {
               {/* Image Container - Smaller aspect ratio */}
               <div className="relative overflow-hidden rounded-xl aspect-[4/3] mb-3 shadow-md">
                 {/* Overlay */}
-                <div className="absolute inset-0 bg-gradient-to-t from-[#1A1A1A]/60 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 z-10" />
+                <div className="absolute inset-0 bg-gradient-to-t from-[#003942]/60 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 z-10" />
                 
                 {/* Image */}
                 <img 
@@ -115,12 +118,12 @@ export default function Portfolio() {
                 
                 {/* Hover Arrow */}
                 <div className="absolute top-3 right-3 bg-white p-2 rounded-full opacity-0 group-hover:opacity-100 transform -translate-y-2 group-hover:translate-y-0 transition-all duration-300 z-20 shadow-lg">
-                  <ArrowUpRight size={16} className="text-[#1A1A1A]" />
+                  <ArrowUpRight size={16} className="text-[#003942]" />
                 </div>
 
                 {/* Category Badge */}
                 <div className="absolute bottom-3 left-3 z-20">
-                  <span className="px-3 py-1 bg-white/90 backdrop-blur-sm text-[#1A1A1A] text-xs font-medium rounded-full">
+                  <span className="px-3 py-1 bg-white/90 backdrop-blur-sm text-[#003942] text-xs font-medium rounded-full">
                     {project.category}
                   </span>
                 </div>
@@ -128,10 +131,10 @@ export default function Portfolio() {
               
               {/* Text Content */}
               <div>
-                <h3 className="text-lg font-bold text-[#1A1A1A] group-hover:text-[#C9A227] transition-colors mb-1">
+                <h3 className={`text-lg font-bold ${isDark ? 'text-white' : 'text-[#003942]'} group-hover:underline group-hover:decoration-[#f6ff82] group-hover:decoration-2 group-hover:underline-offset-4 transition-all mb-1`}>
                   {project.title}
                 </h3>
-                <p className="text-gray-500 text-sm">{project.description}</p>
+                <p className={`${isDark ? 'text-gray-400' : 'text-gray-500'} text-sm`}>{project.description}</p>
               </div>
             </motion.div>
           ))}

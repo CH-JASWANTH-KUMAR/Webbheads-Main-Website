@@ -18,6 +18,7 @@
 
 import { motion } from 'framer-motion';
 import { Zap, ShieldCheck, Palette, Bot, Building2, Layers } from 'lucide-react';
+import { useTheme } from "@/context/ThemeContext";
 
 // Key differentiators that set us apart from competitors
 const features = [
@@ -54,19 +55,21 @@ const features = [
 ];
 
 export default function WhyChooseUs() {
+  const { isDark } = useTheme();
+  
   return (
-    <section className="py-24 bg-white">
+    <section className={`py-24 ${isDark ? 'bg-[#001a1f]' : 'bg-white'}`}>
       <div className="container mx-auto px-6 md:px-12 lg:px-20">
         <div className="text-center mb-20">
           <motion.h2 
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
-            className="text-4xl md:text-5xl font-bold text-[#1A1A1A] mb-6"
+            className={`text-4xl md:text-5xl font-bold ${isDark ? 'text-white' : 'text-[#003942]'} mb-6`}
           >
-            Why Leading Agencies <span className="text-[#C9A227]">Choose Us</span>
+            Why Leading Agencies <span className={`${isDark ? 'text-white' : 'text-[#003942]'} underline decoration-[#f6ff82] decoration-4 underline-offset-4`}>Choose Us</span>
           </motion.h2>
-          <p className="text-gray-600 max-w-2xl mx-auto text-lg">
+          <p className={`${isDark ? 'text-gray-400' : 'text-gray-600'} max-w-2xl mx-auto text-lg`}>
             We combine technical excellence with luxury aesthetics to deliver results that matter.
           </p>
         </div>
@@ -81,11 +84,11 @@ export default function WhyChooseUs() {
               transition={{ delay: index * 0.1 }}
               className="flex flex-col items-start group"
             >
-              <div className="w-12 h-12 rounded-lg bg-gradient-to-br from-[#C9A227]/20 to-[#C9A227]/5 flex items-center justify-center mb-6 group-hover:scale-110 transition-transform duration-300">
-                <feature.icon className="text-[#C9A227]" size={24} />
+              <div className="w-12 h-12 rounded-lg bg-[#f6ff82] flex items-center justify-center mb-6 group-hover:scale-110 transition-transform duration-300 shadow-lg shadow-[#f6ff82]/30">
+                <feature.icon className="text-[#003942]" size={24} />
               </div>
-              <h3 className="text-xl font-bold text-[#1A1A1A] mb-3 group-hover:text-[#C9A227] transition-colors">{feature.title}</h3>
-              <p className="text-gray-600 leading-relaxed">{feature.description}</p>
+              <h3 className={`text-xl font-bold ${isDark ? 'text-white' : 'text-[#003942]'} mb-3 group-hover:underline group-hover:decoration-[#f6ff82] group-hover:decoration-4 group-hover:underline-offset-4 transition-all`}>{feature.title}</h3>
+              <p className={`${isDark ? 'text-gray-400' : 'text-gray-600'} leading-relaxed`}>{feature.description}</p>
             </motion.div>
           ))}
         </div>

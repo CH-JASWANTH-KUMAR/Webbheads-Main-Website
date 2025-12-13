@@ -2,125 +2,160 @@
 
 /**
  * ==========================================================================
- * ABOUT US SECTION - WebbHeads Agency Introduction
+ * ABOUT US SECTION - WebbHeads Agency (webbheads.com style)
  * ==========================================================================
- * Introduces WebbHeads as a digital agency specializing in real estate.
- * Features:
- * - Company description and value propositions
- * - Team/office image with floating stats card
+ * Layout matching webbheads.com screenshot:
+ * - Left side: Team photo in circular frame with decorative elements
+ * - Right side: "More about us" content + Vision/Mission/Values
  * 
- * Brand: WebbHeads - "Crafting Ideas into Empires"
+ * Colors: Lime #f6ff82, Teal #003942, White #ffffff
  * ==========================================================================
  */
 
 import { motion } from 'framer-motion';
-import { CheckCircle2 } from 'lucide-react';
-
-// Key value propositions we offer to real estate clients
-const VALUE_PROPOSITIONS = [
-  "Specialized in High-End Property Markets",
-  "Data-Driven Design & Development",
-  "AI-Powered Automation & Workflows"
-];
+import { ArrowUpRight } from 'lucide-react';
 
 export default function AboutUs() {
   return (
-    <section id="about" className="py-24 bg-gray-50 overflow-hidden">
+    <section id="about" className="py-24 bg-white overflow-hidden">
       <div className="container mx-auto px-6 md:px-12 lg:px-20">
-        <div className="flex flex-col lg:flex-row items-center gap-16">
+        
+        <div className="flex flex-col lg:flex-row items-start gap-16">
           
-          {/* ===== LEFT COLUMN: Text Content ===== */}
+          {/* ===== LEFT COLUMN: Team Photo ===== */}
           <motion.div 
             initial={{ opacity: 0, x: -50 }}
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.8 }}
-            className="lg:w-1/2"
-          >
-            {/* Section Badge */}
-            <div className="inline-block px-4 py-1.5 mb-6 border border-[#C9A227]/20 rounded-full bg-[#C9A227]/5">
-              <span className="text-sm font-medium text-[#C9A227] tracking-wide uppercase">
-                About WebbHeads
-              </span>
-            </div>
-            
-            {/* Section Headline */}
-            <h2 className="text-4xl md:text-5xl font-bold text-[#1A1A1A] mb-8 leading-tight">
-              Crafting Ideas into <br />
-              <span className="text-[#C9A227]">Digital Empires</span> for Real Estate.
-            </h2>
-            
-            {/* Description */}
-            <p className="text-gray-600 text-lg mb-8 leading-relaxed">
-              At WebbHeads, we help real estate businesses establish an emotional connection between their properties and engaged buyers. We blend creativity, technology, and AI innovation to craft digital solutions that drive real impact.
-            </p>
-            
-            {/* Value Propositions List */}
-            <div className="space-y-4 mb-10">
-              {VALUE_PROPOSITIONS.map((item, index) => (
-                <div key={index} className="flex items-center gap-3">
-                  <CheckCircle2 className="text-[#C9A227] flex-shrink-0" size={24} />
-                  <span className="text-[#1A1A1A] font-medium text-lg">{item}</span>
-                </div>
-              ))}
-            </div>
-
-            {/* CTA Button */}
-            <a 
-              href="https://www.webbheads.com/" 
-              target="_blank" 
-              rel="noopener noreferrer"
-              className="inline-block px-8 py-4 bg-[#1A1A1A] text-white font-medium rounded-lg hover:bg-[#2A2A2A] transition-colors shadow-lg shadow-[#1A1A1A]/10"
-            >
-              Visit WebbHeads.com
-            </a>
-          </motion.div>
-
-          {/* ===== RIGHT COLUMN: Image ===== */}
-          <motion.div 
-            initial={{ opacity: 0, scale: 0.9 }}
-            whileInView={{ opacity: 1, scale: 1 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.8 }}
             className="lg:w-1/2 relative"
           >
-            {/* Main Image */}
-            <div className="relative rounded-3xl overflow-hidden shadow-2xl aspect-[4/3]">
-              <div className="absolute inset-0 bg-gradient-to-tr from-[#1A1A1A]/30 to-transparent z-10" />
-              <img 
-                src="https://images.unsplash.com/photo-1600880292203-757bb62b4baf?auto=format&fit=crop&q=80&w=1200" 
-                alt="WebbHeads Team Collaboration" 
-                className="w-full h-full object-cover"
-              />
-            </div>
-            
-            {/* Floating Stats Card */}
-            <motion.div 
-              initial={{ y: 20, opacity: 0 }}
-              whileInView={{ y: 0, opacity: 1 }}
-              viewport={{ once: true }}
-              transition={{ delay: 0.4, duration: 0.8 }}
-              className="absolute -bottom-8 -left-8 bg-white p-6 rounded-2xl shadow-xl border border-gray-100 hidden md:block z-20"
-            >
-              <p className="text-4xl font-bold text-[#C9A227] mb-1">40+</p>
-              <p className="text-[#1A1A1A] font-medium text-sm">Happy clients across <br />real estate & tech.</p>
-            </motion.div>
+            {/* Circular Photo Frame */}
+            <div className="relative w-full max-w-md mx-auto">
+              {/* Decorative Ring with Text */}
+              <div className="absolute -top-4 -right-4 w-24 h-24 rounded-full border-2 border-[#003942] flex items-center justify-center bg-white z-20">
+                <div className="relative w-full h-full">
+                  {/* Rotating Text Around Circle */}
+                  <svg className="w-full h-full animate-spin-slow" viewBox="0 0 100 100">
+                    <defs>
+                      <path id="circlePath" d="M 50, 50 m -35, 0 a 35,35 0 1,1 70,0 a 35,35 0 1,1 -70,0" fill="none" />
+                    </defs>
+                    <text className="text-[8px] fill-[#003942] uppercase tracking-widest">
+                      <textPath href="#circlePath">
+                        • LEADERS • DRIVEN BY INNOVATION •
+                      </textPath>
+                    </text>
+                  </svg>
+                  {/* Arrow Icon */}
+                  <div className="absolute inset-0 flex items-center justify-center">
+                    <ArrowUpRight className="w-6 h-6 text-[#003942]" />
+                  </div>
+                </div>
+              </div>
 
-            {/* Second Floating Card - Top Right */}
-            <motion.div 
-              initial={{ y: -20, opacity: 0 }}
-              whileInView={{ y: 0, opacity: 1 }}
-              viewport={{ once: true }}
-              transition={{ delay: 0.6, duration: 0.8 }}
-              className="absolute -top-4 -right-4 bg-[#1A1A1A] text-white p-4 rounded-xl shadow-xl hidden md:block z-20"
-            >
-              <p className="text-2xl font-bold text-[#C9A227]">250%</p>
-              <p className="text-xs text-gray-300">Avg. Growth</p>
-            </motion.div>
+              {/* Main Photo */}
+              <div className="relative rounded-full overflow-hidden aspect-square border-4 border-[#f6ff82] shadow-2xl">
+                <img 
+                  src="https://images.unsplash.com/photo-1522071820081-009f0129c71c?auto=format&fit=crop&q=80&w=800&h=800" 
+                  alt="WebbHeads Team" 
+                  className="w-full h-full object-cover"
+                />
+                {/* Overlay Gradient */}
+                <div className="absolute inset-0 bg-gradient-to-t from-[#003942]/20 to-transparent" />
+              </div>
+            </div>
+          </motion.div>
+
+          {/* ===== RIGHT COLUMN: Content ===== */}
+          <motion.div 
+            initial={{ opacity: 0, x: 50 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.8 }}
+            className="lg:w-1/2"
+          >
+            {/* About Badge */}
+            <div className="inline-flex items-center gap-2 px-4 py-2 bg-[#f6ff82] rounded-full mb-6">
+              <span className="text-sm font-medium text-[#003942]">★ ABOUT</span>
+            </div>
+
+            {/* Main Heading */}
+            <h2 className="text-4xl md:text-5xl font-bold text-[#003942] mb-6 leading-tight">
+              More about us
+            </h2>
+            
+            {/* Description Paragraphs */}
+            <p className="text-gray-700 text-lg mb-4 leading-relaxed">
+              At WebbHeads, we build functional technologies that help businesses optimize time and deliver exceptional user experiences.
+            </p>
+            <p className="text-gray-600 mb-10 leading-relaxed">
+              By blending creativity, technology, and AI innovation, we craft digital solutions that drive real impact — from smart automation to high-converting websites and user-friendly apps that help brands grow smarter and faster.
+            </p>
+
+            {/* About Sub-section */}
+            <div className="flex flex-col md:flex-row gap-10">
+              {/* Left: About Text */}
+              <div className="md:w-1/2">
+                <h3 className="text-2xl font-bold text-[#003942] mb-4">About</h3>
+                <p className="text-gray-600 leading-relaxed mb-6">
+                  At WebbHeads, our mission and vision guide everything we build — helping businesses embrace the future with smarter, faster, and more human-centered digital solutions.
+                </p>
+                <a 
+                  href="https://djkushal.framer.website/" 
+                  target="_blank" 
+                  rel="noopener noreferrer"
+                  className="inline-block px-6 py-3 border-2 border-[#003942] text-[#003942] font-medium rounded-full hover:bg-[#003942] hover:text-white transition-all duration-300"
+                >
+                  More About Founder
+                </a>
+              </div>
+
+              {/* Right: Vision, Mission, Values */}
+              <div className="md:w-1/2 space-y-6">
+                {/* Vision */}
+                <div className="flex items-start gap-3">
+                  <div className="w-3 h-3 rounded-full bg-[#003942] mt-1.5 flex-shrink-0" />
+                  <div>
+                    <h4 className="font-bold text-[#003942] mb-1">Vision</h4>
+                    <p className="text-gray-600 text-sm">Transforming Businesses Digitally.</p>
+                  </div>
+                </div>
+
+                {/* Mission */}
+                <div className="flex items-start gap-3">
+                  <div className="w-3 h-3 rounded-full bg-[#f6ff82] border-2 border-[#003942] mt-1.5 flex-shrink-0" />
+                  <div>
+                    <h4 className="font-bold text-[#003942] mb-1">Mission</h4>
+                    <p className="text-gray-600 text-sm">Helping brands build professional, high-performing digital identities through technology and automation.</p>
+                  </div>
+                </div>
+
+                {/* Values */}
+                <div className="flex items-start gap-3">
+                  <div className="w-3 h-3 rounded-full bg-[#f6ff82] mt-1.5 flex-shrink-0" />
+                  <div>
+                    <h4 className="font-bold text-[#003942] mb-1">Values</h4>
+                    <p className="text-gray-600 text-sm">Creativity, innovation, and integrity guide our every move — ensuring each project is built with purpose, precision, and a passion for progress.</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+
           </motion.div>
 
         </div>
       </div>
+
+      {/* CSS for slow spin animation */}
+      <style jsx>{`
+        @keyframes spin-slow {
+          from { transform: rotate(0deg); }
+          to { transform: rotate(360deg); }
+        }
+        .animate-spin-slow {
+          animation: spin-slow 20s linear infinite;
+        }
+      `}</style>
     </section>
   );
 }

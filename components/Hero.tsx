@@ -8,21 +8,24 @@
  * - Left side: Headline, subheadline, and CTA buttons
  * - Right side: Animated 3D growth visualization (houses on coins with arrow)
  * 
- * Design: Luxury light theme with gold (#C9A227) and charcoal (#1A1A1A)
+ * Design: Luxury light/dark theme with lime (#f6ff82) and teal (#003942)
  * Animation: Floating houses with growth arrow, similar to real estate investment growth
  * ==========================================================================
  */
 
 import { motion } from "framer-motion";
 import { TrendingUp, Building2, DollarSign } from "lucide-react";
+import { useTheme } from "@/context/ThemeContext";
 
 export default function Hero() {
+  const { isDark } = useTheme();
+  
   return (
-    <section className="relative min-h-screen w-full bg-white overflow-hidden flex items-center">
+    <section id="hero" className={`relative min-h-screen w-full overflow-hidden flex items-center pt-20 ${isDark ? 'bg-[#001a1f]' : 'bg-white'}`}>
       
       {/* ===== BACKGROUND DECORATIONS ===== */}
-      <div className="absolute top-[-20%] left-[-10%] w-[500px] h-[500px] bg-[#C9A227]/5 rounded-full blur-[120px] pointer-events-none" />
-      <div className="absolute bottom-[-20%] right-[-10%] w-[600px] h-[600px] bg-[#1A1A1A]/5 rounded-full blur-[100px] pointer-events-none" />
+      <div className={`absolute top-[-20%] left-[-10%] w-[500px] h-[500px] rounded-full blur-[120px] pointer-events-none ${isDark ? 'bg-[#f6ff82]/10' : 'bg-[#f6ff82]/20'}`} />
+      <div className={`absolute bottom-[-20%] right-[-10%] w-[600px] h-[600px] rounded-full blur-[100px] pointer-events-none ${isDark ? 'bg-[#003942]/30' : 'bg-[#003942]/10'}`} />
 
       {/* ===== MAIN CONTENT GRID ===== */}
       <div className="container mx-auto px-6 md:px-12 lg:px-20 grid grid-cols-1 lg:grid-cols-2 gap-12 items-center relative z-10">
@@ -39,50 +42,62 @@ export default function Hero() {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.2, duration: 0.8 }}
-            className="inline-block px-4 py-1.5 mb-6 border border-[#1A1A1A]/10 rounded-full bg-[#1A1A1A]/5 backdrop-blur-sm"
+            className={`inline-block px-4 py-1.5 mb-6 border rounded-full backdrop-blur-sm ${
+              isDark 
+                ? 'border-[#f6ff82]/30 bg-[#f6ff82]/10' 
+                : 'border-[#003942]/10 bg-[#f6ff82]'
+            }`}
           >
-            <span className="text-sm font-medium text-[#1A1A1A] tracking-wide uppercase">
+            <span className={`text-sm font-medium tracking-wide uppercase ${isDark ? 'text-[#f6ff82]' : 'text-[#003942]'}`}>
               Elevating Real Estate
             </span>
           </motion.div>
 
           {/* Main Headline */}
-          <h1 className="text-5xl md:text-6xl lg:text-7xl font-bold text-[#1A1A1A] leading-[1.1] mb-6 tracking-tight">
+          <h1 className={`text-5xl md:text-6xl lg:text-7xl font-bold leading-[1.1] mb-6 tracking-tight ${isDark ? 'text-white' : 'text-[#003942]'}`}>
             Premium Digital <br />
-            <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#C9A227] to-[#E5C558]">
+            <span className={`text-transparent bg-clip-text bg-gradient-to-r ${isDark ? 'from-[#f6ff82] to-[#d4e682]' : 'from-[#003942] to-[#005f73]'}`}>
               Solutions
             </span> for <br />
             Real Estate.
           </h1>
 
           {/* Subheadline */}
-          <p className="text-lg md:text-xl text-gray-600 mb-10 leading-relaxed max-w-lg">
+          <p className={`text-lg md:text-xl mb-10 leading-relaxed max-w-lg ${isDark ? 'text-gray-400' : 'text-gray-600'}`}>
             We craft high-end websites, custom apps, and intelligent automation systems specifically designed for property developers and luxury agencies.
           </p>
 
           {/* CTA Buttons */}
           <div className="flex flex-wrap gap-4">
+            {/* Explore Plans - Links to Pricing Section */}
             <motion.a
-              href="https://cal.com/webb-heads"
-              target="_blank"
-              rel="noopener noreferrer"
+              href="#pricing"
               whileHover={{ scale: 1.02 }}
               whileTap={{ scale: 0.98 }}
-              className="px-8 py-4 bg-[#1A1A1A] text-white text-lg font-medium rounded-lg shadow-xl shadow-[#1A1A1A]/20 hover:bg-[#2A2A2A] transition-all flex items-center gap-2 group"
+              className={`px-8 py-4 text-lg font-medium rounded-lg shadow-xl transition-all flex items-center gap-2 group ${
+                isDark 
+                  ? 'bg-[#f6ff82] text-[#003942] hover:bg-[#e6ef72] shadow-[#f6ff82]/20' 
+                  : 'bg-[#003942] text-white hover:bg-[#004d59] shadow-[#003942]/20'
+              }`}
             >
-              Book Strategy Call
-              <svg className="w-5 h-5 text-[#C9A227] group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              Explore Plans
+              <svg className={`w-5 h-5 group-hover:translate-x-1 transition-transform ${isDark ? 'text-[#003942]' : 'text-[#f6ff82]'}`} fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
               </svg>
             </motion.a>
             
+            {/* Our Case Studies - Links to Portfolio Section */}
             <motion.a
               href="#portfolio"
               whileHover={{ scale: 1.02 }}
               whileTap={{ scale: 0.98 }}
-              className="px-8 py-4 bg-white border border-[#1A1A1A]/10 text-[#1A1A1A] text-lg font-medium rounded-lg hover:bg-gray-50 transition-all"
+              className={`px-8 py-4 border-2 text-lg font-medium rounded-lg transition-all ${
+                isDark 
+                  ? 'bg-transparent border-[#f6ff82]/30 text-white hover:border-[#f6ff82] hover:bg-[#f6ff82]/10' 
+                  : 'bg-white border-[#003942]/10 text-[#003942] hover:border-[#003942] hover:bg-[#f6ff82]/20'
+              }`}
             >
-              See Our Work
+              Our Case Studies
             </motion.a>
           </div>
         </motion.div>
@@ -246,9 +261,9 @@ export default function Hero() {
                   className="mb-2"
                 >
                   <div className="w-18 h-16 md:w-20 md:h-18 relative">
-                    <div className="absolute top-0 left-1/2 -translate-x-1/2 w-0 h-0 border-l-[40px] md:border-l-[44px] border-r-[40px] md:border-r-[44px] border-b-[26px] md:border-b-[30px] border-l-transparent border-r-transparent border-b-[#C9A227]" />
-                    <div className="absolute bottom-0 left-1/2 -translate-x-1/2 w-16 md:w-18 h-9 md:h-10 bg-[#FEF3C7] border-2 border-[#C9A227] rounded-sm">
-                      <div className="absolute bottom-0 left-1/2 -translate-x-1/2 w-4 h-6 bg-[#1A1A1A] rounded-t-sm" />
+                    <div className="absolute top-0 left-1/2 -translate-x-1/2 w-0 h-0 border-l-[40px] md:border-l-[44px] border-r-[40px] md:border-r-[44px] border-b-[26px] md:border-b-[30px] border-l-transparent border-r-transparent border-b-[#f6ff82]" />
+                    <div className="absolute bottom-0 left-1/2 -translate-x-1/2 w-16 md:w-18 h-9 md:h-10 bg-[#FEF3C7] border-2 border-[#f6ff82] rounded-sm">
+                      <div className="absolute bottom-0 left-1/2 -translate-x-1/2 w-4 h-6 bg-[#003942] rounded-t-sm" />
                     </div>
                   </div>
                 </motion.div>
@@ -281,7 +296,7 @@ export default function Hero() {
                 </div>
                 <div>
                   <p className="text-xs text-gray-500 font-medium uppercase">Avg. ROI Increase</p>
-                  <p className="text-lg font-bold text-[#1A1A1A]">+340%</p>
+                  <p className="text-lg font-bold text-[#003942]">+340%</p>
                 </div>
               </div>
             </motion.div>
@@ -291,10 +306,10 @@ export default function Hero() {
               initial={{ opacity: 0, y: -20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 2, duration: 0.6 }}
-              className="absolute top-4 right-0 bg-[#1A1A1A] text-white p-4 rounded-xl shadow-xl z-20"
+              className="absolute top-4 right-0 bg-[#003942] text-white p-4 rounded-xl shadow-xl z-20"
             >
               <div className="flex items-center gap-3">
-                <DollarSign className="w-5 h-5 text-[#C9A227]" />
+                <DollarSign className="w-5 h-5 text-[#f6ff82]" />
                 <div>
                   <p className="text-xs text-gray-400">Properties Sold</p>
                   <p className="text-sm font-bold">$2B+ Value</p>
@@ -307,15 +322,15 @@ export default function Hero() {
               initial={{ opacity: 0, scale: 0.8 }}
               animate={{ opacity: 1, scale: 1 }}
               transition={{ delay: 2.2, duration: 0.4 }}
-              className="absolute bottom-4 right-0 bg-[#C9A227] text-white px-3 py-1.5 rounded-full text-xs font-medium shadow-lg flex items-center gap-1.5"
+              className="absolute bottom-4 right-0 bg-[#003942] text-white px-3 py-1.5 rounded-full text-xs font-medium shadow-lg flex items-center gap-1.5 border-2 border-[#f6ff82]"
             >
-              <Building2 className="w-3.5 h-3.5" />
+              <Building2 className="w-3.5 h-3.5 text-[#f6ff82]" />
               Real Estate Growth
             </motion.div>
           </div>
           
           {/* Ambient glow */}
-          <div className="absolute inset-0 bg-gradient-to-tr from-[#C9A227]/10 to-transparent blur-[60px] -z-10 rounded-full scale-75" />
+          <div className="absolute inset-0 bg-gradient-to-tr from-[#f6ff82]/10 to-transparent blur-[60px] -z-10 rounded-full scale-75" />
         </motion.div>
       </div>
     </section>

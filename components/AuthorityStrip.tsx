@@ -48,8 +48,8 @@ export default function AuthorityStrip() {
           >
             {logos.map((logo, index) => (
               <div key={index} className="flex items-center gap-3 group min-w-max">
-                <logo.Icon className="w-8 h-8 text-[#1A1A1A]" strokeWidth={1.5} />
-                <span className="text-xl font-bold text-[#1A1A1A]">{logo.name}</span>
+                <logo.Icon className="w-8 h-8 text-[#003942]" strokeWidth={1.5} />
+                <span className="text-xl font-bold text-[#003942]">{logo.name}</span>
               </div>
             ))}
           </motion.div>

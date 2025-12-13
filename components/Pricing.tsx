@@ -2,18 +2,16 @@
 
 /**
  * ==========================================================================
- * PRICING SECTION - Service Packages
+ * PRICING SECTION - 4 Card Layout
  * ==========================================================================
- * Displays 4 pricing tiers with animated count-up for prices:
- * 1. Must Have ($2,999) - Basic website package
- * 2. Need Based ($4,999) - CMS and advanced SEO
- * 3. Nice to Have ($7,999) - Property search and virtual tours
- * 4. Premium ($12,999) - Full suite with AI and mobile app
+ * 4 Pricing tiers in card format:
+ * 1. Must-Have - Essential services
+ * 2. Premium - Full-stack solutions (highlighted)
+ * 3. Need-Based - Scale-dependent services
+ * 4. Nice-to-Have - Add-on services
  * 
- * Features:
- * - CountUp animation when cards come into view
- * - Highlighted "Premium" card with gold accent
- * - Feature checkmarks for each tier
+ * All prices in INR (₹)
+ * Color: Lime #f6ff82, Teal #003942, White #ffffff
  * ==========================================================================
  */
 
@@ -21,116 +19,192 @@ import { Check } from 'lucide-react';
 import { motion, useInView } from 'framer-motion';
 import { useRef, useState, useEffect } from 'react';
 
-// Pricing tiers - adjust prices and features as needed
+// Pricing tiers with INR prices
 const plans = [
   {
-    name: 'Must Have',
-    price: 2999,
-    features: ['Custom Website', 'Mobile Responsive', 'Basic SEO', 'Contact Form'],
-    highlight: false
-  },
-  {
-    name: 'Need Based',
-    price: 4999,
-    features: ['Everything in Must Have', 'CMS Integration', 'Advanced SEO', 'Blog Section'],
-    highlight: false
-  },
-  {
-    name: 'Nice to Have',
-    price: 7999,
-    features: ['Everything in Need Based', 'Property Search', 'Virtual Tours', 'CRM Integration'],
+    name: 'Must-Have',
+    price: '₹1.2L',
+    priceNote: 'Starting from',
+    description: 'Essential services every realtor needs',
+    features: [
+      'High-Conversion Website',
+      'Property Listing CMS',
+      'Lead Capture Forms',
+      'WhatsApp Integration',
+      'CRM Setup',
+      'Speed Optimization'
+    ],
     highlight: false
   },
   {
     name: 'Premium',
-    price: 12999,
-    features: ['Everything in Nice to Have', 'AI Chatbot', 'Custom Mobile App', 'Priority Support'],
+    price: '₹4L',
+    priceNote: 'Starting from',
+    description: 'Full-stack solutions for serious growth',
+    features: [
+      'Everything in Must-Have',
+      'AI Follow-Up Chatbot',
+      'Lead Automation System',
+      'Analytics Dashboard',
+      'Sales Pipeline Setup',
+      'Team Training Included'
+    ],
     highlight: true
+  },
+  {
+    name: 'Need-Based',
+    price: '₹50K',
+    priceNote: 'Starting from',
+    description: 'Scale-dependent services for growing teams',
+    features: [
+      'Listings Management',
+      'Sales Team Automation',
+      'Ad Landing Pages',
+      'Builder Microsites',
+      'Analytics Dashboard',
+      'Lead Source Tracking'
+    ],
+    highlight: false
+  },
+  {
+    name: 'Nice-to-Have',
+    price: '₹15K',
+    priceNote: 'Starting from',
+    description: 'Add-on services to enhance your brand',
+    features: [
+      'UI/UX Redesign',
+      'Brand Refresh',
+      'Drone Video Editing',
+      'Virtual Staging (AI)',
+      'WhatsApp Catalogue',
+      'Social Media Assets'
+    ],
+    highlight: false
   }
 ];
 
 /**
- * CountUp Component
- * Animates a number counting up from 0 to the target value.
- * Triggers when the element comes into view.
+ * CountUp Component - Animates price display
  */
-const CountUp = ({ end, duration = 2 }: { end: number, duration?: number }) => {
-  const [count, setCount] = useState(0);
+const CountUp = ({ target }: { target: string }) => {
+  const [display, setDisplay] = useState('₹0');
   const ref = useRef(null);
   const inView = useInView(ref, { once: true });
 
   useEffect(() => {
     if (inView) {
-      let start = 0;
-      const increment = end / (duration * 60);
-      const timer = setInterval(() => {
-        start += increment;
-        if (start >= end) {
-          setCount(end);
-          clearInterval(timer);
-        } else {
-          setCount(Math.floor(start));
-        }
-      }, 1000 / 60);
-      return () => clearInterval(timer);
+      // Simple animation to target
+      const timer = setTimeout(() => {
+        setDisplay(target);
+      }, 500);
+      return () => clearTimeout(timer);
     }
-  }, [inView, end, duration]);
+  }, [inView, target]);
 
-  return <span ref={ref}>${count.toLocaleString()}</span>;
+  return <span ref={ref}>{display}</span>;
 };
 
 export default function Pricing() {
   return (
-    <section className="py-24 bg-gray-50">
+    <section className="py-24 bg-white">
       <div className="container mx-auto px-6 md:px-12 lg:px-20">
-        <div className="text-center mb-20">
-          <h2 className="text-4xl md:text-5xl font-bold text-[#1A1A1A] mb-4">Investment</h2>
-          <p className="text-gray-600 text-lg">Transparent pricing for every stage of growth.</p>
+        {/* Header */}
+        <div className="text-center mb-16">
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            className="inline-flex items-center gap-2 px-4 py-2 bg-[#f6ff82] rounded-full mb-6"
+          >
+            <span className="w-2 h-2 bg-[#003942] rounded-full" />
+            <span className="text-sm font-medium text-[#003942]">Investment</span>
+          </motion.div>
+          <motion.h2 
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            className="text-4xl md:text-5xl font-bold text-[#003942] mb-4"
+          >
+            Transparent <span className="text-[#003942]">Pricing</span>
+          </motion.h2>
+          <motion.p 
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            className="text-gray-600 text-lg"
+          >
+            Honest pricing for every stage of growth. All prices in INR.
+          </motion.p>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+        {/* 4-Card Grid */}
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
           {plans.map((plan, index) => (
             <motion.div
               key={index}
+              initial={{ opacity: 0, y: 30 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ delay: index * 0.1 }}
               whileHover={{ y: -10, scale: 1.02 }}
-              className={`p-8 rounded-3xl border-2 transition-all duration-300 flex flex-col ${
+              className={`p-6 rounded-2xl border-2 transition-all duration-300 flex flex-col ${
                 plan.highlight 
-                  ? 'bg-[#1A1A1A] border-[#C9A227] text-white shadow-2xl shadow-[#1A1A1A]/30 scale-105' 
-                  : 'bg-white border-gray-200 text-[#1A1A1A] hover:shadow-xl hover:border-[#C9A227]'
+                  ? 'bg-[#003942] border-[#f6ff82] text-white shadow-2xl shadow-[#003942]/30 lg:scale-105' 
+                  : 'bg-white border-gray-200 text-[#003942] hover:shadow-xl hover:border-[#003942]'
               }`}
             >
               {plan.highlight && (
-                <div className="mb-4 inline-block px-3 py-1 bg-[#C9A227] text-white text-xs font-bold uppercase tracking-wider rounded-full w-max">
+                <div className="mb-4 inline-block px-3 py-1 bg-[#f6ff82] text-[#003942] text-xs font-bold uppercase tracking-wider rounded-full w-max">
                   Best Value
                 </div>
               )}
-              <h3 className={`text-xl font-bold mb-2 ${plan.highlight ? 'text-white' : 'text-[#1A1A1A]'}`}>{plan.name}</h3>
+              
+              <h3 className={`text-xl font-bold mb-2 ${plan.highlight ? 'text-white' : 'text-[#003942]'}`}>
+                {plan.name}
+              </h3>
+              
+              <p className={`text-sm mb-4 ${plan.highlight ? 'text-gray-300' : 'text-gray-500'}`}>
+                {plan.description}
+              </p>
+              
               <div className="mb-6">
-                <span className={`text-4xl font-bold ${plan.highlight ? 'text-[#C9A227]' : 'text-[#1A1A1A]'}`}>
-                  <CountUp end={plan.price} />
+                <span className={`text-xs ${plan.highlight ? 'text-gray-400' : 'text-gray-500'}`}>
+                  {plan.priceNote}
                 </span>
-                <span className={`text-sm ${plan.highlight ? 'text-gray-400' : 'text-gray-500'}`}>/project</span>
+                <div className={`text-3xl font-bold ${plan.highlight ? 'text-[#f6ff82]' : 'text-[#003942]'}`}>
+                  <CountUp target={plan.price} />
+                </div>
               </div>
               
-              <ul className="space-y-4 mb-8 flex-grow">
+              <ul className="space-y-3 mb-6 flex-grow">
                 {plan.features.map((feature, i) => (
-                  <li key={i} className="flex items-start gap-3 text-sm">
-                    <Check size={18} className={`mt-0.5 ${plan.highlight ? 'text-[#C9A227]' : 'text-[#1A1A1A]'}`} />
+                  <li key={i} className="flex items-start gap-2 text-sm">
+                    <Check size={16} className={`mt-0.5 flex-shrink-0 ${plan.highlight ? 'text-[#f6ff82]' : 'text-[#003942]'}`} />
                     <span className={plan.highlight ? 'text-gray-300' : 'text-gray-600'}>{feature}</span>
                   </li>
                 ))}
               </ul>
               
-              <button className={`w-full py-3.5 rounded-xl font-bold transition-all duration-300 ${
+              <button className={`w-full py-3 rounded-xl font-semibold transition-all duration-300 ${
                 plan.highlight 
-                  ? 'bg-[#C9A227] text-white hover:bg-[#D4B03B] shadow-lg shadow-[#C9A227]/30' 
-                  : 'bg-[#1A1A1A] text-white hover:bg-[#2A2A2A] hover:shadow-lg'
+                  ? 'bg-[#f6ff82] text-[#003942] hover:bg-[#e8f075]' 
+                  : 'bg-[#003942] text-white hover:bg-[#004d59]'
               }`}>
                 Get Started →
               </button>
             </motion.div>
           ))}
         </div>
+
+        {/* Bottom Note */}
+        <motion.p 
+          initial={{ opacity: 0 }}
+          whileInView={{ opacity: 1 }}
+          viewport={{ once: true }}
+          className="text-center text-gray-500 text-sm mt-12"
+        >
+          Need a custom package? <a href="#contact" className="text-[#003942] font-medium hover:underline">Contact us</a> for a tailored solution.
+        </motion.p>
       </div>
     </section>
   );

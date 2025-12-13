@@ -56,9 +56,9 @@ const CountUp = ({ end, prefix = '', suffix = '', duration = 2 }: {
 
 export default function Proof() {
   return (
-    <section className="py-20 bg-[#1A1A1A] text-white relative overflow-hidden">
+    <section className="py-20 bg-[#003942] text-white relative overflow-hidden">
       {/* Background Accents */}
-      <div className="absolute top-0 left-0 w-[300px] h-[300px] bg-[#C9A227]/10 rounded-full blur-[100px] pointer-events-none" />
+      <div className="absolute top-0 left-0 w-[300px] h-[300px] bg-[#f6ff82]/10 rounded-full blur-[100px] pointer-events-none" />
       <div className="absolute bottom-0 right-0 w-[300px] h-[300px] bg-white/5 rounded-full blur-[100px] pointer-events-none" />
 
       <div className="container mx-auto px-6 md:px-12 lg:px-20 relative z-10">
@@ -75,11 +75,11 @@ export default function Proof() {
                 className="text-center group"
               >
                 {/* Icon */}
-                <div className="w-12 h-12 mx-auto mb-4 bg-[#C9A227]/10 rounded-xl flex items-center justify-center group-hover:bg-[#C9A227]/20 transition-colors">
-                  <Icon className="w-6 h-6 text-[#C9A227]" />
+                <div className="w-12 h-12 mx-auto mb-4 bg-[#f6ff82]/10 rounded-xl flex items-center justify-center group-hover:bg-[#f6ff82]/20 transition-colors">
+                  <Icon className="w-6 h-6 text-[#f6ff82]" />
                 </div>
                 {/* Count */}
-                <h3 className="text-4xl md:text-5xl lg:text-6xl font-bold text-[#C9A227] mb-2">
+                <h3 className="text-4xl md:text-5xl lg:text-6xl font-bold text-[#f6ff82] mb-2">
                   <CountUp end={stat.value} prefix={stat.prefix} suffix={stat.suffix} />
                 </h3>
                 {/* Label */}
