@@ -145,7 +145,7 @@ export default function Process() {
 
   return (
     <>
-      <section className={`py-24 ${isDark ? 'bg-gradient-to-b from-[#002428] to-[#001a1f]' : 'bg-gradient-to-b from-gray-50 to-white'}`} ref={sectionRef}>
+      <section className={`py-24 ${isDark ? 'bg-[#001a1f]' : 'bg-gradient-to-b from-gray-50 to-white'}`} ref={sectionRef}>
         <div className="container mx-auto px-6 md:px-12 lg:px-20">
           {/* Section Header */}
           <motion.div

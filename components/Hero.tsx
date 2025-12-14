@@ -74,14 +74,10 @@ export default function Hero() {
               href="#pricing"
               whileHover={{ scale: 1.02 }}
               whileTap={{ scale: 0.98 }}
-              className={`px-8 py-4 text-lg font-medium rounded-lg shadow-xl transition-all flex items-center gap-2 group ${
-                isDark 
-                  ? 'bg-gradient-to-r from-[#f6ff82] to-[#d4e682] text-[#003942] hover:shadow-[#f6ff82]/30 hover:shadow-2xl' 
-                  : 'bg-gradient-to-r from-[#003942] to-[#005f73] text-white hover:shadow-[#003942]/30 hover:shadow-2xl'
-              }`}
+              className="px-8 py-4 text-lg font-medium rounded-lg shadow-xl transition-all flex items-center gap-2 group bg-gradient-to-r from-[#f6ff82] via-[#e8f074] to-[#d4e066] text-[#003942] hover:shadow-[#f6ff82]/40 hover:shadow-2xl"
             >
               Explore Plans
-              <svg className={`w-5 h-5 group-hover:translate-x-1 transition-transform ${isDark ? 'text-[#003942]' : 'text-[#f6ff82]'}`} fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <svg className="w-5 h-5 group-hover:translate-x-1 transition-transform text-[#003942]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
               </svg>
             </motion.a>
