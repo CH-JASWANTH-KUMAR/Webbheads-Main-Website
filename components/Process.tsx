@@ -168,7 +168,7 @@ export default function Process() {
           {/* Process Steps */}
           <div className="relative">
             {/* Horizontal Progress Line (Desktop) */}
-            <div className="absolute top-[3.5rem] left-0 w-full h-1 bg-gray-200 hidden lg:block rounded-full overflow-hidden">
+            <div className={`absolute top-[3.5rem] left-0 w-full h-1 hidden lg:block rounded-full overflow-hidden ${isDark ? 'bg-[#003942]' : 'bg-gray-200'}`}>
               <motion.div
                 style={{ scaleX: scrollYProgress, transformOrigin: "left" }}
                 className="h-full bg-gradient-to-r from-[#f6ff82] to-[#D4AF37]"
@@ -184,22 +184,23 @@ export default function Process() {
                   whileInView={{ opacity: 1, y: 0 }}
                   viewport={{ once: true }}
                   transition={{ delay: index * 0.1 + 0.2, duration: 0.5 }}
+                  whileHover={{ scale: 1.05, y: -5 }}
                   onClick={() => setSelectedStep(index)}
-                  className="flex flex-col items-center text-center cursor-pointer group"
+                  className="flex flex-col items-center text-center cursor-pointer group transition-all duration-300"
                 >
                   {/* Step Circle - Animated based on scroll */}
                   <motion.div
-                    className="w-20 h-20 lg:w-28 lg:h-28 rounded-full flex items-center justify-center border-4 shadow-xl mb-4 relative transition-all group-hover:scale-105 group-hover:shadow-2xl bg-white"
+                    className={`w-20 h-20 lg:w-28 lg:h-28 rounded-full flex items-center justify-center border-4 shadow-xl mb-4 relative transition-all duration-300 group-hover:shadow-2xl group-hover:shadow-[#f6ff82]/20 ${isDark ? 'bg-[#002428]' : 'bg-white'}`}
                     style={{
                       borderColor: useTransform(
                         progressValue,
                         [index, index + 0.5],
-                        ["#E5E7EB", "#003942"]
+                        [isDark ? "#003942" : "#E5E7EB", "#f6ff82"]
                       ),
                       backgroundColor: useTransform(
                         progressValue,
                         [index, index + 0.5],
-                        ["#FFFFFF", "#f6ff82"]
+                        [isDark ? "#002428" : "#FFFFFF", "#f6ff82"]
                       ),
                     }}
                   >
@@ -208,11 +209,11 @@ export default function Process() {
                         color: useTransform(
                           progressValue,
                           [index, index + 0.5],
-                          ["#D1D5DB", "#003942"]
+                          [isDark ? "#4B5563" : "#D1D5DB", "#003942"]
                         ),
                       }}
                     >
-                      <step.icon className="w-8 h-8 lg:w-10 lg:h-10" strokeWidth={1.5} />
+                      <step.icon className="w-8 h-8 lg:w-10 lg:h-10 transition-transform duration-300 group-hover:scale-110" strokeWidth={1.5} />
                     </motion.div>
 
                     {/* Completed checkmark */}
@@ -232,12 +233,12 @@ export default function Process() {
 
                   {/* Step Number */}
                   <motion.span
-                    className="text-xs font-bold mb-1"
+                    className="text-xs font-bold mb-1 transition-colors duration-300"
                     style={{
                       color: useTransform(
                         progressValue,
                         [index, index + 0.5],
-                        ["#9CA3AF", "#003942"]
+                        [isDark ? "#6B7280" : "#9CA3AF", isDark ? "#f6ff82" : "#003942"]
                       ),
                     }}
                   >
@@ -246,12 +247,12 @@ export default function Process() {
 
                   {/* Step Title */}
                   <motion.h3
-                    className="text-base lg:text-lg font-bold mb-1 group-hover:underline group-hover:decoration-[#f6ff82] group-hover:decoration-2 transition-all"
+                    className="text-base lg:text-lg font-bold mb-1 transition-all duration-300 group-hover:text-[#f6ff82]"
                     style={{
                       color: useTransform(
                         progressValue,
                         [index, index + 0.5],
-                        ["#9CA3AF", "#003942"]
+                        [isDark ? "#9CA3AF" : "#9CA3AF", isDark ? "#ffffff" : "#003942"]
                       ),
                     }}
                   >
@@ -260,12 +261,12 @@ export default function Process() {
 
                   {/* Step Description */}
                   <motion.p
-                    className="text-xs lg:text-sm leading-relaxed"
+                    className="text-xs lg:text-sm leading-relaxed transition-colors duration-300"
                     style={{
                       color: useTransform(
                         progressValue,
                         [index, index + 0.5],
-                        ["#D1D5DB", "#6B7280"]
+                        [isDark ? "#6B7280" : "#D1D5DB", isDark ? "#9CA3AF" : "#6B7280"]
                       ),
                     }}
                   >
@@ -273,7 +274,7 @@ export default function Process() {
                   </motion.p>
 
                   {/* Tap hint */}
-                  <span className="mt-2 text-xs text-[#003942] font-medium opacity-0 group-hover:opacity-100 transition-opacity">
+                  <span className={`mt-2 text-xs font-medium opacity-0 group-hover:opacity-100 transition-all duration-300 ${isDark ? 'text-[#f6ff82]' : 'text-[#003942]'}`}>
                     Tap for details →
                   </span>
                 </motion.div>

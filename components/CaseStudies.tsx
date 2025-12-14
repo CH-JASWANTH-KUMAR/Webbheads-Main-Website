@@ -186,17 +186,14 @@ export default function CaseStudies() {
 
             {/* Content */}
             <div className="relative z-10 text-center p-4">
-              <div className="w-12 h-12 rounded-full bg-[#f6ff82]/20 flex items-center justify-center mx-auto mb-3 group-hover:scale-110 transition-transform duration-300">
-                <ArrowRight className="w-5 h-5 text-[#f6ff82] group-hover:translate-x-1 transition-transform" />
-              </div>
-              <h3 className="text-lg md:text-xl font-bold text-white mb-2">
-                View All <span className="text-[#003942] underline decoration-[#f6ff82] decoration-4 underline-offset-4">Case Studies</span>
+              <h3 className="text-xl md:text-2xl font-bold text-white mb-3">
+                View All Projects
               </h3>
-              <p className="text-white/60 text-xs mb-3">
-                Explore all {caseStudies.length} projects
+              <p className="text-white/60 text-sm mb-4">
+                Explore our complete portfolio
               </p>
-              <div className="inline-flex items-center gap-1.5 px-4 py-2 bg-[#f6ff82] text-[#003942] text-xs font-semibold rounded-full group-hover:bg-[#D4AF37] transition-colors">
-                Explore All <ArrowUpRight className="w-3 h-3" />
+              <div className="inline-flex items-center px-6 py-3 bg-[#f6ff82] text-[#003942] text-sm font-semibold rounded-full group-hover:bg-[#e8f075] transition-all duration-300 group-hover:shadow-lg group-hover:shadow-[#f6ff82]/30">
+                View All
               </div>
             </div>
 

@@ -164,19 +164,19 @@ export default function Pricing() {
                 </div>
               )}
               
-              <h3 className={`text-xl font-bold mb-2 ${plan.highlight ? 'text-white' : 'text-[#003942]'}`}>
+              <h3 className={`text-xl font-bold mb-2 ${plan.highlight ? 'text-white' : isDark ? 'text-white' : 'text-[#003942]'}`}>
                 {plan.name}
               </h3>
               
-              <p className={`text-sm mb-4 ${plan.highlight ? 'text-gray-300' : 'text-gray-500'}`}>
+              <p className={`text-sm mb-4 ${plan.highlight ? 'text-gray-300' : isDark ? 'text-gray-400' : 'text-gray-500'}`}>
                 {plan.description}
               </p>
               
               <div className="mb-6">
-                <span className={`text-xs ${plan.highlight ? 'text-gray-400' : 'text-gray-500'}`}>
+                <span className={`text-xs ${plan.highlight ? 'text-gray-400' : isDark ? 'text-gray-500' : 'text-gray-500'}`}>
                   {plan.priceNote}
                 </span>
-                <div className={`text-3xl font-bold ${plan.highlight ? 'text-[#f6ff82]' : 'text-[#003942]'}`}>
+                <div className={`text-3xl font-bold ${plan.highlight ? 'text-[#f6ff82]' : isDark ? 'text-transparent bg-clip-text bg-gradient-to-r from-[#f6ff82] to-[#d4e682]' : 'text-[#003942]'}`}>
                   <CountUp target={plan.price} />
                 </div>
               </div>
@@ -184,8 +184,8 @@ export default function Pricing() {
               <ul className="space-y-3 mb-6 flex-grow">
                 {plan.features.map((feature, i) => (
                   <li key={i} className="flex items-start gap-2 text-sm">
-                    <Check size={16} className={`mt-0.5 flex-shrink-0 ${plan.highlight ? 'text-[#f6ff82]' : 'text-[#003942]'}`} />
-                    <span className={plan.highlight ? 'text-gray-300' : 'text-gray-600'}>{feature}</span>
+                    <Check size={16} className={`mt-0.5 flex-shrink-0 ${plan.highlight ? 'text-[#f6ff82]' : isDark ? 'text-[#f6ff82]' : 'text-[#003942]'}`} />
+                    <span className={plan.highlight ? 'text-gray-300' : isDark ? 'text-gray-300' : 'text-gray-600'}>{feature}</span>
                   </li>
                 ))}
               </ul>
@@ -193,7 +193,9 @@ export default function Pricing() {
               <button className={`w-full py-3 rounded-xl font-semibold transition-all duration-300 ${
                 plan.highlight 
                   ? 'bg-[#f6ff82] text-[#003942] hover:bg-[#e8f075]' 
-                  : 'bg-[#003942] text-white hover:bg-[#004d59]'
+                  : isDark 
+                    ? 'bg-gradient-to-r from-[#f6ff82] to-[#d4e682] text-[#003942] hover:shadow-lg hover:shadow-[#f6ff82]/20'
+                    : 'bg-[#003942] text-white hover:bg-[#004d59]'
               }`}>
                 Get Started →
               </button>
