@@ -51,7 +51,7 @@ export default function Services() {
   const { isDark } = useTheme();
   
   return (
-    <section className={`py-24 ${isDark ? 'bg-[#002428]' : 'bg-gray-50'}`}>
+    <section className={`py-24 ${isDark ? 'bg-[#001a1f]' : 'bg-gray-50'}`}>
       <div className="container mx-auto px-6 md:px-12 lg:px-20">
         <div className="text-center mb-20">
           <motion.h2 
@@ -84,7 +84,7 @@ export default function Services() {
               whileHover={{ y: -10 }}
               className={`p-10 rounded-2xl border shadow-sm hover:shadow-xl transition-all duration-300 group ${
                 isDark 
-                  ? 'bg-[#001a1f] border-[#003942]/50 hover:border-[#f6ff82]/30' 
+                  ? 'bg-[#002428] border-[#003942]/50 hover:border-[#f6ff82]/30' 
                   : 'bg-white border-gray-100 hover:border-[#f6ff82]/30'
               }`}
             >
