@@ -8,7 +8,7 @@
  * Uses duplicated logo array for seamless infinite scrolling.
  * 
  * Animation: CSS translate from 0% to -50% with Framer Motion
- * Note: Replace placeholder logos with actual client logos when available.
+ * Note: Replace placeholder logos with actual client logos when available.Our Expertise in Real Estate Tech
  * ==========================================================================
  */
 

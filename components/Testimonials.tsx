@@ -114,7 +114,7 @@ export default function Testimonials() {
   const { isDark } = useTheme();
   
   return (
-    <section className={`py-20 ${isDark ? 'bg-[#002428]' : 'bg-gray-50'} overflow-hidden`}>
+    <section className={`py-20 ${isDark ? 'bg-[#001a1f]' : 'bg-gray-50'} overflow-hidden`}>
       <div className="container mx-auto px-6 md:px-12 lg:px-20 mb-12">
         {/* Header */}
         <div className="text-center">
@@ -149,8 +149,8 @@ export default function Testimonials() {
       {/* Scrolling Testimonials - Row 1 (Left to Right) */}
       <div className="relative mb-6">
         {/* Gradient Overlays */}
-        <div className={`absolute left-0 top-0 bottom-0 w-32 bg-gradient-to-r ${isDark ? 'from-[#002428]' : 'from-gray-50'} to-transparent z-10 pointer-events-none`} />
-        <div className={`absolute right-0 top-0 bottom-0 w-32 bg-gradient-to-l ${isDark ? 'from-[#002428]' : 'from-gray-50'} to-transparent z-10 pointer-events-none`} />
+        <div className={`absolute left-0 top-0 bottom-0 w-32 bg-gradient-to-r ${isDark ? 'from-[#001a1f]' : 'from-gray-50'} to-transparent z-10 pointer-events-none`} />
+        <div className={`absolute right-0 top-0 bottom-0 w-32 bg-gradient-to-l ${isDark ? 'from-[#001a1f]' : 'from-gray-50'} to-transparent z-10 pointer-events-none`} />
         
         {/* Scrolling Container */}
         <motion.div 
@@ -174,8 +174,8 @@ export default function Testimonials() {
       {/* Scrolling Testimonials - Row 2 (Right to Left) */}
       <div className="relative">
         {/* Gradient Overlays */}
-        <div className={`absolute left-0 top-0 bottom-0 w-32 bg-gradient-to-r ${isDark ? 'from-[#002428]' : 'from-gray-50'} to-transparent z-10 pointer-events-none`} />
-        <div className={`absolute right-0 top-0 bottom-0 w-32 bg-gradient-to-l ${isDark ? 'from-[#002428]' : 'from-gray-50'} to-transparent z-10 pointer-events-none`} />
+        <div className={`absolute left-0 top-0 bottom-0 w-32 bg-gradient-to-r ${isDark ? 'from-[#001a1f]' : 'from-gray-50'} to-transparent z-10 pointer-events-none`} />
+        <div className={`absolute right-0 top-0 bottom-0 w-32 bg-gradient-to-l ${isDark ? 'from-[#001a1f]' : 'from-gray-50'} to-transparent z-10 pointer-events-none`} />
         
         {/* Scrolling Container - Reverse Direction */}
         <motion.div 

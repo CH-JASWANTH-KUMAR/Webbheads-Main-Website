@@ -20,7 +20,7 @@ export default function AboutUs() {
   const { isDark } = useTheme();
   
   return (
-    <section id="about" className={`py-24 ${isDark ? 'bg-[#002428]' : 'bg-white'} overflow-hidden`}>
+    <section id="about" className={`py-24 ${isDark ? 'bg-[#001a1f]' : 'bg-white'} overflow-hidden`}>
       <div className="container mx-auto px-6 md:px-12 lg:px-20">
         
         <div className="flex flex-col lg:flex-row items-start gap-16">
@@ -36,7 +36,7 @@ export default function AboutUs() {
             {/* Square Photo Frame */}
             <div className="relative w-full max-w-lg mx-auto">
               {/* Decorative Ring with Text */}
-              <div className={`absolute -top-6 -right-6 w-28 h-28 rounded-full border-2 flex items-center justify-center z-20 ${isDark ? 'border-[#f6ff82] bg-[#002428]' : 'border-[#003942] bg-white'}`}>
+              <div className={`absolute -top-6 -right-6 w-28 h-28 rounded-full border-2 flex items-center justify-center z-20 ${isDark ? 'border-[#f6ff82] bg-[#001a1f]' : 'border-[#003942] bg-white'}`}>
                 <div className="relative w-full h-full">
                   {/* Rotating Text Around Circle */}
                   <svg className="w-full h-full animate-spin-slow" viewBox="0 0 100 100">

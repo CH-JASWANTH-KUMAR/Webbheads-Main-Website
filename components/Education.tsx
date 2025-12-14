@@ -65,7 +65,7 @@ export default function Education() {
   const { isDark } = useTheme();
   
   return (
-    <section className={`relative py-20 md:py-28 overflow-hidden ${isDark ? 'bg-gradient-to-b from-[#001a1f] to-[#002428]' : 'bg-gradient-to-b from-white to-gray-50'}`}>
+    <section className={`relative py-20 md:py-28 overflow-hidden ${isDark ? 'bg-[#001a1f]' : 'bg-gradient-to-b from-white to-gray-50'}`}>
       <div className="container mx-auto px-6 md:px-12 lg:px-20">
         
         {/* ===== MAIN CONTENT GRID ===== */}
@@ -148,7 +148,7 @@ export default function Education() {
                   whileInView={{ opacity: 1, y: 0 }}
                   viewport={{ once: true }}
                   transition={{ duration: 0.4, delay: 0.1 * index }}
-                  className={`group flex items-start gap-4 p-4 rounded-xl transition-all duration-300 ${isDark ? 'hover:bg-[#002a33]' : 'hover:bg-white'} hover:shadow-lg`}
+                  className={`group flex items-start gap-4 p-4 rounded-xl transition-all duration-300 ${isDark ? 'bg-[#002428] hover:bg-[#003942]/50' : 'hover:bg-white'} hover:shadow-lg`}
                 >
                   {/* Icon */}
                   <div className="shrink-0 w-12 h-12 rounded-xl bg-[#f6ff82] flex items-center justify-center group-hover:scale-110 transition-transform duration-300 shadow-lg shadow-[#f6ff82]/30">
@@ -175,8 +175,8 @@ export default function Education() {
       <div className="mt-20 overflow-hidden">
         <div className="relative">
           {/* Gradient fades */}
-          <div className={`absolute left-0 top-0 bottom-0 w-32 z-10 ${isDark ? 'bg-gradient-to-r from-[#002428] to-transparent' : 'bg-gradient-to-r from-gray-50 to-transparent'}`} />
-          <div className={`absolute right-0 top-0 bottom-0 w-32 z-10 ${isDark ? 'bg-gradient-to-l from-[#002428] to-transparent' : 'bg-gradient-to-l from-gray-50 to-transparent'}`} />
+          <div className={`absolute left-0 top-0 bottom-0 w-32 z-10 ${isDark ? 'bg-gradient-to-r from-[#001a1f] to-transparent' : 'bg-gradient-to-r from-gray-50 to-transparent'}`} />
+          <div className={`absolute right-0 top-0 bottom-0 w-32 z-10 ${isDark ? 'bg-gradient-to-l from-[#001a1f] to-transparent' : 'bg-gradient-to-l from-gray-50 to-transparent'}`} />
 
           {/* Scrolling content */}
           <motion.div

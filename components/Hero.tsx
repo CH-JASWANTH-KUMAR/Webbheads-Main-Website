@@ -76,8 +76,8 @@ export default function Hero() {
               whileTap={{ scale: 0.98 }}
               className={`px-8 py-4 text-lg font-medium rounded-lg shadow-xl transition-all flex items-center gap-2 group ${
                 isDark 
-                  ? 'bg-[#f6ff82] text-[#003942] hover:bg-[#e6ef72] shadow-[#f6ff82]/20' 
-                  : 'bg-[#003942] text-white hover:bg-[#004d59] shadow-[#003942]/20'
+                  ? 'bg-gradient-to-r from-[#f6ff82] to-[#d4e682] text-[#003942] hover:shadow-[#f6ff82]/30 hover:shadow-2xl' 
+                  : 'bg-gradient-to-r from-[#003942] to-[#005f73] text-white hover:shadow-[#003942]/30 hover:shadow-2xl'
               }`}
             >
               Explore Plans

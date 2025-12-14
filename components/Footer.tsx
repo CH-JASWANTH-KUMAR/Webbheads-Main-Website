@@ -16,10 +16,13 @@
 
 import { Facebook, Instagram, Linkedin, Twitter } from 'lucide-react';
 import { motion } from 'framer-motion';
+import { useTheme } from '@/context/ThemeContext';
 
 export default function Footer() {
+  const { isDark } = useTheme();
+  
   return (
-    <footer className="bg-[#003942] text-white py-16 border-t border-[#f6ff82]/20">
+    <footer className={`py-16 border-t ${isDark ? 'bg-[#001a1f] border-[#003942]' : 'bg-[#003942] border-[#f6ff82]/20'} text-white`}>
       <div className="container mx-auto px-6 md:px-12 lg:px-20">
         <div className="grid grid-cols-1 md:grid-cols-4 gap-12 mb-12">
           <motion.div 

@@ -86,7 +86,7 @@ export default function BeforeAfter() {
   const { isDark } = useTheme();
 
   return (
-    <section className={`py-24 ${isDark ? 'bg-[#002428]' : 'bg-gray-50'}`}>
+    <section className={`py-24 ${isDark ? 'bg-[#001a1f]' : 'bg-gray-50'}`}>
       <div className="container mx-auto px-6 md:px-12 lg:px-20">
         {/* Header */}
         <motion.div 
@@ -119,7 +119,7 @@ export default function BeforeAfter() {
               onMouseLeave={() => setActiveCard(null)}
               className="group relative"
             >
-              <div className={`relative ${isDark ? 'bg-[#001a1f]' : 'bg-white'} rounded-2xl overflow-hidden shadow-lg hover:shadow-2xl transition-all duration-500 border ${isDark ? 'border-[#003942]/50' : 'border-gray-100'}`}>
+              <div className={`relative ${isDark ? 'bg-[#002428]' : 'bg-white'} rounded-2xl overflow-hidden shadow-lg hover:shadow-2xl transition-all duration-500 border ${isDark ? 'border-[#003942]/50' : 'border-gray-100'}`}>
                 {/* Category Badge */}
                 <div className="absolute top-4 left-4 z-10 flex items-center gap-2 px-3 py-1.5 bg-[#003942] text-white text-xs font-medium rounded-full">
                   {item.icon}
@@ -208,7 +208,7 @@ export default function BeforeAfter() {
         >
           <a 
             href="#contact" 
-            className="inline-flex items-center gap-3 px-8 py-4 bg-[#003942] text-white font-medium rounded-full hover:bg-[#004d59] transition-colors shadow-lg"
+            className={`inline-flex items-center gap-3 px-8 py-4 font-medium rounded-full transition-all duration-300 shadow-lg ${isDark ? 'bg-gradient-to-r from-[#f6ff82] to-[#d4e682] text-[#003942] hover:shadow-[#f6ff82]/30 hover:shadow-xl' : 'bg-gradient-to-r from-[#003942] to-[#005f73] text-white hover:shadow-[#003942]/30 hover:shadow-xl'}`}
           >
             <span>Get Your Transformation</span>
             <ArrowRight className="w-5 h-5" />
