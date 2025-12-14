@@ -18,6 +18,7 @@
 import { Check } from 'lucide-react';
 import { motion, useInView } from 'framer-motion';
 import { useRef, useState, useEffect } from 'react';
+import { useTheme } from '@/context/ThemeContext';
 
 // Pricing tiers with INR prices
 const plans = [
@@ -105,8 +106,10 @@ const CountUp = ({ target }: { target: string }) => {
 };
 
 export default function Pricing() {
+  const { isDark } = useTheme();
+  
   return (
-    <section className="py-24 bg-white">
+    <section className={`py-24 ${isDark ? 'bg-[#001a1f]' : 'bg-white'}`}>
       <div className="container mx-auto px-6 md:px-12 lg:px-20">
         {/* Header */}
         <div className="text-center mb-16">
@@ -123,15 +126,15 @@ export default function Pricing() {
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
-            className="text-4xl md:text-5xl font-bold text-[#003942] mb-4"
+            className={`text-4xl md:text-5xl font-bold mb-4 ${isDark ? 'text-white' : 'text-[#003942]'}`}
           >
-            Transparent <span className="text-[#003942]">Pricing</span>
+            Transparent <span className={`${isDark ? 'text-transparent bg-clip-text bg-gradient-to-r from-[#f6ff82] to-[#d4e682]' : 'text-transparent bg-clip-text bg-gradient-to-r from-[#003942] to-[#005f73]'}`}>Pricing</span>
           </motion.h2>
           <motion.p 
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
-            className="text-gray-600 text-lg"
+            className={`text-lg ${isDark ? 'text-gray-400' : 'text-gray-600'}`}
           >
             Honest pricing for every stage of growth. All prices in INR.
           </motion.p>
@@ -150,7 +153,9 @@ export default function Pricing() {
               className={`p-6 rounded-2xl border-2 transition-all duration-300 flex flex-col ${
                 plan.highlight 
                   ? 'bg-[#003942] border-[#f6ff82] text-white shadow-2xl shadow-[#003942]/30 lg:scale-105' 
-                  : 'bg-white border-gray-200 text-[#003942] hover:shadow-xl hover:border-[#003942]'
+                  : isDark 
+                    ? 'bg-[#002428] border-[#003942] text-white hover:shadow-xl hover:border-[#f6ff82]/50'
+                    : 'bg-white border-gray-200 text-[#003942] hover:shadow-xl hover:border-[#003942]'
               }`}
             >
               {plan.highlight && (

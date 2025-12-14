@@ -60,7 +60,7 @@ export default function Services() {
             viewport={{ once: true }}
             className={`text-4xl md:text-5xl font-bold mb-6 ${isDark ? 'text-white' : 'text-[#003942]'}`}
           >
-            Our Expertise in <span className={`underline decoration-[#f6ff82] decoration-4 underline-offset-4 ${isDark ? 'text-white' : 'text-[#003942]'}`}>Real Estate Tech</span>
+            Our Expertise in <span className={`${isDark ? 'text-transparent bg-clip-text bg-gradient-to-r from-[#f6ff82] to-[#d4e682]' : 'text-transparent bg-clip-text bg-gradient-to-r from-[#003942] to-[#005f73]'}`}>Real Estate Tech</span>
           </motion.h2>
           <motion.p 
             initial={{ opacity: 0, y: 20 }}

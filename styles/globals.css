@@ -5,6 +5,7 @@
   --foreground: #003942;
   --primary: #003942;
   --accent: #f6ff82;
+  --section-alt: #f9fafb;
 }
 
 .dark {
@@ -12,6 +13,7 @@
   --foreground: #ffffff;
   --primary: #f6ff82;
   --accent: #003942;
+  --section-alt: #002428;
 }
 
 @theme inline {
@@ -19,6 +21,11 @@
   --color-foreground: var(--foreground);
   --font-sans: var(--font-geist-sans);
   --font-mono: var(--font-geist-mono);
+}
+
+/* Smooth scroll */
+html {
+  scroll-behavior: smooth;
 }
 
 body {
@@ -31,6 +38,47 @@ body {
 /* Smooth transitions for theme switching */
 * {
   transition-property: background-color, border-color, color;
-  transition-duration: 0.15s;
-  transition-timing-function: ease;
+  transition-duration: 0.2s;
+  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* Disable transitions on framer motion animations */
+.motion-reduce * {
+  transition: none !important;
+}
+
+/* Premium gradient text utilities */
+.gradient-text-light {
+  background: linear-gradient(135deg, #003942 0%, #005f73 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.gradient-text-dark {
+  background: linear-gradient(135deg, #f6ff82 0%, #d4e682 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+/* Premium button gradients */
+.btn-gradient-primary {
+  background: linear-gradient(135deg, #003942 0%, #004d59 100%);
+}
+
+.btn-gradient-accent {
+  background: linear-gradient(135deg, #f6ff82 0%, #e8f074 100%);
+}
+
+/* Reduce motion for accessibility */
+@media (prefers-reduced-motion: reduce) {
+  * {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+  html {
+    scroll-behavior: auto;
+  }
 }

@@ -122,7 +122,7 @@ export default function CaseStudies() {
             <span className="text-sm font-medium text-[#003942]">Our Work</span>
           </div>
           <h2 className={`text-3xl md:text-4xl lg:text-5xl font-bold mb-3 ${isDark ? 'text-white' : 'text-[#003942]'}`}>
-            Case <span className={`underline decoration-[#f6ff82] decoration-4 underline-offset-4 ${isDark ? 'text-white' : 'text-[#003942]'}`}>Studies</span>
+            Case <span className={`${isDark ? 'text-transparent bg-clip-text bg-gradient-to-r from-[#f6ff82] to-[#d4e682]' : 'text-transparent bg-clip-text bg-gradient-to-r from-[#003942] to-[#005f73]'}`}>Studies</span>
           </h2>
           <p className={`max-w-lg ${isDark ? 'text-gray-400' : 'text-gray-600'}`}>
             See how we&apos;ve helped leading real estate agencies transform their digital presence.

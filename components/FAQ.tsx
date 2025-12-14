@@ -74,7 +74,7 @@ export default function FAQ() {
             <span className="text-sm font-medium text-[#003942]">FAQ</span>
           </div>
           <h2 className={`text-4xl md:text-5xl font-bold ${isDark ? 'text-white' : 'text-[#003942]'} mb-4`}>
-            Questions <span className={`${isDark ? 'text-white' : 'text-[#003942]'} underline decoration-[#f6ff82] decoration-4 underline-offset-4`}>Answered</span>
+            Questions <span className={`${isDark ? 'text-transparent bg-clip-text bg-gradient-to-r from-[#f6ff82] to-[#d4e682]' : 'text-transparent bg-clip-text bg-gradient-to-r from-[#003942] to-[#005f73]'}`}>Answered</span>
           </h2>
           <p className={`${isDark ? 'text-gray-400' : 'text-gray-600'} text-lg max-w-2xl mx-auto`}>
             We&apos;re here to help you and solve objections. Find answers to the most common questions below.

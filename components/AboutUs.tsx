@@ -14,10 +14,13 @@
 
 import { motion } from 'framer-motion';
 import { ArrowUpRight } from 'lucide-react';
+import { useTheme } from '@/context/ThemeContext';
 
 export default function AboutUs() {
+  const { isDark } = useTheme();
+  
   return (
-    <section id="about" className="py-24 bg-white overflow-hidden">
+    <section id="about" className={`py-24 ${isDark ? 'bg-[#002428]' : 'bg-white'} overflow-hidden`}>
       <div className="container mx-auto px-6 md:px-12 lg:px-20">
         
         <div className="flex flex-col lg:flex-row items-start gap-16">
@@ -80,15 +83,15 @@ export default function AboutUs() {
             </div>
 
             {/* Main Heading */}
-            <h2 className="text-4xl md:text-5xl font-bold text-[#003942] mb-6 leading-tight">
-              More about us
+            <h2 className={`text-4xl md:text-5xl font-bold mb-6 leading-tight ${isDark ? 'text-white' : 'text-[#003942]'}`}>
+              More <span className={`${isDark ? 'text-transparent bg-clip-text bg-gradient-to-r from-[#f6ff82] to-[#d4e682]' : 'text-transparent bg-clip-text bg-gradient-to-r from-[#003942] to-[#005f73]'}`}>about us</span>
             </h2>
             
             {/* Description Paragraphs */}
-            <p className="text-gray-700 text-lg mb-4 leading-relaxed">
+            <p className={`text-lg mb-4 leading-relaxed ${isDark ? 'text-gray-300' : 'text-gray-700'}`}>
               At WebbHeads, we build functional technologies that help businesses optimize time and deliver exceptional user experiences.
             </p>
-            <p className="text-gray-600 mb-10 leading-relaxed">
+            <p className={`mb-10 leading-relaxed ${isDark ? 'text-gray-400' : 'text-gray-600'}`}>
               By blending creativity, technology, and AI innovation, we craft digital solutions that drive real impact — from smart automation to high-converting websites and user-friendly apps that help brands grow smarter and faster.
             </p>
 
@@ -96,15 +99,15 @@ export default function AboutUs() {
             <div className="flex flex-col md:flex-row gap-10">
               {/* Left: About Text */}
               <div className="md:w-1/2">
-                <h3 className="text-2xl font-bold text-[#003942] mb-4">About</h3>
-                <p className="text-gray-600 leading-relaxed mb-6">
+                <h3 className={`text-2xl font-bold mb-4 ${isDark ? 'text-white' : 'text-[#003942]'}`}>About</h3>
+                <p className={`leading-relaxed mb-6 ${isDark ? 'text-gray-400' : 'text-gray-600'}`}>
                   At WebbHeads, our mission and vision guide everything we build — helping businesses embrace the future with smarter, faster, and more human-centered digital solutions.
                 </p>
                 <a 
                   href="https://djkushal.framer.website/" 
                   target="_blank" 
                   rel="noopener noreferrer"
-                  className="inline-block px-6 py-3 border-2 border-[#003942] text-[#003942] font-medium rounded-full hover:bg-[#003942] hover:text-white transition-all duration-300"
+                  className={`inline-block px-6 py-3 border-2 font-medium rounded-full transition-all duration-300 ${isDark ? 'border-[#f6ff82] text-[#f6ff82] hover:bg-[#f6ff82] hover:text-[#003942]' : 'border-[#003942] text-[#003942] hover:bg-[#003942] hover:text-white'}`}
                 >
                   More About Founder
                 </a>
@@ -116,8 +119,8 @@ export default function AboutUs() {
                 <div className="flex items-start gap-3">
                   <div className="w-3 h-3 rounded-full bg-[#003942] mt-1.5 flex-shrink-0" />
                   <div>
-                    <h4 className="font-bold text-[#003942] mb-1">Vision</h4>
-                    <p className="text-gray-600 text-sm">Transforming Businesses Digitally.</p>
+                    <h4 className={`font-bold mb-1 ${isDark ? 'text-white' : 'text-[#003942]'}`}>Vision</h4>
+                    <p className={`text-sm ${isDark ? 'text-gray-400' : 'text-gray-600'}`}>Transforming Businesses Digitally.</p>
                   </div>
                 </div>
 
@@ -125,8 +128,8 @@ export default function AboutUs() {
                 <div className="flex items-start gap-3">
                   <div className="w-3 h-3 rounded-full bg-[#f6ff82] border-2 border-[#003942] mt-1.5 flex-shrink-0" />
                   <div>
-                    <h4 className="font-bold text-[#003942] mb-1">Mission</h4>
-                    <p className="text-gray-600 text-sm">Helping brands build professional, high-performing digital identities through technology and automation.</p>
+                    <h4 className={`font-bold mb-1 ${isDark ? 'text-white' : 'text-[#003942]'}`}>Mission</h4>
+                    <p className={`text-sm ${isDark ? 'text-gray-400' : 'text-gray-600'}`}>Helping brands build professional, high-performing digital identities through technology and automation.</p>
                   </div>
                 </div>
 
@@ -134,8 +137,8 @@ export default function AboutUs() {
                 <div className="flex items-start gap-3">
                   <div className="w-3 h-3 rounded-full bg-[#f6ff82] mt-1.5 flex-shrink-0" />
                   <div>
-                    <h4 className="font-bold text-[#003942] mb-1">Values</h4>
-                    <p className="text-gray-600 text-sm">Creativity, innovation, and integrity guide our every move — ensuring each project is built with purpose, precision, and a passion for progress.</p>
+                    <h4 className={`font-bold mb-1 ${isDark ? 'text-white' : 'text-[#003942]'}`}>Values</h4>
+                    <p className={`text-sm ${isDark ? 'text-gray-400' : 'text-gray-600'}`}>Creativity, innovation, and integrity guide our every move — ensuring each project is built with purpose, precision, and a passion for progress.</p>
                   </div>
                 </div>
               </div>

@@ -1,3 +1,5 @@
+"use client";
+
 import Navbar from '@/components/Navbar';
 import Hero from '@/components/Hero';
 import Education from '@/components/Education';
@@ -12,10 +14,13 @@ import Testimonials from '@/components/Testimonials';
 import FAQ from '@/components/FAQ';
 import ContactUs from '@/components/ContactUs';
 import Footer from '@/components/Footer';
+import { useTheme } from '@/context/ThemeContext';
 
 export default function Home() {
+  const { isDark } = useTheme();
+  
   return (
-    <main className="min-h-screen bg-white">
+    <main className={`min-h-screen transition-colors duration-300 ${isDark ? 'bg-[#001a1f]' : 'bg-white'}`}>
       <Navbar />
       <Hero />
       <Education />

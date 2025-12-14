@@ -14,6 +14,7 @@
 
 import { Building2, Home, Key, Landmark, ShieldCheck } from 'lucide-react';
 import { motion } from 'framer-motion';
+import { useTheme } from '@/context/ThemeContext';
 
 // Logo data - duplicated for infinite loop effect
 const logos = [
@@ -31,10 +32,12 @@ const logos = [
 ];
 
 export default function AuthorityStrip() {
+  const { isDark } = useTheme();
+  
   return (
-    <section className="py-12 bg-white border-b border-gray-100 overflow-hidden">
+    <section className={`py-12 border-b overflow-hidden ${isDark ? 'bg-[#002428] border-[#003942]' : 'bg-white border-gray-100'}`}>
       <div className="container mx-auto px-6">
-        <p className="text-center text-gray-500 text-xs font-bold uppercase tracking-[0.2em] mb-10">Trusted by Industry Leaders</p>
+        <p className={`text-center text-xs font-bold uppercase tracking-[0.2em] mb-10 ${isDark ? 'text-gray-400' : 'text-gray-500'}`}>Trusted by Industry Leaders</p>
         
         <div className="relative flex overflow-hidden mask-gradient">
           <motion.div 
@@ -48,8 +51,8 @@ export default function AuthorityStrip() {
           >
             {logos.map((logo, index) => (
               <div key={index} className="flex items-center gap-3 group min-w-max">
-                <logo.Icon className="w-8 h-8 text-[#003942]" strokeWidth={1.5} />
-                <span className="text-xl font-bold text-[#003942]">{logo.name}</span>
+                <logo.Icon className={`w-8 h-8 ${isDark ? 'text-[#f6ff82]' : 'text-[#003942]'}`} strokeWidth={1.5} />
+                <span className={`text-xl font-bold ${isDark ? 'text-white' : 'text-[#003942]'}`}>{logo.name}</span>
               </div>
             ))}
           </motion.div>

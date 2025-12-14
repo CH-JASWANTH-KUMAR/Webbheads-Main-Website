@@ -88,7 +88,7 @@ export default function Education() {
             {/* Heading */}
             <h2 className={`text-3xl md:text-4xl lg:text-5xl font-bold leading-tight ${isDark ? 'text-white' : 'text-[#003942]'}`}>
               How Technology is
-              <span className={`underline decoration-[#f6ff82] decoration-4 underline-offset-4 ${isDark ? 'text-white' : 'text-[#003942]'}`}> Transforming</span>
+              <span className={`${isDark ? 'text-transparent bg-clip-text bg-gradient-to-r from-[#f6ff82] to-[#d4e682]' : 'text-transparent bg-clip-text bg-gradient-to-r from-[#003942] to-[#005f73]'}`}> Transforming</span>
               <br />
               Real Estate
             </h2>

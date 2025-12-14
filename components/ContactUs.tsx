@@ -15,10 +15,13 @@
 
 import { motion } from 'framer-motion';
 import { ArrowRight } from 'lucide-react';
+import { useTheme } from '@/context/ThemeContext';
 
 export default function ContactUs() {
+  const { isDark } = useTheme();
+  
   return (
-    <section className="py-24 bg-gray-50">
+    <section className={`py-24 ${isDark ? 'bg-[#001a1f]' : 'bg-gray-50'}`}>
       <div className="container mx-auto px-6 md:px-12 lg:px-20">
         <div className="bg-[#003942] rounded-[3rem] overflow-hidden shadow-2xl relative">
           {/* Background Accents */}

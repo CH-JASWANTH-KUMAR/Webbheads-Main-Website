@@ -15,6 +15,7 @@
 import { motion, useScroll, useTransform, AnimatePresence } from "framer-motion";
 import { MessageSquare, Search, PenTool, Code2, Rocket, BarChart, X, CheckCircle2 } from "lucide-react";
 import { useRef, useState } from "react";
+import { useTheme } from '@/context/ThemeContext';
 
 // Process steps with detailed information for popups
 const steps = [
@@ -131,6 +132,7 @@ const steps = [
 export default function Process() {
   const sectionRef = useRef<HTMLDivElement>(null);
   const [selectedStep, setSelectedStep] = useState<number | null>(null);
+  const { isDark } = useTheme();
 
   // Scroll-based animation - synced with scroll position
   const { scrollYProgress } = useScroll({
@@ -143,7 +145,7 @@ export default function Process() {
 
   return (
     <>
-      <section className="py-24 bg-gradient-to-b from-gray-50 to-white" ref={sectionRef}>
+      <section className={`py-24 ${isDark ? 'bg-gradient-to-b from-[#002428] to-[#001a1f]' : 'bg-gradient-to-b from-gray-50 to-white'}`} ref={sectionRef}>
         <div className="container mx-auto px-6 md:px-12 lg:px-20">
           {/* Section Header */}
           <motion.div
@@ -155,10 +157,10 @@ export default function Process() {
             <div className="inline-flex items-center gap-2 px-4 py-2 bg-[#f6ff82] rounded-full mb-6"><span className="w-2 h-2 bg-[#003942] rounded-full" />
               <span className="text-sm font-medium text-[#003942]">How We Work</span>
             </div>
-            <h2 className="text-4xl md:text-5xl font-bold text-[#003942] mb-4">
-              Our <span className="text-[#003942] underline decoration-[#f6ff82] decoration-4 underline-offset-4">Process</span>
+            <h2 className={`text-4xl md:text-5xl font-bold mb-4 ${isDark ? 'text-white' : 'text-[#003942]'}`}>
+              Our <span className={`${isDark ? 'text-transparent bg-clip-text bg-gradient-to-r from-[#f6ff82] to-[#d4e682]' : 'text-transparent bg-clip-text bg-gradient-to-r from-[#003942] to-[#005f73]'}`}>Process</span>
             </h2>
-            <p className="text-gray-600 text-lg max-w-2xl mx-auto">
+            <p className={`text-lg max-w-2xl mx-auto ${isDark ? 'text-gray-400' : 'text-gray-600'}`}>
               A proven 6-step workflow designed to deliver exceptional results. Click on any stage to learn more.
             </p>
           </motion.div>

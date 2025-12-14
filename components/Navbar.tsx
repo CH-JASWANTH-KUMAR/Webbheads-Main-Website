@@ -63,7 +63,7 @@ export default function Navbar() {
               ? 'bg-[#002a33]/80 border-[#003942]/50' 
               : 'bg-white/70 border-white/50'
             }
-            backdrop-blur-3xl
+            backdrop-blur-5xl
             rounded-full
             border
             shadow-[0_8px_32px_rgba(0,0,0,0.08)]
