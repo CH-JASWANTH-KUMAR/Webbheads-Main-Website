@@ -3,7 +3,7 @@
 import Navbar from '@/components/Navbar';
 import Hero from '@/components/Hero';
 import Education from '@/components/Education';
-import AuthorityStrip from '@/components/AuthorityStrip';
+// import AuthorityStrip from '@/components/AuthorityStrip'; // Commented out temporarily
 import Process from '@/components/Process';
 import CaseStudies from '@/components/CaseStudies';
 import Services from '@/components/Services';
@@ -24,7 +24,7 @@ export default function Home() {
       <Navbar />
       <Hero />
       <Education />
-      <AuthorityStrip />
+      {/* <AuthorityStrip /> */}{/* Commented out temporarily */}
       <section id="process">
         <Process />
       </section>

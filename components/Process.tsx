@@ -284,30 +284,30 @@ export default function Process() {
         </div>
       </section>
 
-      {/* ===== POPUP MODAL ===== */}
+      {/* ===== SLIDE-IN PANEL FROM RIGHT ===== */}
       <AnimatePresence>
         {selectedStep !== null && (
           <motion.div
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            className="fixed inset-0 z-50 flex items-center justify-center p-4"
+            className="fixed inset-0 z-50"
             onClick={() => setSelectedStep(null)}
           >
-            {/* Backdrop */}
-            <div className="absolute inset-0 bg-black/60 backdrop-blur-sm" />
+            {/* Backdrop - semi-transparent without blur */}
+            <div className="absolute inset-0 bg-black/40" />
 
-            {/* Modal Content */}
+            {/* Slide-in Panel from Right */}
             <motion.div
-              initial={{ scale: 0.9, opacity: 0, y: 20 }}
-              animate={{ scale: 1, opacity: 1, y: 0 }}
-              exit={{ scale: 0.9, opacity: 0, y: 20 }}
-              transition={{ type: "spring", damping: 25 }}
+              initial={{ x: "100%", opacity: 0 }}
+              animate={{ x: 0, opacity: 1 }}
+              exit={{ x: "100%", opacity: 0 }}
+              transition={{ type: "spring", damping: 30, stiffness: 300 }}
               onClick={(e) => e.stopPropagation()}
-              className="relative bg-white rounded-3xl shadow-2xl max-w-lg w-full max-h-[85vh] overflow-hidden"
+              className="absolute right-0 top-0 h-full bg-white shadow-2xl w-full max-w-md overflow-hidden flex flex-col"
             >
               {/* Header with gradient */}
-              <div className="bg-gradient-to-br from-[#003942] to-[#004d59] p-6 text-white">
+              <div className="bg-gradient-to-br from-[#003942] to-[#004d59] p-6 text-white flex-shrink-0">
                 <div className="flex items-start justify-between">
                   <div className="flex items-center gap-4">
                     <div className="w-14 h-14 rounded-2xl bg-[#f6ff82]/20 flex items-center justify-center">
@@ -334,8 +334,8 @@ export default function Process() {
                 </div>
               </div>
 
-              {/* Content */}
-              <div className="p-6 overflow-y-auto max-h-[50vh]">
+              {/* Content - scrollable area */}
+              <div className="p-6 overflow-y-auto flex-1">
                 {/* Overview */}
                 <p className="text-gray-600 mb-6 leading-relaxed">
                   {steps[selectedStep].details.overview}
@@ -369,7 +369,7 @@ export default function Process() {
               </div>
 
               {/* Footer */}
-              <div className="p-6 border-t border-gray-100 bg-gray-50">
+              <div className="p-6 border-t border-gray-100 bg-gray-50 flex-shrink-0">
                 <div className="flex items-center justify-between">
                   <button
                     onClick={() => setSelectedStep(selectedStep > 0 ? selectedStep - 1 : steps.length - 1)}
@@ -379,7 +379,7 @@ export default function Process() {
                   </button>
                   <button
                     onClick={() => setSelectedStep(selectedStep < steps.length - 1 ? selectedStep + 1 : 0)}
-                    className="px-4 py-2 text-sm font-medium bg-[#003942] text-white rounded-full hover:bg-[#004d59] transition-colors"
+                    className="px-6 py-2.5 text-sm font-medium bg-[#003942] text-white rounded-full hover:bg-[#004d59] transition-all duration-300 hover:shadow-lg"
                   >
                     Next Stage →
                   </button>

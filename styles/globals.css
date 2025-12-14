@@ -35,9 +35,9 @@ body {
   transition: background-color 0.3s ease, color 0.3s ease;
 }
 
-/* Smooth transitions for theme switching */
-* {
-  transition-property: background-color, border-color, color;
+/* Smooth transitions for theme switching - exclude transform for Framer Motion */
+*:not([style*="transform"]) {
+  transition-property: background-color, border-color, color, opacity;
   transition-duration: 0.2s;
   transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
 }
@@ -69,6 +69,19 @@ body {
 
 .btn-gradient-accent {
   background: linear-gradient(135deg, #f6ff82 0%, #e8f074 100%);
+}
+
+/* Reduce motion for accessibility */
+/* GPU acceleration for smoother animations */
+.gpu-accelerate {
+  transform: translateZ(0);
+  will-change: transform;
+  backface-visibility: hidden;
+}
+
+/* Optimize images */
+img {
+  content-visibility: auto;
 }
 
 /* Reduce motion for accessibility */
