@@ -21,7 +21,7 @@ export default function ContactUs() {
   const { isDark } = useTheme();
   
   return (
-    <section className={`py-24 ${isDark ? 'bg-[#001a1f]' : 'bg-gray-50'}`}>
+    <section className={`py-24 ${isDark ? 'bg-[#001a1f]' : 'bg-white'}`}>
       <div className="container mx-auto px-6 md:px-12 lg:px-20">
         <div className="bg-[#003942] rounded-[3rem] overflow-hidden shadow-2xl relative">
           {/* Background Accents */}
@@ -83,7 +83,7 @@ export default function ContactUs() {
                   <label className="block text-sm font-medium text-gray-700 mb-2">Message</label>
                   <textarea rows={4} className="w-full px-4 py-3 rounded-lg bg-gray-50 border border-gray-200 focus:border-[#f6ff82] focus:ring-1 focus:ring-[#f6ff82] outline-none transition-all" placeholder="Tell us about your project..." />
                 </div>
-                <button className="w-full py-4 bg-[#003942] text-white font-bold rounded-lg hover:bg-[#f6ff82] transition-colors duration-300 flex items-center justify-center gap-2 group">
+                <button className="w-full py-4 bg-gradient-to-r from-[#f6ff82] via-[#e8f074] to-[#d4e066] text-[#003942] font-bold rounded-lg hover:shadow-lg hover:shadow-[#f6ff82]/30 transition-all duration-300 flex items-center justify-center gap-2 group">
                   Send Message
                   <ArrowRight className="group-hover:translate-x-1 transition-transform" size={20} />
                 </button>

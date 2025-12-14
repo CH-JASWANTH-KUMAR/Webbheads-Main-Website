@@ -51,7 +51,7 @@ export default function Services() {
   const { isDark } = useTheme();
   
   return (
-    <section className={`py-24 ${isDark ? 'bg-[#001a1f]' : 'bg-gray-50'}`}>
+    <section className={`py-24 ${isDark ? 'bg-[#001a1f]' : 'bg-white'}`}>
       <div className="container mx-auto px-6 md:px-12 lg:px-20">
         <div className="text-center mb-20">
           <motion.h2 

@@ -60,10 +60,10 @@ export default function Navbar() {
             flex items-center justify-between
             px-5 md:px-8 py-3.5
             ${isDark 
-              ? 'bg-[#002a33]/80 border-[#003942]/50' 
-              : 'bg-white/70 border-white/50'
+              ? 'bg-[#002a33]/70 border-[#003942]/40' 
+              : 'bg-white/50 border-white/40'
             }
-            backdrop-blur-5xl
+            backdrop-blur-xl
             rounded-full
             border
             shadow-[0_8px_32px_rgba(0,0,0,0.08)]
@@ -71,8 +71,8 @@ export default function Navbar() {
             w-full max-w-4xl
             ${isScrolled 
               ? isDark 
-                ? "bg-[#002a33]/95 shadow-[0_8px_40px_rgba(0,0,0,0.25)]" 
-                : "bg-white/85 shadow-[0_8px_40px_rgba(0,0,0,0.12)]" 
+                ? "bg-[#002a33]/85 shadow-[0_8px_40px_rgba(0,0,0,0.25)]" 
+                : "bg-white/70 shadow-[0_8px_40px_rgba(0,0,0,0.12)]" 
               : ""
             }
           `}
@@ -121,11 +121,11 @@ export default function Navbar() {
               rel="noopener noreferrer"
               className={`px-5 py-2.5 text-sm font-semibold rounded-full transition-all duration-300 shadow-lg flex items-center gap-2 ${
                 isDark 
-                  ? 'bg-[#f6ff82] text-[#003942] hover:bg-[#e6ef72] shadow-[#f6ff82]/15' 
-                  : 'bg-[#003942] text-white hover:bg-[#004d59] shadow-[#003942]/15'
+                  ? 'bg-gradient-to-r from-[#f6ff82] via-[#e8f074] to-[#d4e066] text-[#003942] hover:shadow-xl hover:shadow-[#f6ff82]/30' 
+                  : 'bg-gradient-to-r from-[#f6ff82] via-[#e8f074] to-[#d4e066] text-[#003942] hover:shadow-xl hover:shadow-[#f6ff82]/30'
               }`}
             >
-              <span className={`w-2 h-2 rounded-full animate-pulse ${isDark ? 'bg-[#003942]' : 'bg-[#f6ff82]'}`} />
+              <span className={`w-2 h-2 rounded-full animate-pulse ${isDark ? 'bg-[#003942]' : 'bg-[#003942]'}`} />
               Book a Call
             </a>
           </div>
@@ -207,13 +207,9 @@ export default function Navbar() {
                   initial={{ opacity: 0, y: 10 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ delay: 0.25 }}
-                  className={`mt-6 w-full py-4 text-center font-semibold rounded-full flex items-center justify-center gap-2 shadow-lg ${
-                    isDark 
-                      ? 'bg-[#f6ff82] text-[#003942]' 
-                      : 'bg-[#003942] text-white'
-                  }`}
+                  className="mt-6 w-full py-4 text-center font-semibold rounded-full flex items-center justify-center gap-2 shadow-lg bg-gradient-to-r from-[#f6ff82] via-[#e8f074] to-[#d4e066] text-[#003942] hover:shadow-xl hover:shadow-[#f6ff82]/30"
                 >
-                  <span className={`w-2 h-2 rounded-full animate-pulse ${isDark ? 'bg-[#003942]' : 'bg-[#f6ff82]'}`} />
+                  <span className="w-2 h-2 rounded-full animate-pulse bg-[#003942]" />
                   Book a Call
                 </motion.a>
               </div>

@@ -192,10 +192,10 @@ export default function Pricing() {
               
               <button className={`w-full py-3 rounded-xl font-semibold transition-all duration-300 ${
                 plan.highlight 
-                  ? 'bg-[#f6ff82] text-[#003942] hover:bg-[#e8f075]' 
+                  ? 'bg-gradient-to-r from-[#f6ff82] via-[#e8f074] to-[#d4e066] text-[#003942] hover:shadow-lg hover:shadow-[#f6ff82]/30' 
                   : isDark 
                     ? 'bg-gradient-to-r from-[#f6ff82] to-[#d4e682] text-[#003942] hover:shadow-lg hover:shadow-[#f6ff82]/20'
-                    : 'bg-[#003942] text-white hover:bg-[#004d59]'
+                    : 'bg-gradient-to-r from-[#003942] to-[#005f73] text-white hover:shadow-lg hover:shadow-[#003942]/20'
               }`}>
                 Get Started →
               </button>

@@ -145,7 +145,7 @@ export default function Process() {
 
   return (
     <>
-      <section className={`py-24 ${isDark ? 'bg-[#001a1f]' : 'bg-gradient-to-b from-gray-50 to-white'}`} ref={sectionRef}>
+      <section className={`py-24 ${isDark ? 'bg-[#001a1f]' : 'bg-white'}`} ref={sectionRef}>
         <div className="container mx-auto px-6 md:px-12 lg:px-20">
           {/* Section Header */}
           <motion.div
@@ -188,19 +188,22 @@ export default function Process() {
                   onClick={() => setSelectedStep(index)}
                   className="flex flex-col items-center text-center cursor-pointer group transition-all duration-300"
                 >
-                  {/* Step Circle - Animated based on scroll */}
+                  {/* Step Circle - Animated based on scroll with gradient */}
                   <motion.div
-                    className={`w-20 h-20 lg:w-28 lg:h-28 rounded-full flex items-center justify-center border-4 shadow-xl mb-4 relative transition-all duration-300 group-hover:shadow-2xl group-hover:shadow-[#f6ff82]/20 ${isDark ? 'bg-[#002428]' : 'bg-white'}`}
+                    className={`w-20 h-20 lg:w-28 lg:h-28 rounded-full flex items-center justify-center border-4 shadow-xl mb-4 relative transition-all duration-300 group-hover:shadow-2xl group-hover:shadow-[#f6ff82]/20`}
                     style={{
                       borderColor: useTransform(
                         progressValue,
                         [index, index + 0.5],
                         [isDark ? "#003942" : "#E5E7EB", "#f6ff82"]
                       ),
-                      backgroundColor: useTransform(
+                      background: useTransform(
                         progressValue,
                         [index, index + 0.5],
-                        [isDark ? "#002428" : "#FFFFFF", "#f6ff82"]
+                        [
+                          isDark ? "#002428" : "#FFFFFF",
+                          "linear-gradient(135deg, #f6ff82 0%, #d4e682 100%)"
+                        ]
                       ),
                     }}
                   >
@@ -284,108 +287,81 @@ export default function Process() {
         </div>
       </section>
 
-      {/* ===== SLIDE-IN PANEL FROM RIGHT ===== */}
+      {/* ===== COMPACT DETAIL CARD BELOW GRID ===== */}
       <AnimatePresence>
         {selectedStep !== null && (
           <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            className="fixed inset-0 z-50"
-            onClick={() => setSelectedStep(null)}
+            initial={{ opacity: 0, height: 0, marginTop: 0 }}
+            animate={{ opacity: 1, height: "auto", marginTop: 48 }}
+            exit={{ opacity: 0, height: 0, marginTop: 0 }}
+            transition={{ duration: 0.3, ease: "easeOut" }}
+            className="overflow-hidden"
           >
-            {/* Backdrop - semi-transparent without blur */}
-            <div className="absolute inset-0 bg-black/40" />
-
-            {/* Slide-in Panel from Right */}
-            <motion.div
-              initial={{ x: "100%", opacity: 0 }}
-              animate={{ x: 0, opacity: 1 }}
-              exit={{ x: "100%", opacity: 0 }}
-              transition={{ type: "spring", damping: 30, stiffness: 300 }}
-              onClick={(e) => e.stopPropagation()}
-              className="absolute right-0 top-0 h-full bg-white shadow-2xl w-full max-w-md overflow-hidden flex flex-col"
-            >
-              {/* Header with gradient */}
-              <div className="bg-gradient-to-br from-[#003942] to-[#004d59] p-6 text-white flex-shrink-0">
-                <div className="flex items-start justify-between">
-                  <div className="flex items-center gap-4">
-                    <div className="w-14 h-14 rounded-2xl bg-[#f6ff82]/20 flex items-center justify-center">
-                      {(() => {
-                        const StepIcon = steps[selectedStep].icon;
-                        return <StepIcon className="w-7 h-7 text-[#f6ff82]" />;
-                      })()}
+            <div className="container mx-auto px-6 md:px-12 lg:px-20">
+              <motion.div
+                initial={{ y: -20 }}
+                animate={{ y: 0 }}
+                exit={{ y: -20 }}
+                className={`relative rounded-2xl shadow-2xl border overflow-hidden ${isDark ? 'bg-[#002428] border-[#003942]' : 'bg-white border-gray-100'}`}
+              >
+                {/* Header with gradient */}
+                <div className="bg-gradient-to-r from-[#f6ff82] via-[#e8f074] to-[#d4e066] p-6">
+                  <div className="flex items-start justify-between">
+                    <div className="flex items-center gap-4">
+                      <div className="w-12 h-12 rounded-xl bg-[#003942]/20 flex items-center justify-center">
+                        {(() => {
+                          const StepIcon = steps[selectedStep].icon;
+                          return <StepIcon className="w-6 h-6 text-[#003942]" />;
+                        })()}
+                      </div>
+                      <div>
+                        <span className="text-[#003942] text-xs font-medium">
+                          Stage 0{selectedStep + 1}
+                        </span>
+                        <h3 className="text-xl font-bold text-[#003942]">
+                          {steps[selectedStep].details.heading}
+                        </h3>
+                      </div>
                     </div>
-                    <div>
-                      <span className="text-[#f6ff82] text-sm font-medium">
-                        Stage 0{selectedStep + 1}
+                    <button
+                      onClick={() => setSelectedStep(null)}
+                      className="p-1.5 hover:bg-[#003942]/10 rounded-full transition-colors"
+                    >
+                      <X className="w-5 h-5 text-[#003942]" />
+                    </button>
+                  </div>
+                </div>
+
+                {/* Content */}
+                <div className="p-6 grid md:grid-cols-2 gap-6">
+                  {/* Left: Overview */}
+                  <div>
+                    <p className={`mb-4 leading-relaxed ${isDark ? 'text-gray-300' : 'text-gray-700'}`}>
+                      {steps[selectedStep].details.overview}
+                    </p>
+                    <div className="inline-flex items-center gap-2 px-3 py-1.5 bg-[#f6ff82]/20 rounded-full">
+                      <span className="w-1.5 h-1.5 bg-[#f6ff82] rounded-full" />
+                      <span className={`text-xs font-medium ${isDark ? 'text-[#f6ff82]' : 'text-[#003942]'}`}>
+                        Duration: {steps[selectedStep].details.duration}
                       </span>
-                      <h3 className="text-2xl font-bold">
-                        {steps[selectedStep].details.heading}
-                      </h3>
                     </div>
                   </div>
-                  <button
-                    onClick={() => setSelectedStep(null)}
-                    className="p-2 hover:bg-white/10 rounded-full transition-colors"
-                  >
-                    <X className="w-5 h-5" />
-                  </button>
+
+                  {/* Right: Points */}
+                  <div>
+                    <h4 className={`font-bold mb-3 text-sm ${isDark ? 'text-white' : 'text-[#003942]'}`}>What&apos;s Included:</h4>
+                    <ul className="space-y-2">
+                      {steps[selectedStep].details.points.slice(0, 4).map((point, idx) => (
+                        <li key={idx} className="flex items-start gap-2 text-sm">
+                          <CheckCircle2 className="w-4 h-4 text-[#f6ff82] shrink-0 mt-0.5" />
+                          <span className={isDark ? 'text-gray-400' : 'text-gray-600'}>{point}</span>
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
                 </div>
-              </div>
-
-              {/* Content - scrollable area */}
-              <div className="p-6 overflow-y-auto flex-1">
-                {/* Overview */}
-                <p className="text-gray-600 mb-6 leading-relaxed">
-                  {steps[selectedStep].details.overview}
-                </p>
-
-                {/* Duration Badge */}
-                <div className="inline-flex items-center gap-2 px-3 py-1.5 bg-[#f6ff82] rounded-full mb-6"><span className="w-2 h-2 bg-[#003942] rounded-full" />
-                  <span className="text-sm font-medium text-[#003942]">
-                    Duration: {steps[selectedStep].details.duration}
-                  </span>
-                </div>
-
-                {/* What's Included */}
-                <h4 className="font-bold text-[#003942] mb-4">What&apos;s Included:</h4>
-                <ul className="space-y-3">
-                  {steps[selectedStep].details.points.map((point, idx) => (
-                    <motion.li
-                      key={idx}
-                      initial={{ opacity: 0, x: -10 }}
-                      animate={{ opacity: 1, x: 0 }}
-                      transition={{ delay: idx * 0.05 }}
-                      className="flex items-start gap-3"
-                    >
-                      <div className="w-5 h-5 rounded-full bg-[#f6ff82] flex items-center justify-center shrink-0 mt-0.5">
-                        <CheckCircle2 className="w-3.5 h-3.5 text-[#003942]" />
-                      </div>
-                      <span className="text-gray-600 text-sm">{point}</span>
-                    </motion.li>
-                  ))}
-                </ul>
-              </div>
-
-              {/* Footer */}
-              <div className="p-6 border-t border-gray-100 bg-gray-50 flex-shrink-0">
-                <div className="flex items-center justify-between">
-                  <button
-                    onClick={() => setSelectedStep(selectedStep > 0 ? selectedStep - 1 : steps.length - 1)}
-                    className="px-4 py-2 text-sm font-medium text-gray-600 hover:text-[#003942] transition-colors"
-                  >
-                    ← Previous
-                  </button>
-                  <button
-                    onClick={() => setSelectedStep(selectedStep < steps.length - 1 ? selectedStep + 1 : 0)}
-                    className="px-6 py-2.5 text-sm font-medium bg-[#003942] text-white rounded-full hover:bg-[#004d59] transition-all duration-300 hover:shadow-lg"
-                  >
-                    Next Stage →
-                  </button>
-                </div>
-              </div>
-            </motion.div>
+              </motion.div>
+            </div>
           </motion.div>
         )}
       </AnimatePresence>

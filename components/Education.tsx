@@ -65,7 +65,7 @@ export default function Education() {
   const { isDark } = useTheme();
   
   return (
-    <section className={`relative py-20 md:py-28 overflow-hidden ${isDark ? 'bg-[#001a1f]' : 'bg-gradient-to-b from-white to-gray-50'}`}>
+    <section className={`relative py-20 md:py-28 overflow-hidden ${isDark ? 'bg-[#001a1f]' : 'bg-white'}`}>
       <div className="container mx-auto px-6 md:px-12 lg:px-20">
         
         {/* ===== MAIN CONTENT GRID ===== */}

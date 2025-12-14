@@ -114,7 +114,7 @@ export default function Testimonials() {
   const { isDark } = useTheme();
   
   return (
-    <section className={`py-20 ${isDark ? 'bg-[#001a1f]' : 'bg-gray-50'} overflow-hidden`}>
+    <section className={`py-20 ${isDark ? 'bg-[#001a1f]' : 'bg-white'} overflow-hidden`}>
       <div className="container mx-auto px-6 md:px-12 lg:px-20 mb-12">
         {/* Header */}
         <div className="text-center">

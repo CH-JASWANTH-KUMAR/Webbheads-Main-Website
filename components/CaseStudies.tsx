@@ -78,7 +78,7 @@ function CaseStudyCard({ study }: { study: typeof caseStudies[0] }) {
         <img
           src={study.image}
           alt={study.title}
-          className="object-cover w-full h-full transition-transform duration-700 group-hover:scale-110"
+          className="object-cover w-full h-full transition-transform duration-1000 ease-out group-hover:scale-105"
           loading="lazy"
         />
         {/* Gradient Overlay */}
@@ -178,11 +178,6 @@ export default function CaseStudies() {
                 backgroundSize: '24px 24px'
               }} />
             </div>
-
-            {/* Decorative Boxes */}
-            <div className="absolute top-4 right-4 w-14 h-8 border-2 border-[#f6ff82]/30 rounded-lg rotate-6 group-hover:rotate-3 transition-transform duration-500" />
-            <div className="absolute top-8 right-8 w-10 h-6 border-2 border-[#f6ff82]/20 rounded-lg rotate-12 group-hover:rotate-6 transition-transform duration-500" />
-            <div className="absolute bottom-4 left-4 w-12 h-7 border-2 border-[#f6ff82]/30 rounded-lg -rotate-6 group-hover:-rotate-3 transition-transform duration-500" />
 
             {/* Content */}
             <div className="relative z-10 text-center p-4">
