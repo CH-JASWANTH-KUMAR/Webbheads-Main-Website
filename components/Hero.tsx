@@ -141,8 +141,6 @@ export default function Hero() {
           className="relative h-[460px] md:h-[520px] w-full flex items-center justify-center"
         >
           <div className="relative w-full h-full flex items-center justify-center">
-            <div className="absolute inset-6 rounded-[32px] opacity-60 blur-[60px] bg-gradient-to-tr from-[#f6ff82]/18 via-transparent to-transparent -z-10" />
-
             <div className="relative flex items-end justify-center gap-4 md:gap-6">
               {/* Arrow */}
               <motion.div

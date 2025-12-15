@@ -1,11 +1,5 @@
 "use client";
 
-/**
- * FAQ SECTION — WebbHeads theme (2 equal columns, no sidebar) — NO BORDERS
- * Smooth dropdown effect using CSS grid rows (0fr -> 1fr), inspired by ActivityDropdown.
- * This avoids Framer Motion layout animations that can make siblings feel like they animate. [web:67][web:71]
- */
-
 import { useState } from "react";
 import { Plus, Minus } from "lucide-react";
 import { useTheme } from "@/context/ThemeContext";
@@ -83,7 +77,6 @@ export default function FAQ() {
 
     return (
       <div className="w-full">
-        {/* Header */}
         <button
           type="button"
           onClick={() => toggleFAQ(index)}
@@ -120,7 +113,6 @@ export default function FAQ() {
             </div>
           </div>
 
-          {/* Answer (ActivityDropdown-style grid reveal) [web:67][web:71] */}
           <div
             className={`
               grid
@@ -151,14 +143,11 @@ export default function FAQ() {
       <div className="container mx-auto px-6 md:px-12 lg:px-20 relative z-10">
         {/* Header */}
         <div className="text-center mb-16">
+          {/* Pill like "Our Work" (simple bg, no gradient-border). [web:234] */}
           <div
             className={`
-              inline-flex items-center gap-2 px-4 py-2 rounded-full mb-6 text-sm font-medium backdrop-blur
-              border border-transparent bg-origin-border
-              ${isDark ? "text-white/75" : "text-slate-700"}
-              [background-image:linear-gradient(${
-                isDark ? "#05060A" : "#ffffff"
-              },${isDark ? "#05060A" : "#ffffff"}),linear-gradient(90deg,#f6ff82,#003942)]
+              inline-flex items-center gap-2 px-4 py-2 rounded-full mb-6 text-sm font-medium
+              ${isDark ? "bg-white/5 text-white/75" : "bg-slate-100 text-slate-700"}
             `}
           >
             <span className="w-2 h-2 bg-[#f6ff82] rounded-full" />
@@ -177,7 +166,6 @@ export default function FAQ() {
           </p>
         </div>
 
-        {/* Two equal columns */}
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
           <div className="space-y-4">
             {leftFaqs.map((faq, colIdx) => (

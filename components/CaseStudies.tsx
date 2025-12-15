@@ -118,17 +118,17 @@ const imageScaleTransition = {
 
 const CARD_SHELL =
   "group relative block overflow-hidden rounded-2xl shadow-[0_18px_45px_rgba(0,0,0,0.18)] will-change-transform";
-const CARD_ASPECT = "relative aspect-[3/4] overflow-hidden";
+
+// LANDSCAPE ratio (4:3) instead of portrait (3:4). [web:202]
+const CARD_ASPECT = "relative aspect-[4/3] overflow-hidden";
+
 const OVERLAY_WASH = "pointer-events-none absolute inset-0 bg-black/18";
 const OVERLAY_BOTTOM =
   "pointer-events-none absolute inset-0 bg-gradient-to-t from-black/70 via-black/25 to-transparent";
 
-// removed ICON_PILL (top-right circle icon)
-
 const CHIP =
   "inline-flex items-center rounded-full px-3 py-1 text-[11px] font-medium bg-black/35 text-white";
 
-// Bigger Read more pill (padding + font + icon size). [web:84]
 const CTA =
   "inline-flex items-center gap-2 rounded-full px-5 py-2.5 text-sm font-semibold bg-black/35 text-white transition-colors duration-300 hover:bg-black/45";
 
@@ -167,8 +167,6 @@ function CaseStudyCard({
 
         <div className={OVERLAY_WASH} />
         <div className={OVERLAY_BOTTOM} />
-
-        {/* Removed top-right circle icon */}
 
         <div className="absolute left-4 top-4 right-4">
           <div className={CHIP}>{study.category}</div>
@@ -272,7 +270,7 @@ export default function CaseStudies() {
             className={`
               relative overflow-hidden rounded-2xl cursor-pointer
               shadow-[0_18px_45px_rgba(0,0,0,0.18)]
-              aspect-[3/4] flex items-center justify-center
+              aspect-[4/3] flex items-center justify-center
               ${isDark ? "bg-white/5" : "bg-white"}
             `}
           >
