@@ -23,7 +23,7 @@
   --font-mono: var(--font-geist-mono);
 }
 
-/* Smooth scroll */
+/* Smooth scroll (ok, but reduce-motion disables below) */
 html {
   scroll-behavior: smooth;
 }
@@ -35,31 +35,22 @@ body {
   transition: background-color 0.3s ease, color 0.3s ease;
 }
 
-/* Smooth transitions for theme switching - exclude transform for Framer Motion */
-*:not([style*="transform"]) {
-  transition-property: background-color, border-color, color, opacity;
-  transition-duration: 0.2s;
-  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
-}
-
-/* Disable transitions on framer motion animations */
-.motion-reduce * {
-  transition: none !important;
-}
+/* Remove the global "transition everything" rule.
+   It can cause extra repaints/jank in Firefox with animation-heavy UIs. */
 
 /* Premium gradient text utilities */
 .gradient-text-light {
   background: linear-gradient(135deg, #003942 0%, #005f73 100%);
   -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
   background-clip: text;
+  -webkit-text-fill-color: transparent;
 }
 
 .gradient-text-dark {
   background: linear-gradient(135deg, #f6ff82 0%, #d4e682 100%);
   -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
   background-clip: text;
+  -webkit-text-fill-color: transparent;
 }
 
 /* Premium button gradients */
@@ -71,17 +62,32 @@ body {
   background: linear-gradient(135deg, #f6ff82 0%, #e8f074 100%);
 }
 
-/* Reduce motion for accessibility */
-/* GPU acceleration for smoother animations */
+/* GPU acceleration helper (use on elements that animate a lot) */
 .gpu-accelerate {
   transform: translateZ(0);
   will-change: transform;
   backface-visibility: hidden;
 }
 
-/* Optimize images */
+/* Safer image defaults (avoid global content-visibility on img) */
 img {
-  content-visibility: auto;
+  display: block;
+  max-width: 100%;
+  height: auto;
+}
+
+/* If you use .backdrop-blur anywhere, provide a no-blur fallback when unsupported */
+@supports not ((-webkit-backdrop-filter: blur(1px)) or (backdrop-filter: blur(1px))) {
+  .backdrop-blur,
+  .backdrop-blur-sm,
+  .backdrop-blur-md,
+  .backdrop-blur-lg,
+  .backdrop-blur-xl,
+  .backdrop-blur-2xl,
+  .backdrop-blur-3xl {
+    backdrop-filter: none !important;
+    -webkit-backdrop-filter: none !important;
+  }
 }
 
 /* Reduce motion for accessibility */

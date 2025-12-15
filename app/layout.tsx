@@ -15,7 +15,8 @@ const geistMono = Geist_Mono({
 
 export const metadata: Metadata = {
   title: "WebbHeads | Premium Real Estate Digital Solutions",
-  description: "High-end websites, custom apps, and intelligent automation systems for property developers and luxury agencies.",
+  description:
+    "High-end websites, custom apps, and intelligent automation systems for property developers and luxury agencies.",
 };
 
 export default function RootLayout({
@@ -25,12 +26,8 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" suppressHydrationWarning>
-      <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased bg-white dark:bg-[#001a1f] transition-colors duration-300`}
-      >
-        <ThemeProvider>
-          {children}
-        </ThemeProvider>
+      <body className={`${geistSans.variable} ${geistMono.variable} antialiased`}>
+        <ThemeProvider>{children}</ThemeProvider>
       </body>
     </html>
   );

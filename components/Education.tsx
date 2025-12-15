@@ -1,55 +1,15 @@
 "use client";
 
-/**
- * ==========================================================================
- * EDUCATION SECTION - Why Tech Matters in Real Estate
- * ==========================================================================
- * Layout:
- * - Left: Text heading + YouTube video embed
- * - Right: Bullet points (Why Leading Agencies Choose Us)
- * - Bottom: Scrolling marquee effect
- * ==========================================================================
- */
-
 import { motion } from "framer-motion";
-import { Zap, Shield, Palette, Bot, Building2, Rocket } from "lucide-react";
+import { Check } from "lucide-react";
 import { useTheme } from "@/context/ThemeContext";
 
-// Bullet points data
-const bulletPoints = [
-  {
-    icon: Zap,
-    title: "Lightning Speed",
-    description: "Optimized performance ensuring your digital platforms load instantly.",
-  },
-  {
-    icon: Shield,
-    title: "Unmatched Reliability",
-    description: "Secure, scalable infrastructure you can trust with your business data.",
-  },
-  {
-    icon: Palette,
-    title: "Premium UI/UX",
-    description: "Award-winning designs that reflect the luxury of your properties.",
-  },
-  {
-    icon: Bot,
-    title: "Automation Expertise",
-    description: "Cutting-edge AI solutions to automate repetitive tasks and lead nurturing.",
-  },
-  {
-    icon: Building2,
-    title: "Real Estate DNA",
-    description: "Deep industry knowledge baked into every solution we build.",
-  },
-  {
-    icon: Rocket,
-    title: "End-to-End Service",
-    description: "From concept to launch and beyond, we handle everything.",
-  },
+const checklist = [
+  "Tailored solutions for your business needs",
+  "Engaging visuals that tell your brand story",
+  "Proven strategies for maximum impact",
 ];
 
-// Scrolling marquee items
 const marqueeItems = [
   "Premium Websites",
   "AI Automation",
@@ -63,45 +23,37 @@ const marqueeItems = [
 
 export default function Education() {
   const { isDark } = useTheme();
-  
+
+  // IMPORTANT: make section transparent so global blobs show through. [web:60]
+  const sectionBg = "bg-transparent";
+
+  const heading = isDark ? "text-white" : "text-slate-900";
+  const sub = isDark ? "text-white/55" : "text-slate-600";
+
+  const cardClass = isDark
+    ? "bg-white/5"
+    : "bg-white shadow-[0_18px_50px_rgba(0,0,0,0.12)]";
+
   return (
-    <section className={`relative py-20 md:py-28 overflow-hidden ${isDark ? 'bg-[#001a1f]' : 'bg-white'}`}>
+    <section className={`relative py-20 md:py-28 overflow-hidden ${sectionBg}`}>
       <div className="container mx-auto px-6 md:px-12 lg:px-20">
-        
-        {/* ===== MAIN CONTENT GRID ===== */}
-        <div className="grid lg:grid-cols-2 gap-12 lg:gap-16 items-start">
-          
-          {/* ===== LEFT SIDE - Video Section ===== */}
-          <motion.div
-            initial={{ opacity: 0, x: -30 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.6 }}
-            className="space-y-6"
-          >
-            {/* Section Label */}
-            <div className="inline-flex items-center gap-2 px-4 py-2 bg-[#f6ff82] rounded-full shadow-lg shadow-[#f6ff82]/30">
-              <span className="w-2 h-2 bg-[#003942] rounded-full" />
-              <span className="text-sm font-medium text-[#003942]">Education</span>
-            </div>
-
-            {/* Heading */}
-            <h2 className={`text-3xl md:text-4xl lg:text-5xl font-bold leading-tight ${isDark ? 'text-white' : 'text-[#003942]'}`}>
-              How Technology is
-              <span className={`${isDark ? 'text-transparent bg-clip-text bg-gradient-to-r from-[#f6ff82] to-[#d4e682]' : 'text-transparent bg-clip-text bg-gradient-to-r from-[#003942] to-[#005f73]'}`}> Transforming</span>
-              <br />
-              Real Estate
-            </h2>
-
-            {/* Subtext */}
-            <p className={`text-lg max-w-lg ${isDark ? 'text-gray-400' : 'text-[#003942]/60'}`}>
-              Discover why top agencies are embracing digital solutions and how you can stay ahead of the competition.
-            </p>
-
-            {/* YouTube Video Embed Placeholder */}
-            <div className="relative mt-8">
-              <div className="relative aspect-video w-full rounded-2xl overflow-hidden bg-[#003942] shadow-2xl shadow-[#003942]/20">
-                {/* Replace this iframe src with your actual YouTube video */}
+        {/* Card */}
+        <motion.div
+          initial={{ opacity: 0, y: 16 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.35, ease: "easeOut" }}
+          className={`rounded-3xl overflow-hidden ${cardClass} mb-10 md:mb-14`}
+        >
+          {/* Smaller gap + custom column widths */}
+          <div className="grid lg:grid-cols-[1.25fr_1fr] items-stretch gap-4 lg:gap-6">
+            {/* LEFT: Video */}
+            <div className="p-8 md:p-10 lg:py-12 lg:ps-12 lg:pe-4">
+              <div
+                className={`
+                  relative w-full h-full rounded-3xl overflow-hidden
+                  ${isDark ? "bg-black/20" : "bg-slate-100"}
+                `}
+              >
                 <iframe
                   className="absolute inset-0 w-full h-full"
                   src="https://www.youtube.com/embed/fH0No8qr9D0?rel=0"
@@ -110,106 +62,82 @@ export default function Education() {
                   allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
                   allowFullScreen
                 />
-                
-                {/* Decorative border */}
-                <div className="absolute inset-0 rounded-2xl ring-1 ring-inset ring-white/10 pointer-events-none" />
+                <div className="absolute inset-0 rounded-3xl ring-1 ring-inset ring-white/10 pointer-events-none" />
               </div>
-
-              {/* Decorative elements */}
-              <div className="absolute -bottom-4 -right-4 w-24 h-24 bg-[#f6ff82]/20 rounded-full blur-2xl" />
-              <div className="absolute -top-4 -left-4 w-16 h-16 bg-[#f6ff82]/10 rounded-full blur-xl" />
             </div>
-          </motion.div>
 
-          {/* ===== RIGHT SIDE - Bullet Points ===== */}
-          <motion.div
-            initial={{ opacity: 0, x: 30 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.6, delay: 0.2 }}
-            className="space-y-6"
-          >
-            {/* Section Title */}
-            <div className="mb-8">
-              <h3 className={`text-2xl md:text-3xl font-bold mb-3 ${isDark ? 'text-white' : 'text-[#003942]'}`}>
-                Why Leading Agencies Choose Us
-              </h3>
-              <p className={isDark ? 'text-gray-400' : 'text-[#003942]/60'}>
-                We combine technical excellence with luxury aesthetics to deliver results that matter.
+            {/* RIGHT: Text (left aligned) */}
+            <div className="p-8 md:p-10 lg:py-12 lg:ps-4 lg:pe-12 flex flex-col items-start text-left">
+              <h2 className={`text-3xl md:text-4xl font-bold leading-tight ${heading}`}>
+                Experience
+                <br />
+                <span className="text-[#f6ff82]">Innovation</span>, See the
+                <br />
+                Impact
+              </h2>
+
+              <p className={`mt-4 text-lg ${sub} max-w-xl`}>
+                Discover why top agencies are embracing digital solutions and how you can stay ahead of
+                the competition.
               </p>
-            </div>
 
-            {/* Bullet Points Grid */}
-            <div className="grid gap-5">
-              {bulletPoints.map((point, index) => (
-                <motion.div
-                  key={point.title}
-                  initial={{ opacity: 0, y: 20 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true }}
-                  transition={{ duration: 0.4, delay: 0.1 * index }}
-                  className={`group flex items-start gap-4 p-4 rounded-xl transition-all duration-300 ${isDark ? 'bg-[#002428] hover:bg-[#003942]/50' : 'hover:bg-white'} hover:shadow-lg`}
-                >
-                  {/* Icon */}
-                  <div className="shrink-0 w-12 h-12 rounded-xl bg-[#f6ff82] flex items-center justify-center group-hover:scale-110 transition-transform duration-300 shadow-lg shadow-[#f6ff82]/30">
-                    <point.icon className="w-6 h-6 text-[#003942]" />
-                  </div>
+              <div className="mt-8 space-y-5 w-full max-w-xl">
+                {checklist.map((text) => (
+                  <div key={text} className="flex items-center gap-4 justify-start">
+                    <div
+                      className={`
+                        h-10 w-10 shrink-0 rounded-full flex items-center justify-center
+                        ${isDark ? "bg-white/10 text-white" : "bg-slate-900 text-white"}
+                      `}
+                    >
+                      <Check className="h-4 w-4" />
+                    </div>
 
-                  {/* Content */}
-                  <div>
-                    <h4 className={`font-semibold mb-1 group-hover:underline group-hover:decoration-[#f6ff82] group-hover:decoration-2 group-hover:underline-offset-4 transition-all ${isDark ? 'text-white' : 'text-[#003942]'}`}>
-                      {point.title}
-                    </h4>
-                    <p className={`text-sm leading-relaxed ${isDark ? 'text-gray-400' : 'text-[#003942]/60'}`}>
-                      {point.description}
+                    <p className={`text-base leading-snug ${isDark ? "text-white/75" : "text-slate-700"}`}>
+                      {text}
                     </p>
                   </div>
-                </motion.div>
-              ))}
-            </div>
-          </motion.div>
-        </div>
-      </div>
-
-      {/* ===== SCROLLING MARQUEE EFFECT ===== */}
-      <div className="mt-20 overflow-hidden">
-        <div className="relative">
-          {/* Gradient fades */}
-          <div className={`absolute left-0 top-0 bottom-0 w-32 z-10 ${isDark ? 'bg-gradient-to-r from-[#001a1f] to-transparent' : 'bg-gradient-to-r from-gray-50 to-transparent'}`} />
-          <div className={`absolute right-0 top-0 bottom-0 w-32 z-10 ${isDark ? 'bg-gradient-to-l from-[#001a1f] to-transparent' : 'bg-gradient-to-l from-gray-50 to-transparent'}`} />
-
-          {/* Scrolling content */}
-          <motion.div
-            className="flex gap-8"
-            animate={{ x: [0, -1920] }}
-            transition={{
-              x: {
-                repeat: Infinity,
-                repeatType: "loop",
-                duration: 30,
-                ease: "linear",
-              },
-            }}
-          >
-            {/* Double the items for seamless loop */}
-            {[...marqueeItems, ...marqueeItems, ...marqueeItems, ...marqueeItems].map((item, index) => (
-              <div
-                key={index}
-                className={`shrink-0 flex items-center gap-4 px-6 py-3 rounded-full border shadow-sm ${isDark ? 'bg-[#002a33] border-[#003942]/50' : 'bg-white border-[#003942]/10'}`}
-              >
-                <span className="w-2 h-2 bg-[#f6ff82] rounded-full" />
-                <span className={`text-sm font-medium whitespace-nowrap ${isDark ? 'text-white' : 'text-[#003942]'}`}>
-                  {item}
-                </span>
+                ))}
               </div>
-            ))}
-          </motion.div>
+            </div>
+          </div>
+        </motion.div>
+
+        {/* Marquee: same width as card */}
+        <div className="w-full overflow-hidden">
+          <div
+            className={`
+              relative
+              [mask-image:linear-gradient(to_right,transparent,black_12%,black_88%,transparent)]
+              [mask-size:100%_100%]
+              [mask-repeat:no-repeat]
+              [-webkit-mask-image:linear-gradient(to_right,transparent,black_12%,black_88%,transparent)]
+              [-webkit-mask-size:100%_100%]
+              [-webkit-mask-repeat:no-repeat]
+            `}
+          >
+            <motion.div
+              className="flex gap-6"
+              animate={{ x: [0, -1600] }}
+              transition={{ x: { repeat: Infinity, repeatType: "loop", duration: 28, ease: "linear" } }}
+            >
+              {[...marqueeItems, ...marqueeItems, ...marqueeItems].map((item, index) => (
+                <div
+                  key={index}
+                  className={`
+                    shrink-0 flex items-center gap-3 px-6 py-3 rounded-full
+                    ${isDark ? "bg-white/5" : "bg-slate-100"}
+                    shadow-none
+                  `}
+                >
+                  <span className="w-2 h-2 bg-[#f6ff82] rounded-full" />
+                  <span className={`text-sm font-medium whitespace-nowrap ${heading}`}>{item}</span>
+                </div>
+              ))}
+            </motion.div>
+          </div>
         </div>
       </div>
-
-      {/* ===== BACKGROUND DECORATIONS ===== */}
-      <div className="absolute top-1/4 right-0 w-96 h-96 bg-[#f6ff82]/5 rounded-full blur-3xl pointer-events-none" />
-      <div className="absolute bottom-0 left-0 w-64 h-64 bg-[#f6ff82]/5 rounded-full blur-3xl pointer-events-none" />
     </section>
   );
 }

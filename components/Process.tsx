@@ -1,370 +1,404 @@
 "use client";
 
-/**
- * ==========================================================================
- * PROCESS SECTION - Our Workflow with Popup Details
- * ==========================================================================
- * Features:
- * - 6-step process with clickable cards
- * - Popup modal with detailed overview for each stage
- * - Scroll-synced loading animation (completes when section hits middle)
- * - Animation reverses when scrolling back up
- * ==========================================================================
- */
+import { AnimatePresence, motion, useScroll, useSpring } from "framer-motion";
+import { CheckCircle2, X } from "lucide-react";
+import React, { useEffect, useMemo, useRef, useState } from "react";
+import { useTheme } from "@/context/ThemeContext";
 
-import { motion, useScroll, useTransform, AnimatePresence } from "framer-motion";
-import { MessageSquare, Search, PenTool, Code2, Rocket, BarChart, X, CheckCircle2 } from "lucide-react";
-import { useRef, useState } from "react";
-import { useTheme } from '@/context/ThemeContext';
+const ACTIVE_YELLOW_ALPHA = 0.75;
+const ACTIVE_YELLOW = `rgba(246,255,130,${ACTIVE_YELLOW_ALPHA})`;
 
-// Process steps with detailed information for popups
 const steps = [
   {
-    icon: MessageSquare,
     title: "Discovery",
     desc: "Understanding your vision",
     details: {
       heading: "Discovery Phase",
-      overview: "We start by deeply understanding your business, goals, target audience, and competitive landscape. This phase sets the foundation for everything we build.",
+      overview:
+        "We start by deeply understanding your business, goals, target audience, and competitive landscape. This phase sets the foundation for everything we build.",
       points: [
         "In-depth consultation call to understand your vision",
         "Analysis of your current digital presence",
         "Competitor research and market positioning",
         "Define target audience and user personas",
         "Document requirements and success metrics",
-        "Set project timeline and milestones"
+        "Set project timeline and milestones",
       ],
-      duration: "1-2 Weeks"
-    }
+      duration: "1-2 Weeks",
+    },
   },
   {
-    icon: Search,
     title: "Strategy",
     desc: "Planning the roadmap",
     details: {
       heading: "Strategy Phase",
-      overview: "Based on our discovery findings, we craft a comprehensive strategy that aligns with your business goals and maximizes ROI.",
+      overview:
+        "Based on our discovery findings, we craft a comprehensive strategy that aligns with your business goals and maximizes ROI.",
       points: [
         "Define technology stack and architecture",
         "Create detailed project roadmap",
         "Plan content strategy and SEO approach",
         "Design user journey and conversion funnels",
         "Establish KPIs and measurement framework",
-        "Present strategy for approval"
+        "Present strategy for approval",
       ],
-      duration: "1 Week"
-    }
+      duration: "1 Week",
+    },
   },
   {
-    icon: PenTool,
     title: "Design",
     desc: "Crafting the visual identity",
     details: {
       heading: "Design Phase",
-      overview: "Our design team creates stunning, conversion-focused designs that reflect your brand's luxury positioning and resonate with your target audience.",
+      overview:
+        "Our design team creates stunning, conversion-focused designs that reflect your brand's luxury positioning and resonate with your target audience.",
       points: [
         "Mood boards and design direction",
         "Wireframes for all key pages",
         "High-fidelity UI design mockups",
         "Mobile-responsive design variations",
         "Interactive prototypes for user testing",
-        "Design revisions based on feedback"
+        "Design revisions based on feedback",
       ],
-      duration: "2-3 Weeks"
-    }
+      duration: "2-3 Weeks",
+    },
   },
   {
-    icon: Code2,
     title: "Development",
     desc: "Building the solution",
     details: {
       heading: "Development Phase",
-      overview: "Our expert developers bring the designs to life with clean, performant code. We build for speed, scalability, and maintainability.",
+      overview:
+        "Our expert developers bring the designs to life with clean, performant code. We build for speed, scalability, and maintainability.",
       points: [
         "Frontend development with modern frameworks",
         "Backend systems and API integration",
         "CRM and automation setup",
         "Performance optimization",
         "Cross-browser and device testing",
-        "Security implementation and testing"
+        "Security implementation and testing",
       ],
-      duration: "3-4 Weeks"
-    }
+      duration: "3-4 Weeks",
+    },
   },
   {
-    icon: Rocket,
     title: "Launch",
     desc: "Going live to the world",
     details: {
       heading: "Launch Phase",
-      overview: "We handle the entire launch process, ensuring a smooth transition with zero downtime and maximum impact.",
+      overview:
+        "We handle the entire launch process, ensuring a smooth transition with zero downtime and maximum impact.",
       points: [
         "Pre-launch checklist and QA testing",
         "Domain and hosting configuration",
         "SSL certificate and security setup",
         "Analytics and tracking implementation",
         "SEO optimization and submission",
-        "Launch day support and monitoring"
+        "Launch day support and monitoring",
       ],
-      duration: "1 Week"
-    }
+      duration: "1 Week",
+    },
   },
   {
-    icon: BarChart,
     title: "Growth",
     desc: "Scaling and optimization",
     details: {
       heading: "Growth Phase",
-      overview: "Post-launch, we continue to optimize, maintain, and grow your digital presence with ongoing support and data-driven improvements.",
+      overview:
+        "Post-launch, we continue to optimize, maintain, and grow your digital presence with ongoing support and data-driven improvements.",
       points: [
         "Performance monitoring and reporting",
         "A/B testing and conversion optimization",
         "Content updates and maintenance",
         "Feature enhancements and updates",
         "Scaling infrastructure as you grow",
-        "Dedicated support and consultation"
+        "Dedicated support and consultation",
       ],
-      duration: "Ongoing"
-    }
-  }
+      duration: "Ongoing",
+    },
+  },
 ];
 
+function StepCard({
+  index,
+  title,
+  desc,
+  isDark,
+  onClick,
+}: {
+  index: number;
+  title: string;
+  desc: string;
+  isDark: boolean;
+  onClick: (e: React.MouseEvent<HTMLButtonElement>) => void;
+}) {
+  return (
+    <motion.button
+      type="button"
+      onClick={onClick}
+      whileHover={{ y: -6 }}
+      whileTap={{ scale: 0.99 }}
+      transition={{ type: "spring", stiffness: 520, damping: 32, mass: 0.6 }}
+      className={`
+        relative w-full text-left rounded-3xl p-7
+        ${isDark ? "bg-white/5" : "bg-white"}
+        shadow-[0_18px_50px_rgba(0,0,0,0.12)]
+        focus:outline-none
+      `}
+    >
+      <div className="flex items-start justify-between gap-4">
+        <div>
+          <p className={`${isDark ? "text-white/60" : "text-slate-500"} text-xs font-semibold`}>
+            Step {String(index + 1).padStart(2, "0")}
+          </p>
+          <h3 className={`${isDark ? "text-white" : "text-slate-900"} mt-2 text-lg font-semibold`}>
+            {title}
+          </h3>
+          <p className={`${isDark ? "text-white/55" : "text-slate-600"} mt-2 text-sm leading-relaxed`}>
+            {desc}
+          </p>
+        </div>
+
+        <div
+          className={`
+            h-10 w-10 shrink-0 rounded-full flex items-center justify-center text-xs font-bold
+            ${isDark ? "bg-white/10 text-white" : "bg-slate-900 text-white"}
+          `}
+        >
+          {String(index + 1).padStart(2, "0")}
+        </div>
+      </div>
+    </motion.button>
+  );
+}
+
+function ProgressLine({
+  isDark,
+  progress,
+}: {
+  isDark: boolean;
+  progress: any; // MotionValue<number>
+}) {
+  return (
+    <div className="relative mt-10">
+      <div className={`h-1 w-full rounded-full ${isDark ? "bg-white/10" : "bg-slate-200"} overflow-hidden`}>
+        <motion.div
+          className="h-full"
+          style={{
+            scaleX: progress,
+            transformOrigin: "0% 50%",
+            backgroundColor: ACTIVE_YELLOW,
+          }}
+        />
+      </div>
+    </div>
+  );
+}
+
 export default function Process() {
-  const sectionRef = useRef<HTMLDivElement>(null);
-  const [selectedStep, setSelectedStep] = useState<number | null>(null);
   const { isDark } = useTheme();
 
-  // Scroll-based animation - synced with scroll position
+  const [selectedStep, setSelectedStep] = useState<number | null>(null);
+  const [anchorRect, setAnchorRect] = useState<DOMRect | null>(null);
+
+  const sectionRef = useRef<HTMLDivElement | null>(null);
+  const cardsWrapperRef = useRef<HTMLDivElement | null>(null);
+
   const { scrollYProgress } = useScroll({
     target: sectionRef,
-    offset: ["start end", "center center"] // Animation completes when section center hits viewport center
+    offset: ["center end", "end center"],
   });
 
-  // Transform scroll progress to step index (0 to 6)
-  const progressValue = useTransform(scrollYProgress, [0, 1], [0, steps.length]);
+  const progress = useSpring(scrollYProgress, { stiffness: 140, damping: 30, mass: 0.2 });
+
+  const brandGradient = "bg-gradient-to-r from-[#f6ff82] to-[#003942]";
+  const sectionBg = "bg-transparent";
+
+  const heading = isDark ? "text-white" : "text-slate-900";
+  const sub = isDark ? "text-white/55" : "text-slate-600";
+
+  const selected = useMemo(
+    () => (selectedStep === null ? null : steps[selectedStep]),
+    [selectedStep]
+  );
+
+  // Close on ANY click anywhere (capture phase), plus Escape. [web:81]
+  useEffect(() => {
+    if (selectedStep === null) return;
+
+    const onKeyDown = (e: KeyboardEvent) => {
+      if (e.key === "Escape") setSelectedStep(null);
+    };
+
+    const onAnyMouseDownCapture = () => {
+      setSelectedStep(null);
+    };
+
+    document.addEventListener("keydown", onKeyDown);
+    document.addEventListener("mousedown", onAnyMouseDownCapture, true);
+
+    return () => {
+      document.removeEventListener("keydown", onKeyDown);
+      document.removeEventListener("mousedown", onAnyMouseDownCapture, true);
+    };
+  }, [selectedStep]);
+
+  const popupPos = useMemo(() => {
+    if (!anchorRect || !cardsWrapperRef.current) return null;
+
+    const wrapperRect = cardsWrapperRef.current.getBoundingClientRect();
+    const margin = 12;
+    const width = 380;
+
+    const anchorLeft = anchorRect.left - wrapperRect.left;
+    const anchorRight = anchorRect.right - wrapperRect.left;
+    const anchorTop = anchorRect.top - wrapperRect.top;
+
+    const wrapperWidth = wrapperRect.width;
+
+    let left = anchorRight + margin;
+    if (left + width > wrapperWidth - margin) left = anchorLeft - width - margin;
+    left = Math.max(margin, Math.min(left, wrapperWidth - width - margin));
+
+    const top = anchorTop;
+
+    return { left, top, width };
+  }, [anchorRect]);
+
+  const openStep = (idx: number, e: React.MouseEvent<HTMLButtonElement>) => {
+    e.stopPropagation();
+    const rect = e.currentTarget.getBoundingClientRect();
+    setAnchorRect(rect);
+    setSelectedStep(idx);
+  };
 
   return (
     <>
-      <section className={`py-24 ${isDark ? 'bg-[#001a1f]' : 'bg-white'}`} ref={sectionRef}>
+      <section ref={sectionRef} className={`py-24 ${sectionBg}`}>
         <div className="container mx-auto px-6 md:px-12 lg:px-20">
-          {/* Section Header */}
           <motion.div
-            initial={{ opacity: 0, y: 20 }}
+            initial={{ opacity: 0, y: 18 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
-            className="text-center mb-16"
+            transition={{ duration: 0.35, ease: "easeOut" }}
+            className="text-center mb-14"
           >
-            <div className="inline-flex items-center gap-2 px-4 py-2 bg-[#f6ff82] rounded-full mb-6"><span className="w-2 h-2 bg-[#003942] rounded-full" />
-              <span className="text-sm font-medium text-[#003942]">How We Work</span>
+            <div
+              className={`
+                inline-flex items-center gap-2 px-4 py-2 rounded-full mb-6 text-sm font-medium
+                ${isDark ? "bg-white/5 text-white/75" : "bg-slate-100 text-slate-700"}
+              `}
+            >
+              <span className="w-2 h-2 bg-[#f6ff82] rounded-full" />
+              <span>How We Work</span>
             </div>
-            <h2 className={`text-4xl md:text-5xl font-bold mb-4 ${isDark ? 'text-white' : 'text-[#003942]'}`}>
-              Our <span className={`${isDark ? 'text-transparent bg-clip-text bg-gradient-to-r from-[#f6ff82] to-[#d4e682]' : 'text-transparent bg-clip-text bg-gradient-to-r from-[#003942] to-[#005f73]'}`}>Process</span>
+
+            <h2 className={`text-4xl md:text-5xl font-bold mb-4 ${heading}`}>
+              Our <span className={`bg-clip-text text-transparent ${brandGradient}`}>Process</span>
             </h2>
-            <p className={`text-lg max-w-2xl mx-auto ${isDark ? 'text-gray-400' : 'text-gray-600'}`}>
-              A proven 6-step workflow designed to deliver exceptional results. Click on any stage to learn more.
+
+            <p className={`text-lg max-w-2xl mx-auto ${sub}`}>
+              A proven 6-step workflow designed to deliver exceptional results. Tap any card to learn more.
             </p>
           </motion.div>
 
-          {/* Process Steps */}
-          <div className="relative">
-            {/* Horizontal Progress Line (Desktop) */}
-            <div className={`absolute top-[3.5rem] left-0 w-full h-1 hidden lg:block rounded-full overflow-hidden ${isDark ? 'bg-[#003942]' : 'bg-gray-200'}`}>
-              <motion.div
-                style={{ scaleX: scrollYProgress, transformOrigin: "left" }}
-                className="h-full bg-gradient-to-r from-[#f6ff82] to-[#D4AF37]"
-              />
-            </div>
-
-            {/* Steps Grid */}
-            <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-6 lg:gap-4 relative z-10">
-              {steps.map((step, index) => (
-                <motion.div
-                  key={index}
-                  initial={{ opacity: 0, y: 30 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true }}
-                  transition={{ delay: index * 0.1 + 0.2, duration: 0.5 }}
-                  whileHover={{ scale: 1.05, y: -5 }}
-                  onClick={() => setSelectedStep(index)}
-                  className="flex flex-col items-center text-center cursor-pointer group transition-all duration-300"
-                >
-                  {/* Step Circle - Animated based on scroll with gradient */}
-                  <motion.div
-                    className={`w-20 h-20 lg:w-28 lg:h-28 rounded-full flex items-center justify-center border-4 shadow-xl mb-4 relative transition-all duration-300 group-hover:shadow-2xl group-hover:shadow-[#f6ff82]/20`}
-                    style={{
-                      borderColor: useTransform(
-                        progressValue,
-                        [index, index + 0.5],
-                        [isDark ? "#003942" : "#E5E7EB", "#f6ff82"]
-                      ),
-                      background: useTransform(
-                        progressValue,
-                        [index, index + 0.5],
-                        [
-                          isDark ? "#002428" : "#FFFFFF",
-                          "linear-gradient(135deg, #f6ff82 0%, #d4e682 100%)"
-                        ]
-                      ),
-                    }}
-                  >
-                    <motion.div
-                      style={{
-                        color: useTransform(
-                          progressValue,
-                          [index, index + 0.5],
-                          [isDark ? "#4B5563" : "#D1D5DB", "#003942"]
-                        ),
-                      }}
-                    >
-                      <step.icon className="w-8 h-8 lg:w-10 lg:h-10 transition-transform duration-300 group-hover:scale-110" strokeWidth={1.5} />
-                    </motion.div>
-
-                    {/* Completed checkmark */}
-                    <motion.div
-                      className="absolute -top-1 -right-1 w-6 h-6 bg-[#003942] rounded-full flex items-center justify-center"
-                      style={{
-                        scale: useTransform(progressValue, [index + 0.8, index + 1], [0, 1]),
-                        opacity: useTransform(progressValue, [index + 0.8, index + 1], [0, 1]),
-                      }}
-                    >
-                      <CheckCircle2 className="w-4 h-4 text-[#f6ff82]" />
-                    </motion.div>
-
-                    {/* Click indicator overlay */}
-                    <div className="absolute inset-0 rounded-full bg-[#f6ff82]/0 group-hover:bg-[#f6ff82]/10 transition-colors" />
-                  </motion.div>
-
-                  {/* Step Number */}
-                  <motion.span
-                    className="text-xs font-bold mb-1 transition-colors duration-300"
-                    style={{
-                      color: useTransform(
-                        progressValue,
-                        [index, index + 0.5],
-                        [isDark ? "#6B7280" : "#9CA3AF", isDark ? "#f6ff82" : "#003942"]
-                      ),
-                    }}
-                  >
-                    0{index + 1}
-                  </motion.span>
-
-                  {/* Step Title */}
-                  <motion.h3
-                    className="text-base lg:text-lg font-bold mb-1 transition-all duration-300 group-hover:text-[#f6ff82]"
-                    style={{
-                      color: useTransform(
-                        progressValue,
-                        [index, index + 0.5],
-                        [isDark ? "#9CA3AF" : "#9CA3AF", isDark ? "#ffffff" : "#003942"]
-                      ),
-                    }}
-                  >
-                    {step.title}
-                  </motion.h3>
-
-                  {/* Step Description */}
-                  <motion.p
-                    className="text-xs lg:text-sm leading-relaxed transition-colors duration-300"
-                    style={{
-                      color: useTransform(
-                        progressValue,
-                        [index, index + 0.5],
-                        [isDark ? "#6B7280" : "#D1D5DB", isDark ? "#9CA3AF" : "#6B7280"]
-                      ),
-                    }}
-                  >
-                    {step.desc}
-                  </motion.p>
-
-                  {/* Tap hint */}
-                  <span className={`mt-2 text-xs font-medium opacity-0 group-hover:opacity-100 transition-all duration-300 ${isDark ? 'text-[#f6ff82]' : 'text-[#003942]'}`}>
-                    Tap for details →
-                  </span>
-                </motion.div>
+          <div ref={cardsWrapperRef} className="relative">
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-6 gap-6">
+              {steps.map((s, idx) => (
+                <StepCard
+                  key={s.title}
+                  index={idx}
+                  title={s.title}
+                  desc={s.desc}
+                  isDark={isDark}
+                  onClick={(e) => openStep(idx, e)}
+                />
               ))}
             </div>
+
+            <AnimatePresence>
+              {selectedStep !== null && selected && popupPos && (
+                <motion.div
+                  key={`process-popover-${selectedStep}`}
+                  initial={{ opacity: 0, scale: 0.98, y: 8 }}
+                  animate={{ opacity: 1, scale: 1, y: 0 }}
+                  exit={{ opacity: 0, scale: 0.98, y: 8 }}
+                  transition={{ duration: 0.18, ease: "easeOut" }}
+                  className="absolute z-30"
+                  style={{
+                    left: popupPos.left,
+                    top: popupPos.top,
+                    width: popupPos.width,
+                  }}
+                >
+                  {/* Removed ring/border; dark bg matches StepCard bg (bg-white/5). [web:118] */}
+                  <div
+                    className={`
+                      rounded-2xl overflow-hidden shadow-2xl
+                      ${isDark ? "bg-[#121316]" : "bg-white"}
+                    `}
+                  >
+                    <div className="bg-gradient-to-r from-[#f6ff82] to-[#003942] p-4">
+                      <div className="flex items-start justify-between gap-3">
+                        <div>
+                          <span className="text-[#003942] text-xs font-medium">
+                            Stage {String(selectedStep + 1).padStart(2, "0")}
+                          </span>
+                          <h3 className="text-lg font-bold text-[#003942]">
+                            {selected.details.heading}
+                          </h3>
+                        </div>
+
+                        <button
+                          onClick={(e) => {
+                            e.stopPropagation();
+                            setSelectedStep(null);
+                          }}
+                          className="p-2 hover:bg-[#003942]/10 rounded-full transition-colors"
+                          aria-label="Close"
+                          type="button"
+                        >
+                          <X className="w-5 h-5 text-[#003942]" />
+                        </button>
+                      </div>
+                    </div>
+
+                    <div className="p-4 max-h-[55vh] overflow-y-auto">
+                      <p className={`mb-3 text-sm leading-relaxed ${isDark ? "text-white/70" : "text-slate-700"}`}>
+                        {selected.details.overview}
+                      </p>
+
+                      <div className="inline-flex items-center gap-2 px-3 py-1.5 bg-[#f6ff82]/20 rounded-full mb-4">
+                        <span className="w-1.5 h-1.5 bg-[#f6ff82] rounded-full" />
+                        <span className={`text-xs font-medium ${isDark ? "text-[#f6ff82]" : "text-[#003942]"}`}>
+                          Duration: {selected.details.duration}
+                        </span>
+                      </div>
+
+                      <h4 className={`font-semibold mb-2 text-sm ${isDark ? "text-white" : "text-slate-900"}`}>
+                        What&apos;s Included:
+                      </h4>
+
+                      <ul className="space-y-2">
+                        {selected.details.points.map((point) => (
+                          <li key={point} className="flex items-start gap-2 text-sm">
+                            <CheckCircle2 className="w-4 h-4 text-[#f6ff82] shrink-0 mt-0.5" />
+                            <span className={isDark ? "text-white/60" : "text-slate-600"}>{point}</span>
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
+                  </div>
+                </motion.div>
+              )}
+            </AnimatePresence>
+          </div>
+
+          <div className="max-w-6xl mx-auto">
+            <ProgressLine isDark={isDark} progress={progress} />
           </div>
         </div>
       </section>
-
-      {/* ===== COMPACT DETAIL CARD BELOW GRID ===== */}
-      <AnimatePresence>
-        {selectedStep !== null && (
-          <motion.div
-            initial={{ opacity: 0, height: 0, marginTop: 0 }}
-            animate={{ opacity: 1, height: "auto", marginTop: 48 }}
-            exit={{ opacity: 0, height: 0, marginTop: 0 }}
-            transition={{ duration: 0.3, ease: "easeOut" }}
-            className="overflow-hidden"
-          >
-            <div className="container mx-auto px-6 md:px-12 lg:px-20">
-              <motion.div
-                initial={{ y: -20 }}
-                animate={{ y: 0 }}
-                exit={{ y: -20 }}
-                className={`relative rounded-2xl shadow-2xl border overflow-hidden ${isDark ? 'bg-[#002428] border-[#003942]' : 'bg-white border-gray-100'}`}
-              >
-                {/* Header with gradient */}
-                <div className="bg-gradient-to-r from-[#f6ff82] via-[#e8f074] to-[#d4e066] p-6">
-                  <div className="flex items-start justify-between">
-                    <div className="flex items-center gap-4">
-                      <div className="w-12 h-12 rounded-xl bg-[#003942]/20 flex items-center justify-center">
-                        {(() => {
-                          const StepIcon = steps[selectedStep].icon;
-                          return <StepIcon className="w-6 h-6 text-[#003942]" />;
-                        })()}
-                      </div>
-                      <div>
-                        <span className="text-[#003942] text-xs font-medium">
-                          Stage 0{selectedStep + 1}
-                        </span>
-                        <h3 className="text-xl font-bold text-[#003942]">
-                          {steps[selectedStep].details.heading}
-                        </h3>
-                      </div>
-                    </div>
-                    <button
-                      onClick={() => setSelectedStep(null)}
-                      className="p-1.5 hover:bg-[#003942]/10 rounded-full transition-colors"
-                    >
-                      <X className="w-5 h-5 text-[#003942]" />
-                    </button>
-                  </div>
-                </div>
-
-                {/* Content */}
-                <div className="p-6 grid md:grid-cols-2 gap-6">
-                  {/* Left: Overview */}
-                  <div>
-                    <p className={`mb-4 leading-relaxed ${isDark ? 'text-gray-300' : 'text-gray-700'}`}>
-                      {steps[selectedStep].details.overview}
-                    </p>
-                    <div className="inline-flex items-center gap-2 px-3 py-1.5 bg-[#f6ff82]/20 rounded-full">
-                      <span className="w-1.5 h-1.5 bg-[#f6ff82] rounded-full" />
-                      <span className={`text-xs font-medium ${isDark ? 'text-[#f6ff82]' : 'text-[#003942]'}`}>
-                        Duration: {steps[selectedStep].details.duration}
-                      </span>
-                    </div>
-                  </div>
-
-                  {/* Right: Points */}
-                  <div>
-                    <h4 className={`font-bold mb-3 text-sm ${isDark ? 'text-white' : 'text-[#003942]'}`}>What&apos;s Included:</h4>
-                    <ul className="space-y-2">
-                      {steps[selectedStep].details.points.slice(0, 4).map((point, idx) => (
-                        <li key={idx} className="flex items-start gap-2 text-sm">
-                          <CheckCircle2 className="w-4 h-4 text-[#f6ff82] shrink-0 mt-0.5" />
-                          <span className={isDark ? 'text-gray-400' : 'text-gray-600'}>{point}</span>
-                        </li>
-                      ))}
-                    </ul>
-                  </div>
-                </div>
-              </motion.div>
-            </div>
-          </motion.div>
-        )}
-      </AnimatePresence>
     </>
   );
 }
