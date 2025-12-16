@@ -2,9 +2,9 @@
 
 /**
  * NAVBAR - Grey translucent + blurred (dark), white translucent + blurred (light), NO borders
- * - Dark theme grey matches your card vibe: #16171B with alpha
- * - Light theme stays clean: white with alpha
- * - Smooth hover/tap animations
+ * - CTA button solid colors:
+ *   - Dark: grey-ish (no yellow)
+ *   - Light: solid #003942
  */
 
 import { useState, useEffect } from "react";
@@ -42,19 +42,23 @@ export default function Navbar() {
   const hoverT = { duration: 0.28, ease } as const;
   const tapT = { duration: 0.12, ease } as const;
 
-  const brandGradient = "bg-gradient-to-r from-[#f6ff82] to-[#003942]";
-
-  // Dark theme navbar grey sampled from your card look: #16171B (with alpha).
   const navSurface = isDark ? "bg-[#16171B]/60" : "bg-white/55";
   const navSurfaceScrolled = isDark ? "bg-[#16171B]/72" : "bg-white/65";
 
-  // ONLY CHANGE: softer shadow. [web:448]
   const navShadow = isScrolled
     ? "shadow-[0_14px_40px_rgba(0,0,0,0.18)]"
     : "shadow-[0_10px_30px_rgba(0,0,0,0.12)]";
 
+  // Accent for "Heads" (dark = yellow, light = #003942)
+  const brandAccent = isDark ? "text-[#f6ff82]" : "text-[#003942]";
+
+  // Focus ring matches accent (Tailwind state variants) [web:388]
+  const focusRing = isDark ? "focus-visible:ring-[#f6ff82]/60" : "focus-visible:ring-[#003942]/35";
+
   const linkBase =
-    "px-4 py-2 text-sm font-medium rounded-full transition-colors duration-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-[#f6ff82]/60";
+    `px-4 py-2 text-sm font-medium rounded-full transition-colors duration-200 ` +
+    `focus:outline-none focus-visible:ring-2 ${focusRing}`;
+
   const linkTheme = isDark
     ? "text-white/75 hover:text-white hover:bg-white/10"
     : "text-slate-700 hover:text-slate-900 hover:bg-black/5";
@@ -67,6 +71,15 @@ export default function Navbar() {
   const mobileLink = isDark
     ? "text-white/85 hover:text-white border-white/10"
     : "text-slate-800 hover:text-slate-900 border-black/10";
+
+  /**
+   * CTA solid colors (updated):
+   * - Dark: grey-ish (match UI), readable white text
+   * - Light: solid #003942 with white text
+   */
+  const ctaBg = isDark ? "bg-white/10 hover:bg-white/15" : "bg-[#003942] hover:bg-[#003942]/90";
+  const ctaText = "text-white";
+  const ctaDot = isDark ? "bg-[#f6ff82]" : "bg-white"; // small premium accent dot stays nice
 
   return (
     <>
@@ -98,7 +111,7 @@ export default function Navbar() {
             className="flex items-center shrink-0"
           >
             <span className={`text-xl md:text-2xl font-bold ${isDark ? "text-white" : "text-slate-900"}`}>
-              Webb<span className="text-[#f6ff82]">Heads</span>
+              Webb<span className={brandAccent}>Heads</span>
             </span>
           </a>
 
@@ -123,7 +136,7 @@ export default function Navbar() {
           <div className="hidden md:flex items-center gap-3 shrink-0">
             <ThemeToggle />
 
-            {/* Book a Call */}
+            {/* Book a Call (solid bg) */}
             <motion.a
               href="https://cal.com/webb-heads"
               target="_blank"
@@ -142,14 +155,14 @@ export default function Navbar() {
               transition={hoverT}
               className={`
                 px-5 py-2.5 text-sm font-semibold rounded-full
-                ${brandGradient} ${isDark ? "text-[#003942]" : "text-white"}
+                ${ctaBg} ${ctaText}
                 flex items-center gap-2
-                focus:outline-none focus-visible:ring-2 focus-visible:ring-[#f6ff82]/60
+                focus:outline-none focus-visible:ring-2 ${focusRing}
                 will-change-transform
               `}
               style={{ boxShadow: "0 12px 30px rgba(0,0,0,0.18)" }}
             >
-              <span className={`w-2 h-2 rounded-full ${isDark ? "bg-[#003942]" : "bg-white"}`} />
+              <span className={`w-2 h-2 rounded-full ${ctaDot}`} />
               Book a Call
             </motion.a>
           </div>
@@ -162,7 +175,7 @@ export default function Navbar() {
               onClick={() => setIsMobileMenuOpen((v) => !v)}
               whileTap={{ scale: 0.96 }}
               transition={tapT}
-              className={`p-2 rounded-full transition-colors ${iconBtn} focus:outline-none focus-visible:ring-2 focus-visible:ring-[#f6ff82]/60`}
+              className={`p-2 rounded-full transition-colors ${iconBtn} focus:outline-none focus-visible:ring-2 ${focusRing}`}
               aria-label="Toggle menu"
             >
               {isMobileMenuOpen ? <X size={22} /> : <Menu size={22} />}
@@ -213,14 +226,14 @@ export default function Navbar() {
                       block py-4 text-lg font-medium border-b last:border-0
                       transition-colors
                       ${mobileLink}
-                      focus:outline-none focus-visible:ring-2 focus-visible:ring-[#f6ff82]/60 rounded-md
+                      focus:outline-none focus-visible:ring-2 ${focusRing} rounded-md
                     `}
                   >
                     {link.name}
                   </motion.a>
                 ))}
 
-                {/* Mobile Book a Call */}
+                {/* Mobile Book a Call (solid bg) */}
                 <motion.a
                   href="https://cal.com/webb-heads"
                   target="_blank"
@@ -232,11 +245,11 @@ export default function Navbar() {
                   className={`
                     mt-6 w-full py-4 text-center font-semibold rounded-full
                     flex items-center justify-center gap-2
-                    ${brandGradient} ${isDark ? "text-[#003942]" : "text-white"}
-                    focus:outline-none focus-visible:ring-2 focus-visible:ring-[#f6ff82]/60
+                    ${ctaBg} ${ctaText}
+                    focus:outline-none focus-visible:ring-2 ${focusRing}
                   `}
                 >
-                  <span className={`w-2 h-2 rounded-full ${isDark ? "bg-[#003942]" : "bg-white"}`} />
+                  <span className={`w-2 h-2 rounded-full ${ctaDot}`} />
                   Book a Call
                 </motion.a>
               </div>
