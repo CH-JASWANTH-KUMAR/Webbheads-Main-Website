@@ -1,7 +1,7 @@
 "use client";
 
 import { AnimatePresence, motion, useScroll, useSpring } from "framer-motion";
-import { CheckCircle2, X } from "lucide-react";
+import { X } from "lucide-react";
 import React, { useEffect, useMemo, useRef, useState } from "react";
 import { useTheme } from "@/context/ThemeContext";
 
@@ -124,18 +124,21 @@ function StepCard({
   title,
   desc,
   isDark,
-  onClick,
+  onHoverStart,
+  onHoverEnd,
 }: {
   index: number;
   title: string;
   desc: string;
   isDark: boolean;
-  onClick: (e: React.MouseEvent<HTMLButtonElement>) => void;
+  onHoverStart: (e: React.PointerEvent<HTMLButtonElement>) => void;
+  onHoverEnd: () => void;
 }) {
   return (
     <motion.button
       type="button"
-      onClick={onClick}
+      onPointerEnter={onHoverStart}
+      onPointerLeave={onHoverEnd}
       whileHover={{ y: -6 }}
       whileTap={{ scale: 0.99 }}
       transition={{ type: "spring", stiffness: 520, damping: 32, mass: 0.6 }}
@@ -159,10 +162,11 @@ function StepCard({
           </p>
         </div>
 
+        {/* Circle icon updated (solid). */}
         <div
           className={`
             h-10 w-10 shrink-0 rounded-full flex items-center justify-center text-xs font-bold
-            ${isDark ? "bg-white/10 text-white" : "bg-slate-900 text-white"}
+            ${isDark ? "bg-[#f6ff82] text-[#003942]" : "bg-[#003942] text-white"}
           `}
         >
           {String(index + 1).padStart(2, "0")}
@@ -177,7 +181,7 @@ function ProgressLine({
   progress,
 }: {
   isDark: boolean;
-  progress: any; // MotionValue<number>
+  progress: any;
 }) {
   return (
     <div className="relative mt-10">
@@ -187,7 +191,7 @@ function ProgressLine({
           style={{
             scaleX: progress,
             transformOrigin: "0% 50%",
-            backgroundColor: ACTIVE_YELLOW,
+            backgroundColor: isDark ? ACTIVE_YELLOW : "#003942",
           }}
         />
       </div>
@@ -222,25 +226,14 @@ export default function Process() {
     [selectedStep]
   );
 
-  // Close on ANY click anywhere (capture phase), plus Escape. [web:81]
+  // Hover-based UI: keep ESC close.
   useEffect(() => {
     if (selectedStep === null) return;
-
     const onKeyDown = (e: KeyboardEvent) => {
       if (e.key === "Escape") setSelectedStep(null);
     };
-
-    const onAnyMouseDownCapture = () => {
-      setSelectedStep(null);
-    };
-
     document.addEventListener("keydown", onKeyDown);
-    document.addEventListener("mousedown", onAnyMouseDownCapture, true);
-
-    return () => {
-      document.removeEventListener("keydown", onKeyDown);
-      document.removeEventListener("mousedown", onAnyMouseDownCapture, true);
-    };
+    return () => document.removeEventListener("keydown", onKeyDown);
   }, [selectedStep]);
 
   const popupPos = useMemo(() => {
@@ -248,7 +241,7 @@ export default function Process() {
 
     const wrapperRect = cardsWrapperRef.current.getBoundingClientRect();
     const margin = 12;
-    const width = 380;
+    const width = 360; // slightly smaller
 
     const anchorLeft = anchorRect.left - wrapperRect.left;
     const anchorRight = anchorRect.right - wrapperRect.left;
@@ -265,140 +258,138 @@ export default function Process() {
     return { left, top, width };
   }, [anchorRect]);
 
-  const openStep = (idx: number, e: React.MouseEvent<HTMLButtonElement>) => {
-    e.stopPropagation();
-    const rect = e.currentTarget.getBoundingClientRect();
+  const openStepHover = (idx: number, e: React.PointerEvent<HTMLButtonElement>) => {
+    const rect = (e.currentTarget as HTMLButtonElement).getBoundingClientRect();
     setAnchorRect(rect);
     setSelectedStep(idx);
   };
 
+  const closeHover = () => setSelectedStep(null);
+
   return (
-    <>
-      <section ref={sectionRef} className={`py-24 ${sectionBg}`}>
-        <div className="container mx-auto px-6 md:px-12 lg:px-20">
-          <motion.div
-            initial={{ opacity: 0, y: 18 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.35, ease: "easeOut" }}
-            className="text-center mb-14"
+    <section ref={sectionRef} className={`py-24 ${sectionBg}`}>
+      <div className="container mx-auto px-6 md:px-12 lg:px-20">
+        <motion.div
+          initial={{ opacity: 0, y: 18 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.35, ease: "easeOut" }}
+          className="text-center mb-14"
+        >
+          <div
+            className={`
+              inline-flex items-center gap-2 px-4 py-2 rounded-full mb-6 text-sm font-medium
+              ${isDark ? "bg-white/5 text-white/75" : "bg-slate-100 text-slate-700"}
+            `}
           >
-            <div
-              className={`
-                inline-flex items-center gap-2 px-4 py-2 rounded-full mb-6 text-sm font-medium
-                ${isDark ? "bg-white/5 text-white/75" : "bg-slate-100 text-slate-700"}
-              `}
-            >
-              <span className="w-2 h-2 bg-[#f6ff82] rounded-full" />
-              <span>How We Work</span>
-            </div>
+            <span className={`w-2 h-2 rounded-full ${isDark ? "bg-[#f6ff82]" : "bg-[#003942]"}`} />
+            <span>How We Work</span>
+          </div>
 
-            <h2 className={`text-4xl md:text-5xl font-bold mb-4 ${heading}`}>
-              Our <span className={`bg-clip-text text-transparent ${brandGradient}`}>Process</span>
-            </h2>
+          <h2 className={`text-4xl md:text-5xl font-bold mb-4 ${heading}`}>
+            Our <span className={`bg-clip-text text-transparent ${brandGradient}`}>Process</span>
+          </h2>
 
-            <p className={`text-lg max-w-2xl mx-auto ${sub}`}>
-              A proven 6-step workflow designed to deliver exceptional results. Tap any card to learn more.
-            </p>
-          </motion.div>
+          <p className={`text-lg max-w-2xl mx-auto ${sub}`}>
+            A proven 6-step workflow designed to deliver exceptional results. Hover any card to learn more.
+          </p>
+        </motion.div>
 
-          <div ref={cardsWrapperRef} className="relative">
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-6 gap-6">
-              {steps.map((s, idx) => (
-                <StepCard
-                  key={s.title}
-                  index={idx}
-                  title={s.title}
-                  desc={s.desc}
-                  isDark={isDark}
-                  onClick={(e) => openStep(idx, e)}
-                />
-              ))}
-            </div>
+        <div ref={cardsWrapperRef} className="relative">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-6 gap-6">
+            {steps.map((s, idx) => (
+              <StepCard
+                key={s.title}
+                index={idx}
+                title={s.title}
+                desc={s.desc}
+                isDark={isDark}
+                onHoverStart={(e) => openStepHover(idx, e)}
+                onHoverEnd={closeHover}
+              />
+            ))}
+          </div>
 
-            <AnimatePresence>
-              {selectedStep !== null && selected && popupPos && (
-                <motion.div
-                  key={`process-popover-${selectedStep}`}
-                  initial={{ opacity: 0, scale: 0.98, y: 8 }}
-                  animate={{ opacity: 1, scale: 1, y: 0 }}
-                  exit={{ opacity: 0, scale: 0.98, y: 8 }}
-                  transition={{ duration: 0.18, ease: "easeOut" }}
-                  className="absolute z-30"
-                  style={{
-                    left: popupPos.left,
-                    top: popupPos.top,
-                    width: popupPos.width,
-                  }}
+          <AnimatePresence>
+            {selectedStep !== null && selected && popupPos && (
+              <motion.div
+                key={`process-popover-${selectedStep}`}
+                initial={{ opacity: 0, scale: 0.98, y: 8 }}
+                animate={{ opacity: 1, scale: 1, y: 0 }}
+                exit={{ opacity: 0, scale: 0.98, y: 8 }}
+                transition={{ duration: 0.14, ease: "easeOut" }}
+                className="absolute z-30"
+                style={{
+                  left: popupPos.left,
+                  top: popupPos.top,
+                  width: popupPos.width,
+                }}
+                onPointerEnter={() => setSelectedStep(selectedStep)}
+                onPointerLeave={closeHover}
+              >
+                <div
+                  className={`
+                    rounded-3xl overflow-hidden
+                    shadow-[0_24px_80px_rgba(0,0,0,0.20)]
+                    ${isDark ? "bg-[#121316]" : "bg-white"}
+                  `}
                 >
-                  {/* Removed ring/border; dark bg matches StepCard bg (bg-white/5). [web:118] */}
-                  <div
-                    className={`
-                      rounded-2xl overflow-hidden shadow-2xl
-                      ${isDark ? "bg-[#121316]" : "bg-white"}
-                    `}
-                  >
-                    <div className="bg-gradient-to-r from-[#f6ff82] to-[#003942] p-4">
-                      <div className="flex items-start justify-between gap-3">
-                        <div>
-                          <span className="text-[#003942] text-xs font-medium">
-                            Stage {String(selectedStep + 1).padStart(2, "0")}
-                          </span>
-                          <h3 className="text-lg font-bold text-[#003942]">
-                            {selected.details.heading}
-                          </h3>
-                        </div>
+                  <div className="p-5">
+                    <div className="flex items-center justify-between gap-3">
+                      <span className={`${isDark ? "text-white/60" : "text-slate-500"} text-xs font-semibold`}>
+                        Stage {String(selectedStep + 1).padStart(2, "0")}
+                      </span>
 
-                        <button
-                          onClick={(e) => {
-                            e.stopPropagation();
-                            setSelectedStep(null);
-                          }}
-                          className="p-2 hover:bg-[#003942]/10 rounded-full transition-colors"
-                          aria-label="Close"
-                          type="button"
+                      <button
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          setSelectedStep(null);
+                        }}
+                        className={`
+                          h-9 w-9 rounded-full flex items-center justify-center transition-colors
+                          ${isDark ? "bg-white/5 hover:bg-white/10" : "bg-slate-100 hover:bg-slate-200"}
+                        `}
+                        aria-label="Close"
+                        type="button"
+                      >
+                        <X className={`w-4 h-4 ${isDark ? "text-white" : "text-slate-900"}`} />
+                      </button>
+                    </div>
+
+                    <h3 className={`mt-2 text-lg font-bold ${isDark ? "text-white" : "text-slate-900"}`}>
+                      {selected.details.heading}
+                    </h3>
+
+                    <div className={`mt-4 h-px w-full ${isDark ? "bg-white/10" : "bg-slate-200"}`} />
+
+                    {/* ONLY bullet points (no description, no tick icons).
+                        marker: lets you color the bullet. [web:462][web:461] */}
+                    <ul
+                      className={`
+                        mt-4 space-y-2 pl-5 list-disc
+                        ${isDark ? "marker:text-[#f6ff82]" : "marker:text-[#003942]"}
+                      `}
+                    >
+                      {selected.details.points.map((point) => (
+                        <li
+                          key={point}
+                          className={`text-sm leading-relaxed ${isDark ? "text-white/70" : "text-slate-700"}`}
                         >
-                          <X className="w-5 h-5 text-[#003942]" />
-                        </button>
-                      </div>
-                    </div>
-
-                    <div className="p-4 max-h-[55vh] overflow-y-auto">
-                      <p className={`mb-3 text-sm leading-relaxed ${isDark ? "text-white/70" : "text-slate-700"}`}>
-                        {selected.details.overview}
-                      </p>
-
-                      <div className="inline-flex items-center gap-2 px-3 py-1.5 bg-[#f6ff82]/20 rounded-full mb-4">
-                        <span className="w-1.5 h-1.5 bg-[#f6ff82] rounded-full" />
-                        <span className={`text-xs font-medium ${isDark ? "text-[#f6ff82]" : "text-[#003942]"}`}>
-                          Duration: {selected.details.duration}
-                        </span>
-                      </div>
-
-                      <h4 className={`font-semibold mb-2 text-sm ${isDark ? "text-white" : "text-slate-900"}`}>
-                        What&apos;s Included:
-                      </h4>
-
-                      <ul className="space-y-2">
-                        {selected.details.points.map((point) => (
-                          <li key={point} className="flex items-start gap-2 text-sm">
-                            <CheckCircle2 className="w-4 h-4 text-[#f6ff82] shrink-0 mt-0.5" />
-                            <span className={isDark ? "text-white/60" : "text-slate-600"}>{point}</span>
-                          </li>
-                        ))}
-                      </ul>
-                    </div>
+                          {point}
+                        </li>
+                      ))}
+                    </ul>
                   </div>
-                </motion.div>
-              )}
-            </AnimatePresence>
-          </div>
-
-          <div className="max-w-6xl mx-auto">
-            <ProgressLine isDark={isDark} progress={progress} />
-          </div>
+                </div>
+              </motion.div>
+            )}
+          </AnimatePresence>
         </div>
-      </section>
-    </>
+
+        <div className="max-w-6xl mx-auto">
+          <ProgressLine isDark={isDark} progress={progress} />
+        </div>
+      </div>
+    </section>
   );
 }

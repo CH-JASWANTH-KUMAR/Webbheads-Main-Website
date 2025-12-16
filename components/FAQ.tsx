@@ -97,12 +97,11 @@ export default function FAQ() {
             >
               {faq.question}
             </h3>
-
             <div
               className={`
                 h-10 w-10 shrink-0 rounded-full flex items-center justify-center
                 transition-all duration-500 ease-[cubic-bezier(0.4,0,0.2,1)]
-                ${isDark ? "bg-white/10 text-white" : "bg-slate-900 text-white"}
+                ${isDark ? "bg-white/10 text-white" : "bg-[#003942] text-white"}
               `}
             >
               {isOpen ? (
@@ -150,7 +149,7 @@ export default function FAQ() {
               ${isDark ? "bg-white/5 text-white/75" : "bg-slate-100 text-slate-700"}
             `}
           >
-            <span className="w-2 h-2 bg-[#f6ff82] rounded-full" />
+            <span className={`w-2 h-2 rounded-full ${isDark ? "bg-[#f6ff82]" : "bg-[#003942]"}`} />
             <span>FAQ</span>
           </div>
 

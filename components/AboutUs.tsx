@@ -9,7 +9,7 @@ export default function AboutUs() {
 
   const brandGradient = "bg-gradient-to-r from-[#f6ff82] to-[#003942]";
   const sectionBg = "bg-transparent";
-  
+
   // No borders (match your card style)
   const card = isDark
     ? "bg-white/5 shadow-[0_18px_50px_rgba(0,0,0,0.55)]"
@@ -21,9 +21,13 @@ export default function AboutUs() {
   // Badge pill without border trick (filled pill)
   const pill = isDark ? "bg-white/5 text-white/75" : "bg-slate-100 text-slate-700";
 
-  // Unified bullet icon for Vision/Mission/Values
+  // Solid bullet for Vision/Mission/Values (theme-matched)
   const Bullet = () => (
-    <span className={`mt-2 h-2.5 w-2.5 shrink-0 rounded-full ${brandGradient}`} />
+    <span
+      className={`mt-2 h-2.5 w-2.5 shrink-0 rounded-full ${
+        isDark ? "bg-[#f6ff82]" : "bg-[#003942]"
+      }`}
+    />
   );
 
   return (
@@ -40,7 +44,9 @@ export default function AboutUs() {
           >
             <div className="relative w-full max-w-lg mx-auto">
               {/* Rotating badge (kept) */}
-              <div className={`absolute -top-6 -right-6 w-28 h-28 rounded-full p-[2px] ${brandGradient} z-20`}>
+              <div
+                className={`absolute -top-6 -right-6 w-28 h-28 rounded-full p-[2px] ${brandGradient} z-20`}
+              >
                 <div
                   className={`w-full h-full rounded-full flex items-center justify-center backdrop-blur ${
                     isDark ? "bg-[#05060A]" : "bg-white"
@@ -55,8 +61,14 @@ export default function AboutUs() {
                           fill="none"
                         />
                       </defs>
-                      <text className={`text-[8px] uppercase tracking-widest ${isDark ? "fill-white/70" : "fill-slate-700"}`}>
-                        <textPath href="#circlePath">• LEADERS • DRIVEN BY INNOVATION •</textPath>
+                      <text
+                        className={`text-[8px] uppercase tracking-widest ${
+                          isDark ? "fill-white/70" : "fill-slate-700"
+                        }`}
+                      >
+                        <textPath href="#circlePath">
+                          • LEADERS • DRIVEN BY INNOVATION •
+                        </textPath>
                       </text>
                     </svg>
 
@@ -88,37 +100,57 @@ export default function AboutUs() {
             className="lg:w-1/2"
           >
             {/* Pill (no border) */}
-            <div className={`inline-flex items-center gap-2 px-4 py-2 rounded-full mb-6 text-sm font-medium ${pill}`}>
-              <span className="h-1.5 w-1.5 rounded-full bg-[#f6ff82]" />
+            <div
+              className={`inline-flex items-center gap-2 px-4 py-2 rounded-full mb-6 text-sm font-medium ${pill}`}
+            >
+              {/* (optional) you can theme-match this dot too; left as-is */}
+            <span className={`w-2 h-2 rounded-full ${isDark ? "bg-[#f6ff82]" : "bg-[#003942]"}`} />
               <span>ABOUT</span>
             </div>
 
-            <h2 className={`text-4xl md:text-5xl font-bold mb-6 leading-tight ${isDark ? "text-white" : "text-slate-900"}`}>
-              More <span className={`bg-clip-text text-transparent ${brandGradient}`}>about us</span>
+            <h2
+              className={`text-4xl md:text-5xl font-bold mb-6 leading-tight ${
+                isDark ? "text-white" : "text-slate-900"
+              }`}
+            >
+              More{" "}
+              <span className={`bg-clip-text text-transparent ${brandGradient}`}>
+                about us
+              </span>
             </h2>
 
             <p className={`text-lg mb-4 leading-relaxed ${bodyText}`}>
-              At WebbHeads, we build functional technologies that help businesses optimize time and deliver exceptional user experiences.
+              At WebbHeads, we build functional technologies that help businesses optimize time
+              and deliver exceptional user experiences.
             </p>
             <p className={`mb-10 leading-relaxed ${subText}`}>
-              By blending creativity, technology, and AI innovation, we craft digital solutions that drive real impact — from smart automation to high-converting websites and user-friendly apps that help brands grow smarter and faster.
+              By blending creativity, technology, and AI innovation, we craft digital solutions
+              that drive real impact — from smart automation to high-converting websites and
+              user-friendly apps that help brands grow smarter and faster.
             </p>
 
             <div className="flex flex-col md:flex-row gap-10">
               {/* Left */}
               <div className="md:w-1/2">
-                <h3 className={`text-2xl font-bold mb-4 ${isDark ? "text-white" : "text-slate-900"}`}>About</h3>
+                <h3 className={`text-2xl font-bold mb-4 ${isDark ? "text-white" : "text-slate-900"}`}>
+                  About
+                </h3>
                 <p className={`leading-relaxed mb-6 ${subText}`}>
-                  At WebbHeads, our mission and vision guide everything we build — helping businesses embrace the future with smarter, faster, and more human-centered digital solutions.
+                  At WebbHeads, our mission and vision guide everything we build — helping
+                  businesses embrace the future with smarter, faster, and more human-centered
+                  digital solutions.
                 </p>
 
+                {/* Button: match your pill style + slightly taller + dark-mode grayish */}
                 <a
                   href="https://djkushal.framer.website/"
                   target="_blank"
                   rel="noopener noreferrer"
                   className={`
-                    inline-flex items-center gap-2 px-6 py-3 rounded-full font-semibold transition hover:opacity-95
-                    ${brandGradient} ${isDark ? "text-[#003942]" : "text-white"}
+                    inline-flex items-center justify-center gap-2
+                    px-6 py-3.5 rounded-full text-sm font-semibold
+                    transition-colors duration-200 hover:opacity-95
+                    ${isDark ? "bg-white/10 text-white hover:bg-white/15" : "bg-[#003942] text-white"}
                     shadow-[0_12px_30px_rgba(0,0,0,0.22)]
                   `}
                 >
@@ -127,14 +159,16 @@ export default function AboutUs() {
                 </a>
               </div>
 
-              {/* Right: Mission/Vision/Values card (no border, unified bullets) */}
+              {/* Right: Mission/Vision/Values card */}
               <div className="md:w-1/2">
                 <div className={`rounded-2xl p-6 backdrop-blur ${card}`}>
                   <div className="space-y-6">
                     <div className="flex items-start gap-3">
                       <Bullet />
                       <div>
-                        <h4 className={`font-bold mb-1 ${isDark ? "text-white" : "text-slate-900"}`}>Vision</h4>
+                        <h4 className={`font-bold mb-1 ${isDark ? "text-white" : "text-slate-900"}`}>
+                          Vision
+                        </h4>
                         <p className={`text-sm ${subText}`}>Transforming Businesses Digitally.</p>
                       </div>
                     </div>
@@ -142,9 +176,12 @@ export default function AboutUs() {
                     <div className="flex items-start gap-3">
                       <Bullet />
                       <div>
-                        <h4 className={`font-bold mb-1 ${isDark ? "text-white" : "text-slate-900"}`}>Mission</h4>
+                        <h4 className={`font-bold mb-1 ${isDark ? "text-white" : "text-slate-900"}`}>
+                          Mission
+                        </h4>
                         <p className={`text-sm ${subText}`}>
-                          Helping brands build professional, high-performing digital identities through technology and automation.
+                          Helping brands build professional, high-performing digital identities
+                          through technology and automation.
                         </p>
                       </div>
                     </div>
@@ -152,9 +189,12 @@ export default function AboutUs() {
                     <div className="flex items-start gap-3">
                       <Bullet />
                       <div>
-                        <h4 className={`font-bold mb-1 ${isDark ? "text-white" : "text-slate-900"}`}>Values</h4>
+                        <h4 className={`font-bold mb-1 ${isDark ? "text-white" : "text-slate-900"}`}>
+                          Values
+                        </h4>
                         <p className={`text-sm ${subText}`}>
-                          Creativity, innovation, and integrity guide our every move — ensuring each project is built with purpose, precision, and a passion for progress.
+                          Creativity, innovation, and integrity guide our every move — ensuring
+                          each project is built with purpose, precision, and a passion for progress.
                         </p>
                       </div>
                     </div>

@@ -7,9 +7,10 @@ import { useTheme } from "@/context/ThemeContext";
 export default function Hero() {
   const { isDark } = useTheme();
 
+  // Keep gradient ONLY for heading text
   const brandGradient = "bg-gradient-to-r from-[#f6ff82] to-[#003942]";
   const sectionBg = "bg-transparent";
-  
+
   const subText = isDark ? "text-white/55" : "text-slate-600";
   const bodyText = isDark ? "text-white/70" : "text-slate-700";
 
@@ -18,9 +19,8 @@ export default function Hero() {
     : "bg-white border-slate-200 shadow-[0_10px_30px_rgba(15,23,42,0.08)]";
 
   // Button motion: consistent + smooth
-  const btnEase = [0.22, 1, 0.36, 1] as const; // smooth “easeOutCubic”-ish
+  const btnEase = [0.22, 1, 0.36, 1] as const;
   const hoverT = { duration: 0.28, ease: btnEase } as const;
-  const tapT = { duration: 0.12, ease: btnEase } as const;
 
   return (
     <section
@@ -49,24 +49,30 @@ export default function Hero() {
               [background-image:linear-gradient(${isDark ? "#05060A" : "#ffffff"},${isDark ? "#05060A" : "#ffffff"}),linear-gradient(90deg,#f6ff82,#003942)]
             `}
           >
-            <span className="h-1.5 w-1.5 rounded-full bg-[#f6ff82]" />
+            <span className={`w-2 h-2 rounded-full ${isDark ? "bg-[#f6ff82]" : "bg-[#003942]"}`} />
             <span>ELEVATING REAL ESTATE</span>
           </div>
 
           <h1 className="text-5xl md:text-6xl lg:text-7xl font-bold leading-[1.1] mb-6 tracking-tight">
             Premium Digital <br />
-            <span className={`bg-clip-text text-transparent ${brandGradient}`}>Solutions</span> for{" "}
-            <br />
+            <span className={`bg-clip-text text-transparent ${brandGradient}`}>
+              Solutions
+            </span>{" "}
+            for <br />
             Real Estate.
           </h1>
 
-          <p className={`text-lg md:text-xl mb-10 leading-relaxed max-w-lg ${bodyText}`}>
-            We craft high-end websites, custom apps, and intelligent automation systems specifically
-            designed for property developers and luxury agencies.
+          <p
+            className={`text-lg md:text-xl mb-10 leading-relaxed max-w-lg ${bodyText}`}
+          >
+            We craft high-end websites, custom apps, and intelligent automation
+            systems specifically designed for property developers and luxury
+            agencies.
           </p>
 
           <div className="flex flex-wrap gap-4">
-            {/* PRIMARY CTA */}
+            {/* PRIMARY CTA (NO gradient, theme-specific colors).
+                Uses arbitrary hex classes supported by Tailwind. [web:367][web:370] */}
             <motion.a
               href="#pricing"
               initial={false}
@@ -86,9 +92,8 @@ export default function Hero() {
               }}
               transition={hoverT}
               className={`
-                px-8 py-4 text-lg font-semibold rounded-full
-                ${brandGradient} ${isDark ? "text-[#003942]" : "text-white"}
-                border-none
+                px-8 py-4 text-lg font-semibold rounded-full border-none
+                ${isDark ? "bg-[#f6ff82] text-[#003942]" : "bg-[#003942] text-white"}
                 will-change-transform
                 focus:outline-none focus-visible:ring-2 focus-visible:ring-[#f6ff82]/60
               `}
@@ -123,7 +128,11 @@ export default function Hero() {
               className={`
                 px-8 py-4 rounded-full font-semibold border-none
                 ${card}
-                ${isDark ? "text-white hover:bg-white/10" : "text-slate-900 hover:bg-slate-50"}
+                ${
+                  isDark
+                    ? "text-white hover:bg-white/10"
+                    : "text-slate-900 hover:bg-slate-50"
+                }
                 will-change-transform
                 focus:outline-none focus-visible:ring-2 focus-visible:ring-[#f6ff82]/60
               `}
@@ -133,7 +142,7 @@ export default function Hero() {
           </div>
         </motion.div>
 
-        {/* RIGHT */}
+        {/* RIGHT (unchanged from your current code) */}
         <motion.div
           initial={{ opacity: 0, scale: 0.95 }}
           animate={{ opacity: 1, scale: 1 }}
@@ -151,7 +160,13 @@ export default function Hero() {
               >
                 <svg viewBox="0 0 400 100" className="w-full h-24">
                   <defs>
-                    <linearGradient id="arrowGradient" x1="0%" y1="0%" x2="100%" y2="0%">
+                    <linearGradient
+                      id="arrowGradient"
+                      x1="0%"
+                      y1="0%"
+                      x2="100%"
+                      y2="0%"
+                    >
                       <stop offset="0%" stopColor="#f6ff82" />
                       <stop offset="100%" stopColor="#003942" />
                     </linearGradient>
@@ -165,7 +180,11 @@ export default function Hero() {
                     strokeLinecap="round"
                     initial={{ pathLength: 0 }}
                     animate={{ pathLength: 1 }}
-                    transition={{ delay: 1.1, duration: 1.4, ease: "easeOut" }}
+                    transition={{
+                      delay: 1.1,
+                      duration: 1.4,
+                      ease: "easeOut",
+                    }}
                   />
                   <motion.polygon
                     points="345,5 375,15 350,30"
@@ -188,7 +207,12 @@ export default function Hero() {
                 >
                   <motion.div
                     animate={{ y: [0, -5, 0] }}
-                    transition={{ duration: 3, repeat: Infinity, ease: "easeInOut", delay: idx * 0.25 }}
+                    transition={{
+                      duration: 3,
+                      repeat: Infinity,
+                      ease: "easeInOut",
+                      delay: idx * 0.25,
+                    }}
                     className="mb-2"
                   >
                     <div className="w-14 h-12 md:w-16 md:h-14 relative">
@@ -199,14 +223,22 @@ export default function Hero() {
                           border-r-[32px] md:border-r-[36px]
                           border-b-[22px] md:border-b-[26px]
                           border-l-transparent border-r-transparent
-                          ${idx === 3 ? "border-b-[#f6ff82]" : "border-b-[#003942]"}
+                          ${
+                            idx === 3
+                              ? "border-b-[#f6ff82]"
+                              : "border-b-[#003942]"
+                          }
                         `}
                       />
                       <div
                         className={`
                           absolute bottom-0 left-1/2 -translate-x-1/2
                           w-12 md:w-14 h-7 md:h-8 rounded-sm
-                          ${isDark ? "bg-white/10 border border-white/15" : "bg-white border border-slate-200"}
+                          ${
+                            isDark
+                              ? "bg-white/10 border border-white/15"
+                              : "bg-white border border-slate-200"
+                          }
                         `}
                       >
                         <div className="absolute bottom-0 left-1/2 -translate-x-1/2 w-3 h-5 bg-[#003942] rounded-t-sm" />
@@ -220,11 +252,17 @@ export default function Hero() {
                         key={i}
                         initial={{ opacity: 0, scale: 0.95 }}
                         animate={{ opacity: 1, scale: 1 }}
-                        transition={{ delay: 0.55 + idx * 0.12 + i * 0.07 }}
+                        transition={{
+                          delay: 0.55 + idx * 0.12 + i * 0.07,
+                        }}
                         className={`
                           w-14 md:w-16 h-4 md:h-5 rounded-full -mt-1 first:mt-0
                           ${brandGradient}
-                          ${isDark ? "shadow-[0_10px_22px_rgba(0,0,0,0.35)]" : "shadow-[0_10px_22px_rgba(15,23,42,0.12)]"}
+                          ${
+                            isDark
+                              ? "shadow-[0_10px_22px_rgba(0,0,0,0.35)]"
+                              : "shadow-[0_10px_22px_rgba(15,23,42,0.12)]"
+                          }
                         `}
                       />
                     ))}
@@ -246,11 +284,23 @@ export default function Hero() {
                     isDark ? "bg-white/5" : "bg-slate-50"
                   }`}
                 >
-                  <TrendingUp className={`${isDark ? "text-[#f6ff82]" : "text-[#003942]"} w-5 h-5`} />
+                  <TrendingUp
+                    className={`${
+                      isDark ? "text-[#f6ff82]" : "text-[#003942]"
+                    } w-5 h-5`}
+                  />
                 </div>
                 <div>
-                  <p className={`text-xs font-medium uppercase ${subText}`}>Avg. ROI Increase</p>
-                  <p className={`text-lg font-bold ${isDark ? "text-white" : "text-[#003942]"}`}>+340%</p>
+                  <p className={`text-xs font-medium uppercase ${subText}`}>
+                    Avg. ROI Increase
+                  </p>
+                  <p
+                    className={`text-lg font-bold ${
+                      isDark ? "text-white" : "text-[#003942]"
+                    }`}
+                  >
+                    +340%
+                  </p>
                 </div>
               </div>
             </motion.div>
@@ -265,7 +315,13 @@ export default function Hero() {
                 <DollarSign className="w-5 h-5 text-[#f6ff82]" />
                 <div>
                   <p className={`text-xs ${subText}`}>Properties Sold</p>
-                  <p className={`text-sm font-bold ${isDark ? "text-white" : "text-[#003942]"}`}>$2B+ Value</p>
+                  <p
+                    className={`text-sm font-bold ${
+                      isDark ? "text-white" : "text-[#003942]"
+                    }`}
+                  >
+                    $2B+ Value
+                  </p>
                 </div>
               </div>
             </motion.div>
@@ -277,7 +333,11 @@ export default function Hero() {
               className={`absolute bottom-4 right-0 px-4 py-2 rounded-full border backdrop-blur ${card} z-20 flex items-center gap-2`}
             >
               <Building2 className="w-4 h-4 text-[#f6ff82]" />
-              <span className={`text-xs font-semibold ${isDark ? "text-white" : "text-slate-900"}`}>
+              <span
+                className={`text-xs font-semibold ${
+                  isDark ? "text-white" : "text-slate-900"
+                }`}
+              >
                 Real Estate Growth
               </span>
             </motion.div>

@@ -119,7 +119,7 @@ const imageScaleTransition = {
 const CARD_SHELL =
   "group relative block overflow-hidden rounded-2xl shadow-[0_18px_45px_rgba(0,0,0,0.18)] will-change-transform";
 
-// LANDSCAPE ratio (4:3) instead of portrait (3:4). [web:202]
+// LANDSCAPE ratio (4:3) instead of portrait. [web:202]
 const CARD_ASPECT = "relative aspect-[4/3] overflow-hidden";
 
 const OVERLAY_WASH = "pointer-events-none absolute inset-0 bg-black/18";
@@ -231,7 +231,7 @@ export default function CaseStudies() {
               ${isDark ? "bg-white/5 text-white/75" : "bg-slate-100 text-slate-700"}
             `}
           >
-            <span className="w-2 h-2 bg-[#f6ff82] rounded-full" />
+            <span className={`w-2 h-2 rounded-full ${isDark ? "bg-[#f6ff82]" : "bg-[#003942]"}`} />
             <span>Our Work</span>
           </div>
 
@@ -291,11 +291,12 @@ export default function CaseStudies() {
               </p>
 
               <div className="mt-6 inline-flex">
+                {/* View All pill (NO gradient, theme-specific colors). [web:367][web:354] */}
                 <span
                   className={`
                     inline-flex items-center px-6 py-3 rounded-full text-sm font-semibold
-                    ${brandGradient} ${isDark ? "text-[#003942]" : "text-white"}
-                    transition-opacity hover:opacity-95
+                    ${isDark ? "bg-white/10 text-white hover:bg-white/15" : "bg-[#003942] text-white"}
+                    transition-colors
                     shadow-[0_10px_24px_rgba(0,0,0,0.12)]
                   `}
                 >

@@ -99,7 +99,8 @@ export default function BeforeAfter() {
         {/* Header (more compact) */}
         <div className="mx-auto mb-10 max-w-3xl text-center">
           <div className={`mb-4 inline-flex items-center gap-2 rounded-full px-3 py-1.5 text-[11px] ${pill}`}>
-            <span className="h-1.5 w-1.5 rounded-full bg-[#f6ff82]" />
+            {/* theme-matched dot */}
+            <span className={`h-1.5 w-1.5 rounded-full ${isDark ? "bg-[#f6ff82]" : "bg-[#003942]"}`} />
             <span className="tracking-wide">BEFORE & AFTER</span>
           </div>
 
@@ -154,11 +155,7 @@ export default function BeforeAfter() {
                 <div className={`rounded-2xl p-4 ${inner}`}>
                   <div className="flex items-start gap-3">
                     <div className={`h-10 w-10 shrink-0 rounded-full flex items-center justify-center ${brandGradient}`}>
-                      <span
-                        className={`h-9 w-9 rounded-full flex items-center justify-center ${
-                          isDark ? "bg-[#05060A]" : "bg-white"
-                        }`}
-                      >
+                      <span className={`h-9 w-9 rounded-full flex items-center justify-center ${isDark ? "bg-[#05060A]" : "bg-white"}`}>
                         <Check className={`h-4 w-4 ${isDark ? "text-white" : "text-slate-900"}`} />
                       </span>
                     </div>
@@ -198,19 +195,19 @@ export default function BeforeAfter() {
           ))}
         </div>
 
-        {/* CTA */}
+        {/* CTA (same pill height as Pricing) */}
         <div className="mt-9 text-center">
           <a
             href="#contact"
             className={`
-              inline-flex items-center gap-2.5 rounded-full px-7 py-3.5 text-sm font-semibold transition hover:opacity-95
-              ${brandGradient}
-              ${isDark ? "text-[#003942]" : "text-white"}
+              inline-flex items-center justify-center gap-2.5
+              rounded-full px-7 py-3.5 text-sm font-semibold
+              transition-colors duration-200
+              ${isDark ? "bg-white/10 text-white hover:bg-white/15" : "bg-[#003942] text-white"}
               shadow-[0_12px_30px_rgba(0,0,0,0.25)]
             `}
           >
             <span>Start now</span>
-            <Check className="h-5 w-5" />
           </a>
         </div>
       </div>

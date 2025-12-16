@@ -1,10 +1,14 @@
 "use client";
 
 /**
- * PRICING SECTION — NO BORDERS + no top strip on Premium
- * - Cards: borderless
- * - Header pill: filled (no gradient-border trick)
- * - Premium highlight: subtle gradient wash behind content (no top bar)
+ * PRICING SECTION — Unified cards (Premium not visually different)
+ * - Cards: borderless, same bg/colors for all
+ * - Header pill: filled
+ * - Heading: keep gradient ONLY on the word "Pricing"
+ * - Price number: SOLID color (light #003942, dark #f6ff82)
+ * - Header dot: SOLID color (light #003942, dark #f6ff82)
+ * - CTA button: light mode same, dark mode grayish
+ * - Premium: only "Best Value" pill
  */
 
 import { Check } from "lucide-react";
@@ -94,11 +98,10 @@ export default function Pricing() {
   const { isDark } = useTheme();
 
   const brandGradient = "bg-gradient-to-r from-[#f6ff82] to-[#003942]";
-
   const sectionBg = "bg-transparent";
   const headerSub = isDark ? "text-white/55" : "text-slate-600";
 
-  // Borderless cards
+  // All cards same
   const cardBase = isDark
     ? "bg-white/5 shadow-[0_18px_50px_rgba(0,0,0,0.55)] text-white"
     : "bg-white shadow-[0_18px_50px_rgba(0,0,0,0.12)] text-slate-900";
@@ -106,12 +109,13 @@ export default function Pricing() {
   const planDesc = isDark ? "text-white/55" : "text-slate-600";
   const featureText = isDark ? "text-white/75" : "text-slate-700";
 
-  // Filled pill (no border trick)
   const pill = isDark ? "bg-white/5 text-white/75" : "bg-slate-100 text-slate-700";
 
-  // Fast + smooth motion presets
   const hoverSpring = { type: "spring" as const, stiffness: 520, damping: 32, mass: 0.6 };
   const inViewTween = { duration: 0.35, ease: "easeOut" as const };
+
+  // SOLID price color rule you wanted
+  const priceColor = isDark ? "text-[#f6ff82]" : "text-[#003942]";
 
   return (
     <section className={`py-24 ${sectionBg}`}>
@@ -125,7 +129,8 @@ export default function Pricing() {
             transition={inViewTween}
             className={`inline-flex items-center gap-2 px-4 py-2 rounded-full mb-6 text-sm font-medium ${pill}`}
           >
-            <span className="w-2 h-2 bg-[#f6ff82] rounded-full" />
+            {/* Dot rule */}
+            <span className={`w-2 h-2 rounded-full ${isDark ? "bg-[#f6ff82]" : "bg-[#003942]"}`} />
             <span>Investment</span>
           </motion.div>
 
@@ -153,100 +158,80 @@ export default function Pricing() {
 
         {/* Cards */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 items-stretch">
-          {plans.map((plan, index) => {
-            const isHighlighted = plan.highlight;
+          {plans.map((plan, index) => (
+            <motion.div
+              key={index}
+              initial={{ opacity: 0, y: 18 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ ...inViewTween, delay: index * 0.06 }}
+              whileHover={{ y: -10, scale: 1.02 }}
+              whileTap={{ scale: 0.99 }}
+              className={`
+                relative rounded-2xl p-6 backdrop-blur flex flex-col overflow-hidden h-full
+                ${cardBase}
+              `}
+            >
+              <motion.div className="absolute inset-0" transition={hoverSpring} />
 
-            return (
-              <motion.div
-                key={index}
-                initial={{ opacity: 0, y: 18 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ ...inViewTween, delay: index * 0.06 }}
-                whileHover={{ y: -10, scale: 1.02 }}
-                whileTap={{ scale: 0.99 }}
-                className={`
-                  relative rounded-2xl p-6 backdrop-blur flex flex-col overflow-hidden
-                  ${cardBase}
-                  ${isHighlighted ? "lg:scale-[1.06] lg:-translate-y-2" : ""}
-                `}
-              >
-                {/* Premium wash (BEHIND content, no top bar) */}
-                {isHighlighted && (
-                  <div className={`pointer-events-none absolute inset-0 ${brandGradient} opacity-[0.10] z-0`} />
+              <div className="relative z-10 flex flex-col h-full">
+                {plan.highlight && (
+                  <div className="mb-4 inline-flex items-center">
+                    <span
+                      className={`
+                        rounded-full px-3 py-1 text-xs font-bold uppercase tracking-wider
+                        ${isDark ? "bg-[#f6ff82] text-[#003942]" : "bg-[#003942] text-white"}
+                      `}
+                    >
+                      Best Value
+                    </span>
+                  </div>
                 )}
 
-                {/* optional: keeps hover feel but does nothing visually */}
-                <motion.div className="absolute inset-0" transition={hoverSpring} />
+                <h3 className="text-xl font-bold mb-2">{plan.name}</h3>
+                <p className={`text-sm mb-4 ${planDesc}`}>{plan.description}</p>
 
-                <div className="relative z-10 flex flex-col h-full">
-                  {isHighlighted && (
-                    <div className="mb-4 inline-flex items-center">
-                      <span
-                        className={`
-                          rounded-full px-3 py-1 text-xs font-bold uppercase tracking-wider
-                          ${brandGradient} ${isDark ? "text-[#003942]" : "text-white"}
-                        `}
-                      >
-                        Best Value
-                      </span>
-                    </div>
-                  )}
+                <div className="mb-6">
+                  <span className={`text-xs ${isDark ? "text-white/45" : "text-slate-500"}`}>
+                    {plan.priceNote}
+                  </span>
 
-                  <h3 className="text-xl font-bold mb-2">{plan.name}</h3>
-                  <p className={`text-sm mb-4 ${planDesc}`}>{plan.description}</p>
-
-                  <div className="mb-6">
-                    <span className={`text-xs ${isDark ? "text-white/45" : "text-slate-500"}`}>{plan.priceNote}</span>
-                    <div className="text-3xl font-bold">
-                      <span className={`bg-clip-text text-transparent ${brandGradient}`}>
-                        <CountUp target={plan.price} />
-                      </span>
-                    </div>
+                  <div className={`text-3xl font-bold ${priceColor}`}>
+                    <CountUp target={plan.price} />
                   </div>
-
-                  <ul className="space-y-3 mb-6 flex-grow">
-                    {plan.features.map((feature, i) => (
-                      <li key={i} className="flex items-start gap-2 text-sm">
-                        <Check size={16} className="mt-0.5 shrink-0 text-[#f6ff82]" />
-                        <span className={featureText}>{feature}</span>
-                      </li>
-                    ))}
-                  </ul>
-
-                  <motion.button
-                    whileHover={{ scale: 1.01 }}
-                    whileTap={{ scale: 0.99 }}
-                    transition={hoverSpring}
-                    className={`
-                      w-full py-3 rounded-xl font-semibold transition-all duration-200 hover:opacity-95
-                      ${brandGradient}
-                      ${isDark ? "text-[#003942]" : "text-white"}
-                      shadow-[0_10px_20px_rgba(0,0,0,0.18)]
-                    `}
-                  >
-                    Get Started →
-                  </motion.button>
                 </div>
-              </motion.div>
-            );
-          })}
-        </div>
 
-        {/* Bottom Note
-        <motion.p
-          initial={{ opacity: 0 }}
-          whileInView={{ opacity: 1 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.25, ease: "easeOut" }}
-          className={`text-center text-sm mt-12 ${isDark ? "text-white/45" : "text-slate-500"}`}
-        >
-          Need a custom package?{" "}
-          <a href="#contact" className={`font-medium hover:underline ${isDark ? "text-white" : "text-slate-900"}`}>
-            Contact us
-          </a>{" "}
-          for a tailored solution.
-        </motion.p> */}
+                <ul className="space-y-3 mb-6 flex-grow">
+                  {plan.features.map((feature, i) => (
+                    <li key={i} className="flex items-start gap-2 text-sm">
+                      {/* Tick mark: dark in light mode, yellow in dark mode */}
+                      <Check
+                        size={16}
+                        className={`mt-0.5 shrink-0 ${isDark ? "text-[#f6ff82]" : "text-[#003942]"}`}
+                      />
+                      <span className={featureText}>{feature}</span>
+                    </li>
+                  ))}
+                </ul>
+
+                <motion.button
+                  whileHover={{ scale: 1.01 }}
+                  whileTap={{ scale: 0.99 }}
+                  transition={hoverSpring}
+                  className={`
+                    w-full inline-flex items-center justify-center
+                    px-6 py-3.5 rounded-full text-sm font-semibold
+                    transition-colors duration-200
+                    ${isDark ? "bg-white/10 text-white hover:bg-white/15" : "bg-[#003942] text-white"}
+                    shadow-[0_10px_20px_rgba(0,0,0,0.18)]
+                  `}
+                >
+                  Get Started →
+                </motion.button>
+              </div>
+            </motion.div>
+          ))}
+        </div>
       </div>
     </section>
   );

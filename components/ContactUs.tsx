@@ -1,11 +1,10 @@
 "use client";
 
 /**
- * CONTACT US — same theme/styles, but **no borders** anywhere:
- * - No outer container border
- * - No form card border
- * - No input/textarea borders
- * - Keep focus feedback using rings (accessible) instead of borders [web:933]
+ * CONTACT US — no borders, consistent pill button + theme-matched focus rings
+ * - Send button matches your other CTAs (pill, py-3.5, dark grayish)
+ * - Inputs keep borderless look, but focus ring matches theme:
+ *   light: #003942, dark: #f6ff82 [web:656]
  */
 
 import { motion } from "framer-motion";
@@ -17,7 +16,7 @@ export default function ContactUs() {
 
   const brandGradient = "bg-gradient-to-r from-[#f6ff82] to-[#003942]";
   const sectionBg = "bg-transparent";
-  
+
   // Removed borders here (no "border", no "*border-*")
   const shell = isDark
     ? "bg-white/5 shadow-[0_10px_30px_rgba(0,0,0,0.55)]"
@@ -27,14 +26,21 @@ export default function ContactUs() {
   const leftSub = isDark ? "text-white/55" : "text-slate-600";
 
   // Removed border
-  const formCard = isDark ? "bg-black/25" : "bg-slate-50";
+  const formCard = isDark
+    ? "bg-black/25 border border-white/10"
+    : "bg-slate-50 border border-slate-200";
 
   const label = isDark ? "text-white/70" : "text-slate-700";
 
-  // Inputs: remove border + keep focus ring for feedback [web:670][web:933]
+  // Inputs: borderless + theme-matched focus ring (instead of always yellow) [web:656]
   const inputBase = isDark
-    ? "bg-black/30 text-white placeholder:text-white/35 border-none focus:ring-1 focus:ring-[#f6ff82] focus:outline-none"
-    : "bg-white text-slate-900 placeholder:text-slate-400 border-none focus:ring-1 focus:ring-[#f6ff82] focus:outline-none";
+    ? "bg-black/30 text-white placeholder:text-white/35 border-none focus:outline-none focus:ring-1 focus:ring-[#f6ff82]"
+    : "bg-white text-slate-900 placeholder:text-slate-400 border-none focus:outline-none focus:ring-1 focus:ring-[#003942]";
+
+  // Pill CTA style (matches Pricing/About/BeforeAfter buttons)
+  const ctaBtn = isDark
+    ? "bg-white/10 text-white hover:bg-white/15"
+    : "bg-[#003942] text-white";
 
   return (
     <section className={`py-24 ${sectionBg}`}>
@@ -55,7 +61,8 @@ export default function ContactUs() {
                   [background-image:linear-gradient(${isDark ? "#05060A" : "#ffffff"},${isDark ? "#05060A" : "#ffffff"}),linear-gradient(90deg,#f6ff82,#003942)]
                 `}
               >
-                <span className="h-1.5 w-1.5 rounded-full bg-[#f6ff82]" />
+                {/* Circle: light mode #003942, dark unchanged (#f6ff82) */}
+                <span className={`h-1.5 w-1.5 rounded-full ${isDark ? "bg-[#f6ff82]" : "bg-[#003942]"}`} />
                 <span>Contact</span>
               </motion.div>
 
@@ -154,15 +161,16 @@ export default function ContactUs() {
                   />
                 </div>
 
+                {/* Send button: match previous pill buttons (no gradient) */}
                 <button
                   type="submit"
                   className={`
-                    w-full py-4 font-bold rounded-xl transition-all duration-200
-                    flex items-center justify-center gap-2 group
-                    ${brandGradient}
-                    ${isDark ? "text-[#003942]" : "text-white"}
-                    hover:opacity-95
+                    w-full inline-flex items-center justify-center gap-2
+                    rounded-full px-7 py-3.5 text-sm font-semibold
+                    transition-colors duration-200 hover:opacity-95
+                    ${ctaBtn}
                     shadow-[0_12px_30px_rgba(0,0,0,0.20)]
+                    focus:outline-none focus-visible:ring-2 focus-visible:ring-[#f6ff82]/60
                   `}
                 >
                   Send Message

@@ -147,7 +147,7 @@ export default function Testimonials() {
             animate={{ opacity: 1, y: 0 }}
             className={`inline-flex items-center gap-2 px-4 py-1.5 mb-4 rounded-full text-sm font-medium ${pillBg}`}
           >
-            <span className="h-1.5 w-1.5 rounded-full bg-[#f6ff82]" />
+            <span className={`w-2 h-2 rounded-full ${isDark ? "bg-[#f6ff82]" : "bg-[#003942]"}`} />
             Client Stories
           </motion.span>
 
