@@ -1,18 +1,7 @@
 "use client";
 
-/**
- * PRICING SECTION — Unified cards (Premium not visually different)
- * - Cards: borderless, same bg/colors for all
- * - Header pill: filled
- * - Heading: keep gradient ONLY on the word "Pricing"
- * - Price number: SOLID color (light #003942, dark #f6ff82)
- * - Header dot: SOLID color (light #003942, dark #f6ff82)
- * - CTA button: light mode same, dark mode grayish
- * - Premium: only "Best Value" pill
- */
-
-import { Check } from "lucide-react";
-import { motion, useInView } from "framer-motion";
+import { Check, ArrowUpRight } from "lucide-react";
+import { useInView } from "framer-motion";
 import { useRef, useState, useEffect } from "react";
 import { useTheme } from "@/context/ThemeContext";
 
@@ -108,79 +97,71 @@ export default function Pricing() {
 
   const planDesc = isDark ? "text-white/55" : "text-slate-600";
   const featureText = isDark ? "text-white/75" : "text-slate-700";
+  const pill = isDark
+    ? "bg-white/5 text-white/75"
+    : "bg-slate-100 text-slate-700";
 
-  const pill = isDark ? "bg-white/5 text-white/75" : "bg-slate-100 text-slate-700";
-
-  const hoverSpring = { type: "spring" as const, stiffness: 520, damping: 32, mass: 0.6 };
-  const inViewTween = { duration: 0.35, ease: "easeOut" as const };
-
-  // SOLID price color rule you wanted
+  // SOLID price color rule
   const priceColor = isDark ? "text-[#f6ff82]" : "text-[#003942]";
 
   return (
-    <section className={`py-24 ${sectionBg}`}>
+    <section id="pricing" className={`py-16 md:py-24 ${sectionBg}`}>
       <div className="container mx-auto px-6 md:px-12 lg:px-20">
         {/* Header */}
-        <div className="text-center mb-16">
-          <motion.div
-            initial={{ opacity: 0, y: 14 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={inViewTween}
-            className={`inline-flex items-center gap-2 px-4 py-2 rounded-full mb-6 text-sm font-medium ${pill}`}
+        <div className="text-center mb-12 md:mb-16">
+          <div
+            className={`inline-flex items-center gap-2 px-4 py-2 rounded-full mb-6 text-xs md:text-sm font-medium ${pill}`}
           >
-            {/* Dot rule */}
-            <span className={`w-2 h-2 rounded-full ${isDark ? "bg-[#f6ff82]" : "bg-[#003942]"}`} />
+            <span
+              className={`w-1.5 h-1.5 md:w-2 md:h-2 rounded-full ${
+                isDark ? "bg-[#f6ff82]" : "bg-[#003942]"
+              }`}
+            />
             <span>Investment</span>
-          </motion.div>
+          </div>
 
-          <motion.h2
-            initial={{ opacity: 0, y: 18 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={inViewTween}
-            className={`text-4xl md:text-5xl font-bold mb-4 ${isDark ? "text-white" : "text-slate-900"}`}
+          <h2
+            className={`text-3xl md:text-5xl font-bold mb-4 ${
+              isDark ? "text-white" : "text-slate-900"
+            }`}
           >
             Transparent{" "}
-            <span className={`bg-clip-text text-transparent ${brandGradient}`}>Pricing</span>
-          </motion.h2>
+            <span className={`bg-clip-text text-transparent ${brandGradient}`}>
+              Pricing
+            </span>
+          </h2>
 
-          <motion.p
-            initial={{ opacity: 0, y: 18 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ ...inViewTween, delay: 0.05 }}
-            className={`text-lg ${headerSub}`}
-          >
+          <p className={`text-base md:text-lg ${headerSub} max-w-2xl mx-auto`}>
             Honest pricing for every stage of growth. All prices in INR.
-          </motion.p>
+          </p>
         </div>
 
-        {/* Cards */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 items-stretch">
+        {/* Grid Layout */}
+        <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-6 items-stretch">
           {plans.map((plan, index) => (
-            <motion.div
+            <div
               key={index}
-              initial={{ opacity: 0, y: 18 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ ...inViewTween, delay: index * 0.06 }}
-              whileHover={{ y: -10, scale: 1.02 }}
-              whileTap={{ scale: 0.99 }}
               className={`
                 relative rounded-2xl p-6 backdrop-blur flex flex-col overflow-hidden h-full
                 ${cardBase}
               `}
             >
-              <motion.div className="absolute inset-0" transition={hoverSpring} />
-
               <div className="relative z-10 flex flex-col h-full">
+                {/* 
+                   Highlight Badge 
+                   - Removed the 'else' block spacer.
+                   - Now if there is no badge, the title sits at the top naturally.
+                */}
                 {plan.highlight && (
                   <div className="mb-4 inline-flex items-center">
                     <span
                       className={`
-                        rounded-full px-3 py-1 text-xs font-bold uppercase tracking-wider
-                        ${isDark ? "bg-[#f6ff82] text-[#003942]" : "bg-[#003942] text-white"}
+                        rounded-full px-3 py-1 text-[10px] md:text-xs font-bold uppercase tracking-wider
+                        ${
+                          isDark
+                            ? "bg-[#f6ff82] text-[#003942]"
+                            : "bg-[#003942] text-white"
+                        }
                       `}
                     >
                       Best Value
@@ -189,47 +170,60 @@ export default function Pricing() {
                 )}
 
                 <h3 className="text-xl font-bold mb-2">{plan.name}</h3>
-                <p className={`text-sm mb-4 ${planDesc}`}>{plan.description}</p>
+                
+                {/* Removed fixed min-height from description to reduce gaps */}
+                <p className={`text-sm mb-4 ${planDesc}`}>
+                  {plan.description}
+                </p>
 
                 <div className="mb-6">
-                  <span className={`text-xs ${isDark ? "text-white/45" : "text-slate-500"}`}>
+                  <span
+                    className={`text-xs ${
+                      isDark ? "text-white/45" : "text-slate-500"
+                    }`}
+                  >
                     {plan.priceNote}
                   </span>
-
                   <div className={`text-3xl font-bold ${priceColor}`}>
                     <CountUp target={plan.price} />
                   </div>
                 </div>
 
-                <ul className="space-y-3 mb-6 flex-grow">
+                {/* Features List */}
+                <ul className="space-y-3 mb-8 flex-grow">
                   {plan.features.map((feature, i) => (
                     <li key={i} className="flex items-start gap-2 text-sm">
-                      {/* Tick mark: dark in light mode, yellow in dark mode */}
                       <Check
                         size={16}
-                        className={`mt-0.5 shrink-0 ${isDark ? "text-[#f6ff82]" : "text-[#003942]"}`}
+                        className={`mt-0.5 shrink-0 ${
+                          isDark ? "text-[#f6ff82]" : "text-[#003942]"
+                        }`}
                       />
                       <span className={featureText}>{feature}</span>
                     </li>
                   ))}
                 </ul>
 
-                <motion.button
-                  whileHover={{ scale: 1.01 }}
-                  whileTap={{ scale: 0.99 }}
-                  transition={hoverSpring}
+                {/* Button */}
+                <button
+                  type="button"
                   className={`
-                    w-full inline-flex items-center justify-center
+                    w-full inline-flex items-center justify-center gap-2
                     px-6 py-3.5 rounded-full text-sm font-semibold
-                    transition-colors duration-200
-                    ${isDark ? "bg-white/10 text-white hover:bg-white/15" : "bg-[#003942] text-white"}
+                    transition-all duration-200 active:scale-95
+                    ${
+                      isDark
+                        ? "bg-white/10 text-white hover:bg-white/15"
+                        : "bg-[#003942] text-white hover:bg-[#002a31]"
+                    }
                     shadow-[0_10px_20px_rgba(0,0,0,0.18)]
                   `}
                 >
-                  Get Started →
-                </motion.button>
+                  <span>Get Started</span>
+                  <ArrowUpRight className="h-4 w-4" />
+                </button>
               </div>
-            </motion.div>
+            </div>
           ))}
         </div>
       </div>

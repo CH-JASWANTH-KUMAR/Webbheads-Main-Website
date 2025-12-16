@@ -34,8 +34,14 @@ export default function Education() {
     ? "bg-white/5"
     : "bg-white shadow-[0_18px_50px_rgba(0,0,0,0.12)]";
 
+  // Circle bg rule:
+  // - Dark: grayish (no yellow)
+  // - Light: #003942
+  const circleBg = isDark ? "bg-[#2B2D31]" : "bg-[#003942]";
+  const circleText = "text-white";
+
   return (
-    <section className={`relative py-20 md:py-28 overflow-hidden ${sectionBg}`}>
+    <section className={`relative py-16 md:py-28 overflow-hidden ${sectionBg}`}>
       <div className="container mx-auto px-6 md:px-12 lg:px-20">
         {/* Card */}
         <motion.div
@@ -44,12 +50,14 @@ export default function Education() {
           transition={{ duration: 0.35, ease: "easeOut" }}
           className={`rounded-3xl overflow-hidden ${cardClass} mb-10 md:mb-14`}
         >
-          <div className="grid lg:grid-cols-[1.25fr_1fr] items-stretch gap-4 lg:gap-6">
+          {/* Responsive Grid: Stacks on mobile, side-by-side on Large (lg) screens */}
+          <div className="grid grid-cols-1 lg:grid-cols-[1.25fr_1fr] items-stretch gap-0 lg:gap-6">
+            
             {/* LEFT: Video */}
-            <div className="p-8 md:p-10 lg:py-12 lg:ps-12 lg:pe-4">
+            <div className="p-4 md:p-8 lg:py-12 lg:ps-12 lg:pe-4 order-1 lg:order-1">
               <div
                 className={`
-                  relative w-full h-full rounded-3xl overflow-hidden
+                  relative w-full aspect-video rounded-3xl overflow-hidden
                   ${isDark ? "bg-black/20" : "bg-slate-100"}
                 `}
               >
@@ -66,39 +74,41 @@ export default function Education() {
             </div>
 
             {/* RIGHT: Text */}
-            <div className="p-8 md:p-10 lg:py-12 lg:ps-4 lg:pe-12 flex flex-col items-start text-left">
-              <h2 className={`text-3xl md:text-4xl font-bold leading-tight ${heading}`}>
-                Experience
-                <br />
-                {/* Innovation color rule */}
+            <div className="p-6 md:p-8 lg:py-12 lg:ps-4 lg:pe-12 flex flex-col items-start text-left justify-center order-2 lg:order-2">
+              <h2
+                className={`text-2xl sm:text-3xl md:text-4xl font-bold leading-tight ${heading}`}
+              >
+                Experience <br className="hidden md:block" />
                 <span className={isDark ? "text-[#f6ff82]" : "text-[#003942]"}>
                   Innovation
                 </span>
-                , See the
-                <br />
+                , See the <br className="hidden md:block" />
                 Impact
               </h2>
 
-              <p className={`mt-4 text-lg ${sub} max-w-xl`}>
-                Discover why top agencies are embracing digital solutions and how you can stay ahead
-                of the competition.
+              <p className={`mt-4 text-base md:text-lg ${sub} max-w-xl`}>
+                Discover why top agencies are embracing digital solutions and
+                how you can stay ahead of the competition.
               </p>
 
-              <div className="mt-8 space-y-5 w-full max-w-xl">
+              <div className="mt-8 space-y-4 md:space-y-5 w-full max-w-xl">
                 {checklist.map((text) => (
-                  <div key={text} className="flex items-center gap-4 justify-start">
-                    {/* Circle shape updated (NO gradient; theme-specific colors). [web:367][web:393] */}
+                  <div
+                    key={text}
+                    className="flex items-start md:items-center gap-4 justify-start"
+                  >
+                    {/* Checklist circle */}
                     <div
                       className={`
-                        h-10 w-10 shrink-0 rounded-full flex items-center justify-center
-                        ${isDark ? "bg-[#f6ff82] text-[#003942]" : "bg-[#003942] text-white"}
+                        h-8 w-8 md:h-10 md:w-10 shrink-0 rounded-full flex items-center justify-center mt-1 md:mt-0
+                        ${circleBg} ${circleText}
                       `}
                     >
-                      <Check className="h-4 w-4" />
+                      <Check className="h-3.5 w-3.5 md:h-4 md:w-4" />
                     </div>
 
                     <p
-                      className={`text-base leading-snug ${
+                      className={`text-sm md:text-base leading-snug ${
                         isDark ? "text-white/75" : "text-slate-700"
                       }`}
                     >
@@ -125,25 +135,41 @@ export default function Education() {
             `}
           >
             <motion.div
-              className="flex gap-6"
+              className="flex gap-4 md:gap-6"
               animate={{ x: [0, -1600] }}
               transition={{
-                x: { repeat: Infinity, repeatType: "loop", duration: 28, ease: "linear" },
+                x: {
+                  repeat: Infinity,
+                  repeatType: "loop",
+                  duration: 28,
+                  ease: "linear",
+                },
               }}
             >
-              {[...marqueeItems, ...marqueeItems, ...marqueeItems].map((item, index) => (
-                <div
-                  key={index}
-                  className={`
-                    shrink-0 flex items-center gap-3 px-6 py-3 rounded-full
+              {[...marqueeItems, ...marqueeItems, ...marqueeItems].map(
+                (item, index) => (
+                  <div
+                    key={index}
+                    className={`
+                    shrink-0 flex items-center gap-2 md:gap-3 px-4 md:px-6 py-2 md:py-3 rounded-full
                     ${isDark ? "bg-white/5" : "bg-slate-100"}
                     shadow-none
                   `}
-                >
-                  <span className="w-2 h-2 bg-[#f6ff82] rounded-full" />
-                  <span className={`text-sm font-medium whitespace-nowrap ${heading}`}>{item}</span>
-                </div>
-              ))}
+                  >
+                    {/* Marquee dot */}
+                    <span
+                      className={`w-1.5 h-1.5 md:w-2 md:h-2 rounded-full ${
+                        isDark ? "bg-[#f6ff82]" : "bg-[#003942]"
+                      }`}
+                    />
+                    <span
+                      className={`text-xs md:text-sm font-medium whitespace-nowrap ${heading}`}
+                    >
+                      {item}
+                    </span>
+                  </div>
+                )
+              )}
             </motion.div>
           </div>
         </div>

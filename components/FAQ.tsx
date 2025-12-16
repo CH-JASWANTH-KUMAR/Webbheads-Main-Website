@@ -3,6 +3,7 @@
 import { useState } from "react";
 import { Plus, Minus } from "lucide-react";
 import { useTheme } from "@/context/ThemeContext";
+import { motion, AnimatePresence, LayoutGroup } from "framer-motion";
 
 const faqs = [
   {
@@ -76,22 +77,25 @@ export default function FAQ() {
     const isOpen = openIndex === index;
 
     return (
-      <div className="w-full">
-        <button
-          type="button"
+      <motion.div>
+        <motion.button
+          layout
           onClick={() => toggleFAQ(index)}
           className={`
-            w-full text-left rounded-3xl p-6 backdrop-blur select-none
-            transition-all duration-500 ease-[cubic-bezier(0.4,0,0.2,1)]
+            w-full text-left rounded-2xl md:rounded-3xl p-5 md:p-6 backdrop-blur select-none
             ${card}
             ${isDark ? "hover:bg-white/10" : "hover:bg-slate-50"}
             ${isOpen ? (isDark ? "bg-white/10" : "bg-white") : ""}
             focus:outline-none
           `}
+          transition={{
+            layout: { duration: 0.4, type: "spring", stiffness: 200, damping: 25 },
+          }}
         >
-          <div className="flex items-center justify-between gap-4">
+          {/* Header - items-center ensures text is centered vertically with the button */}
+          <motion.div layout="position" className="flex items-center justify-between gap-4">
             <h3
-              className={`text-lg font-semibold pr-8 ${
+              className={`text-base md:text-lg font-semibold pr-4 md:pr-8 ${
                 isDark ? "text-white" : "text-slate-900"
               }`}
             >
@@ -99,85 +103,103 @@ export default function FAQ() {
             </h3>
             <div
               className={`
-                h-10 w-10 shrink-0 rounded-full flex items-center justify-center
-                transition-all duration-500 ease-[cubic-bezier(0.4,0,0.2,1)]
+                h-8 w-8 md:h-10 md:w-10 shrink-0 rounded-full flex items-center justify-center
+                transition-colors duration-300
                 ${isDark ? "bg-white/10 text-white" : "bg-[#003942] text-white"}
               `}
             >
-              {isOpen ? (
-                <Minus className="w-4 h-4" />
-              ) : (
-                <Plus className="w-4 h-4" />
-              )}
-            </div>
-          </div>
-
-          <div
-            className={`
-              grid
-              transition-all duration-500 ease-[cubic-bezier(0.4,0,0.2,1)]
-              ${isOpen ? "grid-rows-[1fr] opacity-100" : "grid-rows-[0fr] opacity-0"}
-            `}
-          >
-            <div className="overflow-hidden">
-              <p
-                className={`
-                  mt-4 leading-relaxed
-                  transition-all duration-500 ease-[cubic-bezier(0.4,0,0.2,1)]
-                  ${isOpen ? "translate-y-0" : "-translate-y-1"}
-                  ${isDark ? "text-white/70" : "text-slate-600"}
-                `}
+              <motion.div
+                animate={{ rotate: isOpen ? 180 : 0 }}
+                transition={{ duration: 0.3 }}
+                className="flex items-center justify-center"
               >
-                {faq.answer}
-              </p>
+                {isOpen ? (
+                  <Minus className="w-3.5 h-3.5 md:w-4 md:h-4" />
+                ) : (
+                  <Plus className="w-3.5 h-3.5 md:w-4 md:h-4" />
+                )}
+              </motion.div>
             </div>
-          </div>
-        </button>
-      </div>
+          </motion.div>
+
+          {/* Body */}
+          <AnimatePresence mode="wait" initial={false}>
+            {isOpen && (
+              <motion.div
+                initial={{ height: 0, opacity: 0 }}
+                animate={{ height: "auto", opacity: 1 }}
+                exit={{ height: 0, opacity: 0 }}
+                transition={{ duration: 0.3, ease: "easeOut" }}
+                className="overflow-hidden"
+              >
+                <p
+                  className={`
+                    pt-4 leading-relaxed text-sm md:text-base
+                    ${isDark ? "text-white/70" : "text-slate-600"}
+                  `}
+                >
+                  {faq.answer}
+                </p>
+              </motion.div>
+            )}
+          </AnimatePresence>
+        </motion.button>
+      </motion.div>
     );
   };
 
   return (
-    <section className={`relative py-24 overflow-hidden ${sectionBg}`}>
+    <section className={`relative py-16 md:py-24 overflow-hidden ${sectionBg}`}>
       <div className="container mx-auto px-6 md:px-12 lg:px-20 relative z-10">
-        {/* Header */}
-        <div className="text-center mb-16">
-          {/* Pill like "Our Work" (simple bg, no gradient-border). [web:234] */}
+        <div className="text-center mb-12 md:mb-16">
           <div
             className={`
-              inline-flex items-center gap-2 px-4 py-2 rounded-full mb-6 text-sm font-medium
+              inline-flex items-center gap-2 px-4 py-2 rounded-full mb-6 text-xs md:text-sm font-medium
               ${isDark ? "bg-white/5 text-white/75" : "bg-slate-100 text-slate-700"}
             `}
           >
-            <span className={`w-2 h-2 rounded-full ${isDark ? "bg-[#f6ff82]" : "bg-[#003942]"}`} />
+            <span
+              className={`w-1.5 h-1.5 md:w-2 md:h-2 rounded-full ${
+                isDark ? "bg-[#f6ff82]" : "bg-[#003942]"
+              }`}
+            />
             <span>FAQ</span>
           </div>
 
-          <h2 className={`text-4xl md:text-5xl font-bold ${heading} mb-4`}>
+          <h2
+            className={`text-3xl md:text-5xl font-bold ${heading} mb-4`}
+          >
             Questions{" "}
-            <span className={`bg-clip-text text-transparent ${brandGradient}`}>
+            <span
+              className={`bg-clip-text text-transparent ${brandGradient}`}
+            >
               Answered
             </span>
           </h2>
 
-          <p className={`${sub} text-lg max-w-2xl mx-auto`}>
+          <p
+            className={`${sub} text-base md:text-lg max-w-2xl mx-auto`}
+          >
             Find answers to the most common questions below.
           </p>
         </div>
 
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-          <div className="space-y-4">
-            {leftFaqs.map((faq, colIdx) => (
-              <FaqItem key={faq.question} faq={faq} index={colIdx * 2} />
-            ))}
-          </div>
+        {/* LayoutGroup ensures shared layout animations don't conflict */}
+        <LayoutGroup>
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 md:gap-6 items-start">
+            <div className="space-y-4">
+              {leftFaqs.map((faq, colIdx) => (
+                <FaqItem key={faq.question} faq={faq} index={colIdx * 2} />
+              ))}
+            </div>
 
-          <div className="space-y-4">
-            {rightFaqs.map((faq, colIdx) => (
-              <FaqItem key={faq.question} faq={faq} index={colIdx * 2 + 1} />
-            ))}
+            <div className="space-y-4">
+              {rightFaqs.map((faq, colIdx) => (
+                <FaqItem key={faq.question} faq={faq} index={colIdx * 2 + 1} />
+              ))}
+            </div>
           </div>
-        </div>
+        </LayoutGroup>
       </div>
     </section>
   );

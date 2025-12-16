@@ -1,20 +1,21 @@
 "use client";
 
 /**
- * ==========================================================================
- * THEME TOGGLE BUTTON - Dark/Light Mode Switch
- * ==========================================================================
- * Animated toggle button with sun/moon icons
- * Premium glass effect with smooth transitions
- * ==========================================================================
+ * THEME TOGGLE BUTTON - icon only (no background)
  */
 
-import { motion } from 'framer-motion';
-import { Sun, Moon } from 'lucide-react';
-import { useTheme } from '@/context/ThemeContext';
+import { motion } from "framer-motion";
+import { Sun, Moon } from "lucide-react";
+import { useTheme } from "@/context/ThemeContext";
 
 export default function ThemeToggle() {
-  const { theme, toggleTheme, isDark } = useTheme();
+  const { toggleTheme, isDark } = useTheme();
+
+  // Icon color only (no bg)
+  const iconColor = isDark ? "text-white/75 hover:text-white" : "text-slate-900/80 hover:text-slate-900";
+
+  // Optional: subtle focus ring for accessibility (still no bg) [web:388]
+  const focusRing = isDark ? "focus-visible:ring-[#f6ff82]/60" : "focus-visible:ring-[#003942]/35";
 
   return (
     <motion.button
@@ -24,31 +25,30 @@ export default function ThemeToggle() {
       className={`
         relative w-10 h-10 rounded-full
         flex items-center justify-center
-        transition-all duration-300
-        ${isDark 
-          ? 'bg-[#f6ff82]/20 hover:bg-[#f6ff82]/30 text-[#f6ff82]' 
-          : 'bg-[#003942]/5 hover:bg-[#003942]/10 text-[#003942]'
-        }
+        bg-transparent
+        transition-colors duration-200
+        ${iconColor}
+        focus:outline-none focus-visible:ring-2 ${focusRing}
       `}
-      aria-label={`Switch to ${isDark ? 'light' : 'dark'} mode`}
+      aria-label={`Switch to ${isDark ? "light" : "dark"} mode`}
     >
       <motion.div
         initial={false}
-        animate={{ 
+        animate={{
           rotate: isDark ? 0 : 180,
-          scale: isDark ? 1 : 0
+          scale: isDark ? 1 : 0,
         }}
         transition={{ duration: 0.3 }}
         className="absolute"
       >
         <Moon size={18} />
       </motion.div>
-      
+
       <motion.div
         initial={false}
-        animate={{ 
+        animate={{
           rotate: isDark ? -180 : 0,
-          scale: isDark ? 0 : 1
+          scale: isDark ? 0 : 1,
         }}
         transition={{ duration: 0.3 }}
         className="absolute"
