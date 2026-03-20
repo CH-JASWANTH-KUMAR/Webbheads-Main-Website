@@ -24,15 +24,14 @@ const marqueeItems = [
 export default function Education() {
   const { isDark } = useTheme();
 
-  // IMPORTANT: make section transparent so global blobs show through.
-  const sectionBg = "bg-transparent";
+  const sectionBg = isDark ? "bg-black" : "bg-[#F7FAFC]";
 
   const heading = isDark ? "text-white" : "text-slate-900";
   const sub = isDark ? "text-white/55" : "text-slate-600";
 
   const cardClass = isDark
-    ? "bg-white/5"
-    : "bg-white shadow-[0_18px_50px_rgba(0,0,0,0.12)]";
+    ? "bg-[#11151C] border border-white/10 shadow-[0_22px_58px_rgba(0,0,0,0.45)]"
+    : "bg-white border border-[#003942]/10 shadow-[0_18px_50px_rgba(0,0,0,0.12)]";
 
   // Circle bg rule:
   // - Dark: grayish (no yellow)
@@ -51,10 +50,10 @@ export default function Education() {
           className={`rounded-3xl overflow-hidden ${cardClass} mb-10 md:mb-14`}
         >
           {/* Responsive Grid: Stacks on mobile, side-by-side on Large (lg) screens */}
-          <div className="grid grid-cols-1 lg:grid-cols-[1.25fr_1fr] items-stretch gap-0 lg:gap-6">
+          <div className="grid grid-cols-1 xl:grid-cols-[minmax(0,1.08fr)_minmax(0,1fr)] items-center gap-0 xl:gap-8">
             
             {/* LEFT: Video */}
-            <div className="p-4 md:p-8 lg:py-12 lg:ps-12 lg:pe-4 order-1 lg:order-1">
+            <div className="p-5 md:p-8 xl:p-10 order-1">
               <div
                 className={`
                   relative w-full aspect-video rounded-3xl overflow-hidden
@@ -69,21 +68,20 @@ export default function Education() {
                   allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
                   allowFullScreen
                 />
-                <div className="absolute inset-0 rounded-3xl ring-1 ring-inset ring-white/10 pointer-events-none" />
+                <div className={`absolute inset-0 rounded-3xl ring-1 ring-inset pointer-events-none ${isDark ? "ring-white/15" : "ring-black/10"}`} />
               </div>
             </div>
 
             {/* RIGHT: Text */}
-            <div className="p-6 md:p-8 lg:py-12 lg:ps-4 lg:pe-12 flex flex-col items-start text-left justify-center order-2 lg:order-2">
+            <div className="p-6 md:p-8 xl:p-10 flex flex-col items-start text-left justify-center order-2">
               <h2
                 className={`text-2xl sm:text-3xl md:text-4xl font-bold leading-tight ${heading}`}
               >
-                Experience <br className="hidden md:block" />
+                Experience{" "}
                 <span className={isDark ? "text-[#f6ff82]" : "text-[#003942]"}>
                   Innovation
                 </span>
-                , See the <br className="hidden md:block" />
-                Impact
+                , See the Impact
               </h2>
 
               <p className={`mt-4 text-base md:text-lg ${sub} max-w-xl`}>

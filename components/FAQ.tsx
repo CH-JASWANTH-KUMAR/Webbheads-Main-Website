@@ -1,9 +1,9 @@
 "use client";
 
 import { useState } from "react";
-import { Plus, Minus } from "lucide-react";
+import { Plus } from "lucide-react";
 import { useTheme } from "@/context/ThemeContext";
-import { motion, AnimatePresence, LayoutGroup } from "framer-motion";
+import { motion, LayoutGroup } from "framer-motion";
 
 const faqs = [
   {
@@ -53,13 +53,13 @@ export default function FAQ() {
   const [openIndex, setOpenIndex] = useState<number | null>(null);
 
   const brandGradient = "bg-gradient-to-r from-[#f6ff82] to-[#003942]";
-  const sectionBg = "bg-transparent";
+  const sectionBg = isDark ? "bg-transparent" : "bg-[#f3f7fb]";
   const heading = isDark ? "text-white" : "text-slate-900";
   const sub = isDark ? "text-white/55" : "text-slate-600";
 
   const card = isDark
-    ? "bg-white/5 shadow-[0_10px_30px_rgba(0,0,0,0.55)]"
-    : "bg-white shadow-[0_10px_30px_rgba(15,23,42,0.08)]";
+    ? "bg-white/5 border border-white/10 shadow-[0_10px_30px_rgba(0,0,0,0.55)]"
+    : "bg-white border border-[#003942]/12 shadow-[0_12px_30px_rgba(15,23,42,0.08)]";
 
   const toggleFAQ = (index: number) =>
     setOpenIndex((prev) => (prev === index ? null : index));
@@ -77,22 +77,20 @@ export default function FAQ() {
     const isOpen = openIndex === index;
 
     return (
-      <motion.div>
-        <motion.button
-          layout
+      <motion.div
+        className={`
+          w-full rounded-2xl md:rounded-3xl p-5 md:p-6 backdrop-blur select-none overflow-hidden
+          ${card}
+          ${isDark ? "hover:bg-white/10" : "hover:bg-slate-50"}
+          ${isOpen ? (isDark ? "bg-white/10" : "bg-white") : ""}
+        `}
+      >
+        <button
+          type="button"
           onClick={() => toggleFAQ(index)}
-          className={`
-            w-full text-left rounded-2xl md:rounded-3xl p-5 md:p-6 backdrop-blur select-none
-            ${card}
-            ${isDark ? "hover:bg-white/10" : "hover:bg-slate-50"}
-            ${isOpen ? (isDark ? "bg-white/10" : "bg-white") : ""}
-            focus:outline-none
-          `}
-          transition={{
-            layout: { duration: 0.4, type: "spring", stiffness: 200, damping: 25 },
-          }}
+          className="w-full text-left focus:outline-none"
+          aria-expanded={isOpen}
         >
-          {/* Header - items-center ensures text is centered vertically with the button */}
           <motion.div layout="position" className="flex items-center justify-between gap-4">
             <h3
               className={`text-base md:text-lg font-semibold pr-4 md:pr-8 ${
@@ -109,41 +107,41 @@ export default function FAQ() {
               `}
             >
               <motion.div
-                animate={{ rotate: isOpen ? 180 : 0 }}
-                transition={{ duration: 0.3 }}
+                animate={{ rotate: isOpen ? 45 : 0 }}
+                transition={{ duration: 0.35, ease: [0.22, 1, 0.36, 1] }}
                 className="flex items-center justify-center"
               >
-                {isOpen ? (
-                  <Minus className="w-3.5 h-3.5 md:w-4 md:h-4" />
-                ) : (
-                  <Plus className="w-3.5 h-3.5 md:w-4 md:h-4" />
-                )}
+                <Plus className="w-3.5 h-3.5 md:w-4 md:h-4" />
               </motion.div>
             </div>
           </motion.div>
+        </button>
 
-          {/* Body */}
-          <AnimatePresence mode="wait" initial={false}>
-            {isOpen && (
-              <motion.div
-                initial={{ height: 0, opacity: 0 }}
-                animate={{ height: "auto", opacity: 1 }}
-                exit={{ height: 0, opacity: 0 }}
-                transition={{ duration: 0.3, ease: "easeOut" }}
-                className="overflow-hidden"
-              >
-                <p
-                  className={`
-                    pt-4 leading-relaxed text-sm md:text-base
-                    ${isDark ? "text-white/70" : "text-slate-600"}
-                  `}
-                >
-                  {faq.answer}
-                </p>
-              </motion.div>
-            )}
-          </AnimatePresence>
-        </motion.button>
+        <motion.div
+          initial={false}
+          animate={{
+            height: isOpen ? "auto" : 0,
+            opacity: isOpen ? 1 : 0,
+          }}
+          transition={{
+            height: { type: "spring", stiffness: 170, damping: 24, mass: 0.35 },
+            opacity: { duration: 0.22, ease: "easeOut" },
+          }}
+          className="overflow-hidden"
+          aria-hidden={!isOpen}
+        >
+          <motion.p
+            initial={false}
+            animate={{ y: isOpen ? 0 : -6 }}
+            transition={{ duration: 0.28, ease: [0.22, 1, 0.36, 1] }}
+            className={`
+              pt-4 leading-relaxed text-sm md:text-base
+              ${isDark ? "text-white/70" : "text-slate-700"}
+            `}
+          >
+            {faq.answer}
+          </motion.p>
+        </motion.div>
       </motion.div>
     );
   };

@@ -62,8 +62,12 @@ export default function Navbar() {
     ? "text-white/85 border-white/10"
     : "text-slate-800 border-black/10";
 
-  const ctaBg = isDark ? "bg-[#2B2D31]" : "bg-[#003942]";
+  const ctaBg = isDark
+    ? "bg-gradient-to-r from-[#f6ff82] to-[#dce86f]"
+    : "bg-gradient-to-r from-[#003942] to-[#005766]";
   const ctaText = "text-white";
+  const ctaTextDesktop = isDark ? "text-[#1D1F23]" : ctaText;
+  const ctaRing = isDark ? "ring-[#f6ff82]/50" : "ring-[#003942]/25";
 
   return (
     <>
@@ -122,9 +126,7 @@ export default function Navbar() {
 
           {/* Right side (Desktop) */}
           <div className="hidden md:flex items-center gap-3 shrink-0">
-            <div className="bg-transparent p-0 rounded-none">
-              <ThemeToggle />
-            </div>
+            <ThemeToggle />
 
             <motion.a
               href="https://cal.com/webb-heads"
@@ -134,12 +136,13 @@ export default function Navbar() {
               whileTap={{ scale: tapScale }}
               transition={tapT}
               className={`
-                px-5 py-2.5 text-sm font-semibold rounded-full
-                ${ctaBg} ${ctaText}
+                px-5 py-2.5 text-sm font-bold rounded-full
+                ${ctaBg} ${ctaTextDesktop}
                 flex items-center gap-2
+                ring-1 ${ctaRing}
                 focus:outline-none focus-visible:ring-2 ${focusRing}
               `}
-              style={{ boxShadow: "0 12px 30px rgba(0,0,0,0.18)" }}
+              style={{ boxShadow: isDark ? "0 14px 34px rgba(246,255,130,0.24)" : "0 14px 34px rgba(0,57,66,0.24)" }}
             >
               Book a Call
             </motion.a>
@@ -147,9 +150,7 @@ export default function Navbar() {
 
           {/* Mobile controls */}
           <div className="md:hidden flex items-center gap-2">
-            <div className="bg-transparent p-0 rounded-none">
-              <ThemeToggle />
-            </div>
+            <ThemeToggle />
 
             <motion.button
               type="button"
@@ -218,11 +219,13 @@ export default function Navbar() {
                   whileTap={{ scale: tapScale }}
                   transition={tapT}
                   className={`
-                    mt-6 w-full py-4 text-center font-semibold rounded-full
+                    mt-6 w-full py-4 text-center font-bold rounded-full
                     flex items-center justify-center
                     ${ctaBg} ${ctaText}
+                    ring-1 ${ctaRing}
                     focus:outline-none focus-visible:ring-2 ${focusRing}
                   `}
+                  style={{ boxShadow: isDark ? "0 14px 34px rgba(246,255,130,0.24)" : "0 14px 34px rgba(0,57,66,0.24)" }}
                 >
                   Book a Call
                 </motion.a>

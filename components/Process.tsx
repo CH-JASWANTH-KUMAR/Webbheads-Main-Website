@@ -12,7 +12,7 @@
  * ==========================================================================
  */
 
-import { motion, useScroll, useTransform, AnimatePresence } from "framer-motion";
+import { motion, useScroll, useTransform, useSpring, AnimatePresence } from "framer-motion";
 import { MessageSquare, Search, PenTool, Code2, Rocket, BarChart, CheckCircle2, Clock } from "lucide-react";
 import { useRef, useState } from "react";
 import { useTheme } from '@/context/ThemeContext';
@@ -137,11 +137,25 @@ export default function Process() {
   // Scroll-based animation - synced with scroll position
   const { scrollYProgress } = useScroll({
     target: sectionRef,
-    offset: ["start end", "center center"] // Animation completes when section center hits viewport center
+    offset: ["start 90%", "end 35%"]
   });
 
-  // Transform scroll progress to step index (0 to 6)
-  const progressValue = useTransform(scrollYProgress, [0, 1], [0, steps.length]);
+  const smoothProgress = useSpring(scrollYProgress, {
+    stiffness: 90,
+    damping: 24,
+    mass: 0.35,
+  });
+
+  const visibleSteps = steps.slice(0, 4);
+
+  // Transform scroll progress to step index for visible steps only.
+  const progressValue = useTransform(smoothProgress, [0, 1], [0, visibleSteps.length]);
+
+  const getHoverPositionClass = (index: number) => {
+    if (index === 0) return "left-0 translate-x-0";
+    if (index === visibleSteps.length - 1) return "left-auto right-0 translate-x-0";
+    return "left-1/2 -translate-x-1/2";
+  };
 
   return (
     <>
@@ -162,7 +176,7 @@ export default function Process() {
               Our <span className={`${isDark ? 'text-transparent bg-clip-text bg-gradient-to-r from-[#f6ff82] to-[#d4e682]' : 'text-transparent bg-clip-text bg-gradient-to-r from-[#003942] to-[#005f73]'}`}>Process</span>
             </h2>
             <p className={`text-lg max-w-2xl mx-auto ${isDark ? 'text-gray-400' : 'text-gray-600'}`}>
-              A proven 6-step workflow designed to deliver exceptional results. Hover over any stage to learn more.
+              A focused 4-step workflow designed to deliver exceptional results. Hover over any stage to learn more.
             </p>
           </motion.div>
 
@@ -171,14 +185,14 @@ export default function Process() {
             {/* Horizontal Progress Line (Desktop) */}
             <div className={`absolute top-[3.5rem] left-0 w-full h-1 hidden lg:block rounded-full overflow-hidden ${isDark ? 'bg-[#003942]' : 'bg-gray-200'}`}>
               <motion.div
-                style={{ scaleX: scrollYProgress, transformOrigin: "left" }}
+                style={{ scaleX: smoothProgress, transformOrigin: "left" }}
                 className="h-full bg-gradient-to-r from-[#f6ff82] to-[#D4AF37]"
               />
             </div>
 
             {/* Steps Grid */}
-            <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-6 lg:gap-4 relative z-10">
-              {steps.map((step, index) => (
+            <div className="grid grid-cols-2 lg:grid-cols-4 gap-6 lg:gap-5 relative z-10">
+              {visibleSteps.map((step, index) => (
                 <motion.div
                   key={index}
                   initial={{ opacity: 0, y: 30 }}
@@ -199,17 +213,25 @@ export default function Process() {
                         [index, index + 0.5],
                         [isDark ? "#003942" : "#E5E7EB", "#f6ff82"]
                       ),
-                      background: useTransform(
+                      backgroundColor: useTransform(
                         progressValue,
                         [index, index + 0.5],
                         [
                           isDark ? "#002428" : "#FFFFFF",
-                          "linear-gradient(135deg, #f6ff82 0%, #d4e682 100%)"
+                          "#f6ff82"
                         ]
                       ),
                     }}
                   >
                     <motion.div
+                      className="absolute inset-0 rounded-full bg-gradient-to-br from-[#f6ff82] to-[#d4e682]"
+                      style={{
+                        opacity: useTransform(progressValue, [index, index + 0.5], [0, 1]),
+                      }}
+                    />
+
+                    <motion.div
+                      className="relative z-10"
                       style={{
                         color: useTransform(
                           progressValue,
@@ -223,7 +245,7 @@ export default function Process() {
 
                     {/* Completed checkmark */}
                     <motion.div
-                      className="absolute -top-1 -right-1 w-6 h-6 bg-[#003942] rounded-full flex items-center justify-center"
+                      className="absolute z-20 -top-1 -right-1 w-6 h-6 bg-[#003942] rounded-full flex items-center justify-center"
                       style={{
                         scale: useTransform(progressValue, [index + 0.8, index + 1], [0, 1]),
                         opacity: useTransform(progressValue, [index + 0.8, index + 1], [0, 1]),
@@ -233,7 +255,7 @@ export default function Process() {
                     </motion.div>
 
                     {/* Hover indicator overlay */}
-                    <div className="absolute inset-0 rounded-full bg-[#f6ff82]/0 group-hover:bg-[#f6ff82]/10 transition-colors duration-300" />
+                    <div className="absolute inset-0 z-10 rounded-full bg-[#f6ff82]/0 group-hover:bg-[#f6ff82]/10 transition-colors duration-300" />
                   </motion.div>
 
                   {/* Step Number */}
@@ -286,7 +308,7 @@ export default function Process() {
                         animate={{ opacity: 1, y: 0, scale: 1 }}
                         exit={{ opacity: 0, y: 10, scale: 0.95 }}
                         transition={{ duration: 0.2, ease: "easeOut" }}
-                        className="absolute bottom-full mb-4 left-1/2 -translate-x-1/2 w-72 z-50 pointer-events-none"
+                        className={`absolute bottom-full mb-4 w-[min(22rem,calc(100vw-2rem))] lg:w-72 z-50 pointer-events-none ${getHoverPositionClass(index)}`}
                       >
                         <div className={`rounded-xl shadow-2xl border overflow-hidden ${isDark ? 'bg-[#002428] border-[#003942]' : 'bg-white border-gray-200'}`}>
                           {/* Header with gradient */}

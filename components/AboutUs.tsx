@@ -8,7 +8,7 @@ export default function AboutUs() {
   const { isDark } = useTheme();
 
   const brandGradient = "bg-gradient-to-r from-[#f6ff82] to-[#003942]";
-  const sectionBg = "bg-transparent";
+  const sectionBg = isDark ? "bg-transparent" : "bg-[#f4f8fc]";
 
   // No borders (match your card style)
   const card = isDark
@@ -35,7 +35,7 @@ export default function AboutUs() {
   return (
     <section id="about" className={`py-16 md:py-24 overflow-hidden ${sectionBg}`}>
       <div className="container mx-auto px-6 md:px-12 lg:px-20">
-        <div className="flex flex-col lg:flex-row items-center lg:items-start gap-12 lg:gap-16">
+        <div className="grid grid-cols-1 lg:grid-cols-2 items-center gap-12 lg:gap-14">
           {/* 
             LEFT: Team Photo 
             - Removed `lg:justify-end` which was pushing it right (leaving left gap).
@@ -47,7 +47,7 @@ export default function AboutUs() {
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.8 }}
-            className="w-full lg:w-1/2 relative flex items-center justify-center"
+            className="w-full relative flex items-center justify-center"
           >
             <div className="relative w-full max-w-md lg:max-w-xl">
               {/* Rotating badge */}
@@ -115,7 +115,7 @@ export default function AboutUs() {
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.8 }}
-            className="w-full lg:w-1/2 text-center lg:text-left"
+            className="w-full text-center lg:text-left lg:max-w-[560px] lg:ml-auto"
           >
             {/* Pill */}
             <div
@@ -141,21 +141,21 @@ export default function AboutUs() {
             </h2>
 
             <p
-              className={`text-base md:text-lg mb-4 leading-relaxed ${bodyText}`}
+              className={`text-base md:text-lg mb-3 leading-relaxed ${bodyText}`}
             >
               At WebbHeads, we build functional technologies that help
               businesses optimize time and deliver exceptional user experiences.
             </p>
-            <p className={`text-base md:text-lg mb-10 leading-relaxed ${subText}`}>
+            <p className={`text-base md:text-lg mb-8 leading-relaxed ${subText}`}>
               By blending creativity, technology, and AI innovation, we craft
               digital solutions that drive real impact — from smart automation to
               high-converting websites and user-friendly apps that help brands
               grow smarter and faster.
             </p>
 
-            <div className="flex flex-col md:flex-row gap-10 text-left">
+            <div className="grid grid-cols-1 xl:grid-cols-2 gap-6 xl:gap-7 text-left items-stretch">
               {/* Left Column (About Text + Button) */}
-              <div className="md:w-1/2 flex flex-col items-start">
+              <div className="flex flex-col items-start">
                 <h3
                   className={`text-xl md:text-2xl font-bold mb-4 ${
                     isDark ? "text-white" : "text-slate-900"
@@ -163,7 +163,7 @@ export default function AboutUs() {
                 >
                   About
                 </h3>
-                <p className={`leading-relaxed mb-6 text-sm md:text-base ${subText}`}>
+                <p className={`leading-relaxed mb-5 text-sm md:text-[15px] ${subText}`}>
                   At WebbHeads, our mission and vision guide everything we build
                   — helping businesses embrace the future with smarter, faster,
                   and more human-centered digital solutions.
@@ -192,12 +192,12 @@ export default function AboutUs() {
               </div>
 
               {/* Right Column (Mission/Vision/Values card) */}
-              <div className="md:w-1/2 w-full">
-                <div className={`rounded-2xl p-6 backdrop-blur ${card}`}>
-                  <div className="space-y-6">
+              <div className="w-full h-full min-w-0">
+                <div className={`rounded-2xl p-4 md:p-5 backdrop-blur h-full min-w-0 ${card}`}>
+                  <div className="space-y-4">
                     <div className="flex items-start gap-3">
                       <Bullet />
-                      <div>
+                      <div className="min-w-0">
                         <h4
                           className={`font-bold mb-1 ${
                             isDark ? "text-white" : "text-slate-900"
@@ -205,7 +205,7 @@ export default function AboutUs() {
                         >
                           Vision
                         </h4>
-                        <p className={`text-sm ${subText}`}>
+                        <p className={`text-sm leading-relaxed break-words ${subText}`}>
                           Transforming Businesses Digitally.
                         </p>
                       </div>
@@ -213,7 +213,7 @@ export default function AboutUs() {
 
                     <div className="flex items-start gap-3">
                       <Bullet />
-                      <div>
+                      <div className="min-w-0">
                         <h4
                           className={`font-bold mb-1 ${
                             isDark ? "text-white" : "text-slate-900"
@@ -221,7 +221,7 @@ export default function AboutUs() {
                         >
                           Mission
                         </h4>
-                        <p className={`text-sm ${subText}`}>
+                        <p className={`text-sm leading-relaxed break-words ${subText}`}>
                           Helping brands build professional, high-performing
                           digital identities through technology and automation.
                         </p>
@@ -230,7 +230,7 @@ export default function AboutUs() {
 
                     <div className="flex items-start gap-3">
                       <Bullet />
-                      <div>
+                      <div className="min-w-0">
                         <h4
                           className={`font-bold mb-1 ${
                             isDark ? "text-white" : "text-slate-900"
@@ -238,7 +238,7 @@ export default function AboutUs() {
                         >
                           Values
                         </h4>
-                        <p className={`text-sm ${subText}`}>
+                        <p className={`text-sm leading-relaxed break-words ${subText}`}>
                           Creativity, innovation, and integrity guide our every
                           move — ensuring each project is built with purpose,
                           precision, and a passion for progress.

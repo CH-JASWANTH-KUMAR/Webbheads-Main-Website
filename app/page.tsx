@@ -2,6 +2,7 @@
 
 import Navbar from "@/components/Navbar";
 import Hero from "@/components/Hero";
+import Services from "@/components/Services";
 import Education from "@/components/Education";
 import Process from "@/components/Process";
 import CaseStudies from "@/components/CaseStudies";
@@ -22,11 +23,16 @@ export default function Home() {
       className={`
         relative isolate min-h-screen overflow-x-hidden
         transition-colors duration-300
-        ${isDark ? "bg-[#05060A]" : "bg-white"}
+        ${isDark ? "bg-[#05060A]" : "bg-[#f5f8fc]"}
       `}
     >
       <Navbar />
       <Hero />
+
+      <section id="services">
+        <Services />
+      </section>
+
       <Education />
 
       <section id="process">

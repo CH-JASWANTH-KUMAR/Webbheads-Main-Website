@@ -7,64 +7,76 @@ import { useTheme } from "@/context/ThemeContext";
 
 const plans = [
   {
-    name: "Must-Have",
-    price: "₹1.2L",
+    name: "Starter Growth",
+    price: "₹1.4L",
     priceNote: "Starting from",
-    description: "Essential services every realtor needs",
+    description: "Core setup for agents launching their digital presence",
     features: [
-      "High-Conversion Website",
+      "Website Development (up to 8 pages)",
       "Property Listing CMS",
-      "Lead Capture Forms",
-      "WhatsApp Integration",
-      "CRM Setup",
-      "Speed Optimization",
+      "Lead Capture + WhatsApp Flow",
+      "Basic CRM Pipeline Setup",
+      "Performance & SEO Basics",
+      "Launch Support",
     ],
     highlight: false,
+    ctaLabel: "Get Started",
+    ctaHref: "#contact",
+    external: false,
   },
   {
-    name: "Premium",
-    price: "₹4L",
+    name: "Scale Premium",
+    price: "₹4.5L",
     priceNote: "Starting from",
-    description: "Full-stack solutions for serious growth",
+    description: "Best-value package for teams focused on conversion and automation",
     features: [
-      "Everything in Must-Have",
-      "AI Follow-Up Chatbot",
-      "Lead Automation System",
-      "Analytics Dashboard",
-      "Sales Pipeline Setup",
-      "Team Training Included",
+      "Everything in Starter Growth",
+      "AI Automation + Follow-up Bot",
+      "Booking System Integration",
+      "CRM + Analytics Dashboard",
+      "Custom Sales Automation Flows",
+      "Team Handover + Training",
     ],
     highlight: true,
+    ctaLabel: "Book Strategy Call",
+    ctaHref: "https://cal.com/webb-heads",
+    external: true,
   },
   {
-    name: "Need-Based",
-    price: "₹50K",
+    name: "Performance Add-ons",
+    price: "₹60K",
     priceNote: "Starting from",
-    description: "Scale-dependent services for growing teams",
+    description: "Need-based upgrades for established projects",
     features: [
-      "Listings Management",
-      "Sales Team Automation",
-      "Ad Landing Pages",
-      "Builder Microsites",
-      "Analytics Dashboard",
-      "Lead Source Tracking",
+      "App Development Modules",
+      "Advanced Landing Pages",
+      "Pipeline & Source Tracking",
+      "Dashboard Enhancements",
+      "Automation Extensions",
+      "A/B Test Setup",
     ],
     highlight: false,
+    ctaLabel: "Get Custom Quote",
+    ctaHref: "#contact",
+    external: false,
   },
   {
-    name: "Nice-to-Have",
-    price: "₹15K",
+    name: "Brand & Media",
+    price: "₹25K",
     priceNote: "Starting from",
-    description: "Add-on services to enhance your brand",
+    description: "Creative enhancements for visibility and premium positioning",
     features: [
       "UI/UX Redesign",
       "Brand Refresh",
       "Drone Video Editing",
       "Virtual Staging (AI)",
-      "WhatsApp Catalogue",
+      "Social Media Design Kit",
       "Social Media Assets",
     ],
     highlight: false,
+    ctaLabel: "Email Us",
+    ctaHref: "mailto:webbheadsmarketing@gmail.com",
+    external: true,
   },
 ];
 
@@ -90,10 +102,13 @@ export default function Pricing() {
   const sectionBg = "bg-transparent";
   const headerSub = isDark ? "text-white/55" : "text-slate-600";
 
-  // All cards same
   const cardBase = isDark
     ? "bg-white/5 shadow-[0_18px_50px_rgba(0,0,0,0.55)] text-white"
     : "bg-white shadow-[0_18px_50px_rgba(0,0,0,0.12)] text-slate-900";
+
+  const highlightedCard = isDark
+    ? "ring-2 ring-[#f6ff82]/70 shadow-[0_24px_60px_rgba(246,255,130,0.22)]"
+    : "ring-2 ring-[#003942]/30 shadow-[0_24px_60px_rgba(0,57,66,0.2)]";
 
   const planDesc = isDark ? "text-white/55" : "text-slate-600";
   const featureText = isDark ? "text-white/75" : "text-slate-700";
@@ -132,7 +147,7 @@ export default function Pricing() {
           </h2>
 
           <p className={`text-base md:text-lg ${headerSub} max-w-2xl mx-auto`}>
-            Honest pricing for every stage of growth. All prices in INR.
+            Packages are built around our core services: website, app, AI automation, booking systems, CRM dashboards, and virtual staging.
           </p>
         </div>
 
@@ -144,8 +159,19 @@ export default function Pricing() {
               className={`
                 relative rounded-2xl p-6 backdrop-blur flex flex-col overflow-hidden h-full
                 ${cardBase}
+                ${plan.highlight ? `${highlightedCard} md:-translate-y-2` : ""}
               `}
             >
+              {plan.highlight && (
+                <div
+                  className={`absolute top-0 left-0 right-0 h-1.5 ${
+                    isDark
+                      ? "bg-gradient-to-r from-[#f6ff82] via-[#e8f074] to-[#d4e682]"
+                      : "bg-gradient-to-r from-[#003942] to-[#0b6a78]"
+                  }`}
+                />
+              )}
+
               <div className="relative z-10 flex flex-col h-full">
                 {/* 
                    Highlight Badge 
@@ -153,7 +179,7 @@ export default function Pricing() {
                    - Now if there is no badge, the title sits at the top naturally.
                 */}
                 {plan.highlight && (
-                  <div className="mb-4 inline-flex items-center">
+                  <div className="mb-4 inline-flex items-center gap-2">
                     <span
                       className={`
                         rounded-full px-3 py-1 text-[10px] md:text-xs font-bold uppercase tracking-wider
@@ -165,6 +191,9 @@ export default function Pricing() {
                       `}
                     >
                       Best Value
+                    </span>
+                    <span className={`text-[11px] font-semibold ${isDark ? "text-[#f6ff82]" : "text-[#003942]"}`}>
+                      Most Chosen
                     </span>
                   </div>
                 )}
@@ -205,23 +234,29 @@ export default function Pricing() {
                 </ul>
 
                 {/* Button */}
-                <button
-                  type="button"
+                <a
+                  href={plan.ctaHref}
+                  target={plan.external ? "_blank" : undefined}
+                  rel={plan.external ? "noopener noreferrer" : undefined}
                   className={`
                     w-full inline-flex items-center justify-center gap-2
                     px-6 py-3.5 rounded-full text-sm font-semibold
                     transition-all duration-200 active:scale-95
                     ${
-                      isDark
-                        ? "bg-white/10 text-white hover:bg-white/15"
-                        : "bg-[#003942] text-white hover:bg-[#002a31]"
+                      plan.highlight
+                        ? isDark
+                          ? "bg-[#f6ff82] text-[#003942] hover:bg-[#ecf57d]"
+                          : "bg-[#003942] text-white hover:bg-[#002a31]"
+                        : isDark
+                          ? "bg-white/10 text-white hover:bg-white/15"
+                          : "bg-[#003942] text-white hover:bg-[#002a31]"
                     }
                     shadow-[0_10px_20px_rgba(0,0,0,0.18)]
                   `}
                 >
-                  <span>Get Started</span>
+                  <span>{plan.ctaLabel}</span>
                   <ArrowUpRight className="h-4 w-4" />
-                </button>
+                </a>
               </div>
             </div>
           ))}

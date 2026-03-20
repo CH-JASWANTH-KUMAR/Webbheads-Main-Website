@@ -8,12 +8,12 @@ export default function ContactUs() {
   const { isDark } = useTheme();
 
   const brandGradient = "bg-gradient-to-r from-[#f6ff82] to-[#003942]";
-  const sectionBg = "bg-transparent";
+  const sectionBg = isDark ? "bg-transparent" : "bg-gradient-to-b from-[#eef4f8] to-[#f7fbff]";
 
   // Removed borders here (no "border", no "*border-*")
   const shell = isDark
-    ? "bg-white/5 shadow-[0_10px_30px_rgba(0,0,0,0.55)]"
-    : "bg-white shadow-[0_10px_30px_rgba(15,23,42,0.08)]";
+    ? "bg-white/5 border border-white/10 shadow-[0_12px_34px_rgba(0,0,0,0.55)]"
+    : "bg-gradient-to-br from-white to-[#f9fcff] border border-[#003942]/12 shadow-[0_12px_34px_rgba(15,23,42,0.1)]";
 
   const leftText = isDark ? "text-white/80" : "text-slate-900";
   const leftSub = isDark ? "text-white/55" : "text-slate-600";
@@ -21,19 +21,23 @@ export default function ContactUs() {
   // Removed border
   const formCard = isDark
     ? "bg-black/25 border border-white/10"
-    : "bg-slate-50 border border-slate-200";
+    : "bg-white border border-[#cfdbe4] shadow-[0_10px_24px_rgba(15,23,42,0.06),inset_0_1px_0_rgba(255,255,255,0.9)]";
 
   const label = isDark ? "text-white/70" : "text-slate-700";
 
   // Inputs: borderless + theme-matched focus ring
   const inputBase = isDark
     ? "bg-black/30 text-white placeholder:text-white/35 border-none focus:outline-none focus:ring-1 focus:ring-[#f6ff82]"
-    : "bg-white text-slate-900 placeholder:text-slate-400 border-none focus:outline-none focus:ring-1 focus:ring-[#003942]";
+    : "bg-[#f8fbfd] text-slate-900 placeholder:text-slate-500 border border-[#d6e1e9] focus:outline-none focus:ring-1 focus:ring-[#003942] focus:border-[#003942]";
 
   // Pill CTA style
   const ctaBtn = isDark
     ? "bg-white/10 text-white hover:bg-white/15"
-    : "bg-[#003942] text-white";
+    : "bg-[#003942] text-white hover:bg-[#002a31]";
+
+  const ctaFocus = isDark
+    ? "focus-visible:ring-[#f6ff82]/60"
+    : "focus-visible:ring-[#003942]/35";
 
   return (
     <section className={`py-16 md:py-24 ${sectionBg}`}>
@@ -47,7 +51,7 @@ export default function ContactUs() {
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12 p-6 md:p-10 lg:p-16">
             
             {/* Left Content */}
-            <div className={leftText}>
+            <div className={`${leftText} lg:pr-2`}>
               <motion.div
                 initial={{ opacity: 0, y: 12 }}
                 whileInView={{ opacity: 1, y: 0 }}
@@ -169,7 +173,7 @@ export default function ContactUs() {
                     transition-colors duration-200 hover:opacity-95
                     ${ctaBtn}
                     shadow-[0_12px_30px_rgba(0,0,0,0.20)]
-                    focus:outline-none focus-visible:ring-2 focus-visible:ring-[#f6ff82]/60
+                    focus:outline-none focus-visible:ring-2 ${ctaFocus}
                     group
                   `}
                 >
