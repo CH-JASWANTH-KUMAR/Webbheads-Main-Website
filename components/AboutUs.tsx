@@ -12,8 +12,8 @@ export default function AboutUs() {
 
   // No borders (match your card style)
   const card = isDark
-    ? "bg-white/5 shadow-[0_18px_50px_rgba(0,0,0,0.55)]"
-    : "bg-white shadow-[0_18px_50px_rgba(0,0,0,0.12)]";
+    ? "bg-white/5 border border-white/10 shadow-[0_18px_50px_rgba(0,0,0,0.55)]"
+    : "bg-white border border-slate-200/70 shadow-[0_18px_50px_rgba(0,0,0,0.12)]";
 
   const subText = isDark ? "text-white/55" : "text-slate-600";
   const bodyText = isDark ? "text-white/70" : "text-slate-700";
@@ -35,7 +35,37 @@ export default function AboutUs() {
   return (
     <section id="about" className={`py-16 md:py-24 overflow-hidden ${sectionBg}`}>
       <div className="container mx-auto px-6 md:px-12 lg:px-20">
-        <div className="grid grid-cols-1 lg:grid-cols-2 items-center gap-12 lg:gap-14">
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
+          className="text-center mb-10 md:mb-12"
+        >
+          <div
+            className={`inline-flex items-center gap-2 px-4 py-2 rounded-full mb-6 text-xs md:text-sm font-medium ${pill}`}
+          >
+            <span
+              className={`w-1.5 h-1.5 md:w-2 md:h-2 rounded-full ${
+                isDark ? "bg-[#f6ff82]" : "bg-[#003942]"
+              }`}
+            />
+            <span>ABOUT</span>
+          </div>
+
+          <h2
+            className={`text-3xl md:text-5xl font-bold leading-tight ${
+              isDark ? "text-white" : "text-slate-900"
+            }`}
+          >
+            More{" "}
+            <span className={`bg-clip-text text-transparent ${brandGradient}`}>
+              about us
+            </span>
+          </h2>
+        </motion.div>
+
+        <div className="grid grid-cols-1 lg:grid-cols-2 items-start gap-12 lg:gap-14">
           {/* 
             LEFT: Team Photo 
             - Removed `lg:justify-end` which was pushing it right (leaving left gap).
@@ -115,31 +145,8 @@ export default function AboutUs() {
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.8 }}
-            className="w-full text-center lg:text-left lg:max-w-[560px] lg:ml-auto"
+            className="w-full text-left lg:max-w-[560px] lg:-mt-3"
           >
-            {/* Pill */}
-            <div
-              className={`inline-flex items-center gap-2 px-4 py-2 rounded-full mb-6 text-xs md:text-sm font-medium ${pill}`}
-            >
-              <span
-                className={`w-1.5 h-1.5 md:w-2 md:h-2 rounded-full ${
-                  isDark ? "bg-[#f6ff82]" : "bg-[#003942]"
-                }`}
-              />
-              <span>ABOUT</span>
-            </div>
-
-            <h2
-              className={`text-3xl md:text-5xl font-bold mb-6 leading-tight ${
-                isDark ? "text-white" : "text-slate-900"
-              }`}
-            >
-              More{" "}
-              <span className={`bg-clip-text text-transparent ${brandGradient}`}>
-                about us
-              </span>
-            </h2>
-
             <p
               className={`text-base md:text-lg mb-3 leading-relaxed ${bodyText}`}
             >
@@ -153,105 +160,111 @@ export default function AboutUs() {
               grow smarter and faster.
             </p>
 
-            <div className="grid grid-cols-1 xl:grid-cols-2 gap-6 xl:gap-7 text-left items-stretch">
-              {/* Left Column (About Text + Button) */}
-              <div className="flex flex-col items-start">
-                <h3
-                  className={`text-xl md:text-2xl font-bold mb-4 ${
-                    isDark ? "text-white" : "text-slate-900"
-                  }`}
-                >
-                  About
-                </h3>
-                <p className={`leading-relaxed mb-5 text-sm md:text-[15px] ${subText}`}>
-                  At WebbHeads, our mission and vision guide everything we build
-                  — helping businesses embrace the future with smarter, faster,
-                  and more human-centered digital solutions.
-                </p>
+            <div
+              className={`text-left border-l-2 pl-5 ${
+                isDark ? "border-white/20" : "border-[#003942]/20"
+              }`}
+            >
+              <h3
+                className={`text-xl md:text-2xl font-bold mb-4 ${
+                  isDark ? "text-white" : "text-slate-900"
+                }`}
+              >
+                About
+              </h3>
+              <p className={`leading-relaxed mb-5 text-sm md:text-[15px] ${subText}`}>
+                At WebbHeads, our mission and vision guide everything we build
+                — helping businesses embrace the future with smarter, faster,
+                and more human-centered digital solutions.
+              </p>
 
-                {/* Button */}
-                <a
-                  href="https://djkushal.framer.website/"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className={`
-                    w-full md:w-auto inline-flex items-center justify-center gap-2
-                    px-6 py-3.5 rounded-full text-sm font-semibold
-                    transition-colors duration-200 hover:opacity-95
-                    ${
-                      isDark
-                        ? "bg-white/10 text-white hover:bg-white/15"
-                        : "bg-[#003942] text-white"
-                    }
-                    shadow-[0_12px_30px_rgba(0,0,0,0.22)]
-                  `}
-                >
-                  <span>More About Founder</span>
-                  <ArrowUpRight className="w-5 h-5" />
-                </a>
-              </div>
-
-              {/* Right Column (Mission/Vision/Values card) */}
-              <div className="w-full h-full min-w-0">
-                <div className={`rounded-2xl p-4 md:p-5 backdrop-blur h-full min-w-0 ${card}`}>
-                  <div className="space-y-4">
-                    <div className="flex items-start gap-3">
-                      <Bullet />
-                      <div className="min-w-0">
-                        <h4
-                          className={`font-bold mb-1 ${
-                            isDark ? "text-white" : "text-slate-900"
-                          }`}
-                        >
-                          Vision
-                        </h4>
-                        <p className={`text-sm leading-relaxed break-words ${subText}`}>
-                          Transforming Businesses Digitally.
-                        </p>
-                      </div>
-                    </div>
-
-                    <div className="flex items-start gap-3">
-                      <Bullet />
-                      <div className="min-w-0">
-                        <h4
-                          className={`font-bold mb-1 ${
-                            isDark ? "text-white" : "text-slate-900"
-                          }`}
-                        >
-                          Mission
-                        </h4>
-                        <p className={`text-sm leading-relaxed break-words ${subText}`}>
-                          Helping brands build professional, high-performing
-                          digital identities through technology and automation.
-                        </p>
-                      </div>
-                    </div>
-
-                    <div className="flex items-start gap-3">
-                      <Bullet />
-                      <div className="min-w-0">
-                        <h4
-                          className={`font-bold mb-1 ${
-                            isDark ? "text-white" : "text-slate-900"
-                          }`}
-                        >
-                          Values
-                        </h4>
-                        <p className={`text-sm leading-relaxed break-words ${subText}`}>
-                          Creativity, innovation, and integrity guide our every
-                          move — ensuring each project is built with purpose,
-                          precision, and a passion for progress.
-                        </p>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-              {/* /Right */}
+              <a
+                href="https://djkushal.framer.website/"
+                target="_blank"
+                rel="noopener noreferrer"
+                className={`
+                  w-full md:w-auto inline-flex items-center justify-center gap-2
+                  px-6 py-3.5 rounded-full text-sm font-semibold
+                  transition-colors duration-200 hover:opacity-95
+                  ${
+                    isDark
+                      ? "bg-white/10 text-white hover:bg-white/15"
+                      : "bg-[#003942] text-white"
+                  }
+                  shadow-[0_12px_30px_rgba(0,0,0,0.22)]
+                `}
+              >
+                <span>More About Founder</span>
+                <ArrowUpRight className="w-5 h-5" />
+              </a>
             </div>
           </motion.div>
         </div>
+
+        <motion.div
+          initial={{ opacity: 0, y: 24 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
+          className="mt-10 md:mt-12"
+        >
+          <div className={`rounded-2xl p-5 md:p-6 backdrop-blur ${card}`}>
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-8">
+              <div className="flex items-start gap-3">
+                <Bullet />
+                <div className="min-w-0">
+                  <h4
+                    className={`font-bold mb-1 ${
+                      isDark ? "text-white" : "text-slate-900"
+                    }`}
+                  >
+                    Vision
+                  </h4>
+                  <p className={`text-sm leading-relaxed break-words ${subText}`}>
+                    Transforming businesses digitally with clarity and speed.
+                    We envision growth systems that stay simple, scalable, and
+                    human-first at every stage.
+                  </p>
+                </div>
+              </div>
+
+              <div className="flex items-start gap-3">
+                <Bullet />
+                <div className="min-w-0">
+                  <h4
+                    className={`font-bold mb-1 ${
+                      isDark ? "text-white" : "text-slate-900"
+                    }`}
+                  >
+                    Mission
+                  </h4>
+                  <p className={`text-sm leading-relaxed break-words ${subText}`}>
+                    Helping brands build professional, high-performing digital
+                    identities through technology and automation.
+                  </p>
+                </div>
+              </div>
+
+              <div className="flex items-start gap-3">
+                <Bullet />
+                <div className="min-w-0">
+                  <h4
+                    className={`font-bold mb-1 ${
+                      isDark ? "text-white" : "text-slate-900"
+                    }`}
+                  >
+                    Values
+                  </h4>
+                  <p className={`text-sm leading-relaxed break-words ${subText}`}>
+                    Creativity, innovation, and integrity guide our every move
+                    — ensuring each project is built with purpose, precision,
+                    and a passion for progress.
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </motion.div>
       </div>
 
       <style jsx>{`

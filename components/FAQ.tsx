@@ -2,8 +2,8 @@
 
 import { useState } from "react";
 import { Plus } from "lucide-react";
+import { AnimatePresence, LayoutGroup, MotionConfig, motion } from "framer-motion";
 import { useTheme } from "@/context/ThemeContext";
-import { motion, LayoutGroup } from "framer-motion";
 
 const faqs = [
   {
@@ -61,11 +61,12 @@ export default function FAQ() {
     ? "bg-white/5 border border-white/10 shadow-[0_10px_30px_rgba(0,0,0,0.55)]"
     : "bg-white border border-[#003942]/12 shadow-[0_12px_30px_rgba(15,23,42,0.08)]";
 
-  const toggleFAQ = (index: number) =>
-    setOpenIndex((prev) => (prev === index ? null : index));
-
   const leftFaqs = faqs.filter((_, i) => i % 2 === 0);
   const rightFaqs = faqs.filter((_, i) => i % 2 === 1);
+
+  const toggleFAQ = (index: number) => {
+    setOpenIndex((prev) => (prev === index ? null : index));
+  };
 
   const FaqItem = ({
     faq,
@@ -77,7 +78,9 @@ export default function FAQ() {
     const isOpen = openIndex === index;
 
     return (
-      <motion.div
+      <motion.article
+        layout
+        transition={{ layout: { duration: 0.7, ease: [0.22, 1, 0.36, 1] } }}
         className={`
           w-full rounded-2xl md:rounded-3xl p-5 md:p-6 backdrop-blur select-none overflow-hidden
           ${card}
@@ -90,6 +93,7 @@ export default function FAQ() {
           onClick={() => toggleFAQ(index)}
           className="w-full text-left focus:outline-none"
           aria-expanded={isOpen}
+          aria-controls={`faq-answer-${index}`}
         >
           <motion.div layout="position" className="flex items-center justify-between gap-4">
             <h3
@@ -99,6 +103,7 @@ export default function FAQ() {
             >
               {faq.question}
             </h3>
+
             <div
               className={`
                 h-8 w-8 md:h-10 md:w-10 shrink-0 rounded-full flex items-center justify-center
@@ -107,8 +112,8 @@ export default function FAQ() {
               `}
             >
               <motion.div
-                animate={{ rotate: isOpen ? 45 : 0 }}
-                transition={{ duration: 0.35, ease: [0.22, 1, 0.36, 1] }}
+                animate={{ rotate: isOpen ? 45 : 0, scale: isOpen ? 1.06 : 1 }}
+                transition={{ duration: 0.28, ease: [0.22, 1, 0.36, 1] }}
                 className="flex items-center justify-center"
               >
                 <Plus className="w-3.5 h-3.5 md:w-4 md:h-4" />
@@ -117,37 +122,43 @@ export default function FAQ() {
           </motion.div>
         </button>
 
-        <motion.div
-          initial={false}
-          animate={{
-            height: isOpen ? "auto" : 0,
-            opacity: isOpen ? 1 : 0,
-          }}
-          transition={{
-            height: { type: "spring", stiffness: 170, damping: 24, mass: 0.35 },
-            opacity: { duration: 0.22, ease: "easeOut" },
-          }}
-          className="overflow-hidden"
-          aria-hidden={!isOpen}
-        >
-          <motion.p
-            initial={false}
-            animate={{ y: isOpen ? 0 : -6 }}
-            transition={{ duration: 0.28, ease: [0.22, 1, 0.36, 1] }}
-            className={`
-              pt-4 leading-relaxed text-sm md:text-base
-              ${isDark ? "text-white/70" : "text-slate-700"}
-            `}
-          >
-            {faq.answer}
-          </motion.p>
-        </motion.div>
-      </motion.div>
+        <AnimatePresence initial={false}>
+          {isOpen && (
+            <motion.div
+              id={`faq-answer-${index}`}
+              key={`faq-answer-${index}`}
+              initial={{ height: 0, opacity: 0, y: -14 }}
+              animate={{ height: "auto", opacity: 1, y: 0 }}
+              exit={{ height: 0, opacity: 0, y: -14 }}
+              transition={{
+                height: { duration: 1.35, ease: [0.65, 0, 0.35, 1] },
+                opacity: { duration: 1.0, ease: [0.65, 0, 0.35, 1] },
+                y: { duration: 1.35, ease: [0.65, 0, 0.35, 1] },
+              }}
+              className="overflow-hidden"
+            >
+              <motion.p
+                initial={{ y: 20, opacity: 0 }}
+                animate={{ y: 0, opacity: 1 }}
+                exit={{ y: -10, opacity: 0 }}
+                transition={{ duration: 1.15, delay: 0.18, ease: [0.65, 0, 0.35, 1] }}
+                className={`
+                  pt-4 leading-relaxed text-sm md:text-base
+                  ${isDark ? "text-white/70" : "text-slate-700"}
+                `}
+              >
+                {faq.answer}
+              </motion.p>
+            </motion.div>
+          )}
+        </AnimatePresence>
+      </motion.article>
     );
   };
 
   return (
-    <section className={`relative py-16 md:py-24 overflow-hidden ${sectionBg}`}>
+    <MotionConfig reducedMotion="never">
+      <section className={`relative py-16 md:py-24 overflow-hidden ${sectionBg}`}>
       <div className="container mx-auto px-6 md:px-12 lg:px-20 relative z-10">
         <div className="text-center mb-12 md:mb-16">
           <div
@@ -164,25 +175,15 @@ export default function FAQ() {
             <span>FAQ</span>
           </div>
 
-          <h2
-            className={`text-3xl md:text-5xl font-bold ${heading} mb-4`}
-          >
-            Questions{" "}
-            <span
-              className={`bg-clip-text text-transparent ${brandGradient}`}
-            >
-              Answered
-            </span>
+          <h2 className={`text-3xl md:text-5xl font-bold ${heading} mb-4`}>
+            Questions <span className={`bg-clip-text text-transparent ${brandGradient}`}>Answered</span>
           </h2>
 
-          <p
-            className={`${sub} text-base md:text-lg max-w-2xl mx-auto`}
-          >
+          <p className={`${sub} text-base md:text-lg max-w-2xl mx-auto`}>
             Find answers to the most common questions below.
           </p>
         </div>
 
-        {/* LayoutGroup ensures shared layout animations don't conflict */}
         <LayoutGroup>
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 md:gap-6 items-start">
             <div className="space-y-4">
@@ -199,6 +200,7 @@ export default function FAQ() {
           </div>
         </LayoutGroup>
       </div>
-    </section>
+      </section>
+    </MotionConfig>
   );
 }
