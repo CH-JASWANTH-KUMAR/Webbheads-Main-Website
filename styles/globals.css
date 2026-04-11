@@ -2,9 +2,9 @@
 
 :root {
   --background: #ffffff;
-  --foreground: #003942;
-  --primary: #003942;
-  --accent: #f6ff82;
+  --foreground: #1f4f3a;
+  --primary: #1f4f3a;
+  --accent: #dbe94a;
   --section-alt: #f9fafb;
 }
 
@@ -40,7 +40,7 @@ body {
 
 /* Premium gradient text utilities */
 .gradient-text-light {
-  background: linear-gradient(135deg, #003942 0%, #005f73 100%);
+  background: linear-gradient(135deg, #1f4f3a 0%, #2d6a4f 100%);
   -webkit-background-clip: text;
   background-clip: text;
   -webkit-text-fill-color: transparent;
@@ -55,11 +55,44 @@ body {
 
 /* Premium button gradients */
 .btn-gradient-primary {
-  background: linear-gradient(135deg, #003942 0%, #004d59 100%);
+  background: linear-gradient(135deg, #1f4f3a 0%, #2a6248 100%);
 }
 
 .btn-gradient-accent {
-  background: linear-gradient(135deg, #f6ff82 0%, #e8f074 100%);
+  background: linear-gradient(135deg, #dbe94a 0%, #c8da33 100%);
+}
+
+@keyframes heroGlowDrift {
+  0% {
+    transform: translate3d(-50%, 0, 0) scale(1);
+  }
+  50% {
+    transform: translate3d(-46%, 3%, 0) scale(1.08);
+  }
+  100% {
+    transform: translate3d(-52%, -1%, 0) scale(1);
+  }
+}
+
+.hero-glow-blob {
+  position: absolute;
+  top: 6%;
+  left: 50%;
+  width: min(78vw, 760px);
+  height: min(72vw, 560px);
+  border-radius: 9999px;
+  pointer-events: none;
+  filter: blur(88px);
+  animation: heroGlowDrift 11s ease-in-out infinite;
+  will-change: transform;
+}
+
+.hero-glow-blob--light {
+  background: radial-gradient(circle at 30% 36%, rgba(246, 255, 130, 0.52) 0%, rgba(179, 214, 88, 0.28) 42%, rgba(246, 255, 130, 0) 74%);
+}
+
+.hero-glow-blob--dark {
+  background: radial-gradient(circle at 30% 36%, rgba(246, 255, 130, 0.3) 0%, rgba(179, 214, 88, 0.2) 44%, rgba(246, 255, 130, 0) 75%);
 }
 
 /* GPU acceleration helper (use on elements that animate a lot) */
@@ -100,4 +133,13 @@ img {
   html {
     scroll-behavior: auto;
   }
+
+  .hero-glow-blob {
+    animation: none;
+    transform: translate3d(-50%, 0, 0);
+  }
+}
+
+.after-title {
+  color: var(--color-foreground);
 }

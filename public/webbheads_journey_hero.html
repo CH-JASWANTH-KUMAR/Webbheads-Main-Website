@@ -1,0 +1,584 @@
+
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap');
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{height:100%;background:var(--bg);overflow:hidden}
+:root{
+  --bg:#0b0d0b;--card:#111411;--card2:#161916;--card3:#1c201c;
+  --border:#232823;--border2:#2d342d;
+  --lime:#c8f135;--lime2:#a8d120;--limedim:rgba(200,241,53,.12);
+  --text:#eef2ef;--muted:#5a6b5c;--muted2:#3a4a3c;
+  --red:#f43f5e;--green:#22c55e;--blue:#38bdf8;--amber:#fbbf24;
+  --chaos:#1a0f0f;--chaos2:#2a1515;
+  --title:#ffffff;
+  --chaos-badge-bg:#3a1515;--chaos-badge-text:#f87171;
+  --chaos-desk-border:#3a1a1a;--chaos-card-border:#4a2020;
+  --chaos-label:#f87171;--chaos-value:#f43f5e;--chaos-sub:#7a3a3a;
+  --chaos-note-bg:#1a0808;--chaos-note-border:#4a2020;--chaos-note-text:#7a4a4a;
+  --chaos-note-ic-bg:#2a0f0f;--chaos-note-ic-border:#4a2020;--chaos-note-ic-text:#f87171;
+  --chaos-pill-border:#3a1515;--chaos-pill-text:#7a4a4a;--chaos-pill-bg:#1a0808;
+  --chaos-calls-bg:#2a0808;--chaos-calls-border:#4a1515;--chaos-calls-text:#f87171;
+}
+
+html[data-theme="light"]{
+  --bg:#f5f8fb;--card:#ffffff;--card2:#f8fbff;--card3:#edf3fa;
+  --border:#d8e2ef;--border2:#c8d7e8;
+  --lime:#7a9400;--lime2:#5f7600;--limedim:rgba(122,148,0,.12);
+  --text:#0f1b2d;--muted:#4b607a;--muted2:#6c7e95;
+  --red:#dc2626;--green:#15803d;--blue:#0ea5e9;--amber:#d97706;
+  --chaos:#eef6f1;--chaos2:#e1efe7;
+  --title:#0f172a;
+  --chaos-badge-bg:#dcebe2;--chaos-badge-text:#1f4f3a;
+  --chaos-desk-border:#c8ddcf;--chaos-card-border:#bed6c7;
+  --chaos-label:#2e6b4d;--chaos-value:#1f4f3a;--chaos-sub:#557a67;
+  --chaos-note-bg:#edf6f1;--chaos-note-border:#c8ddcf;--chaos-note-text:#4c6a59;
+  --chaos-note-ic-bg:#dcebe2;--chaos-note-ic-border:#b7d0c0;--chaos-note-ic-text:#1f4f3a;
+  --chaos-pill-border:#bfd6c7;--chaos-pill-text:#4f6f5d;--chaos-pill-bg:#edf6f1;
+  --chaos-calls-bg:#e6f2eb;--chaos-calls-border:#bfd6c7;--chaos-calls-text:#2a6248;
+}
+
+html[data-theme="dark"]{
+  --title:#ffffff;
+}
+.hero{
+  background:var(--bg);border-radius:20px;overflow:hidden;
+  font-family:'Inter',system-ui,sans-serif;
+  border:1px solid var(--border);width:100%;
+  min-height:100%;height:100%;position:relative;
+  display:flex;flex-direction:column;
+}
+
+/* Progress bar */
+.prog-bar{height:2px;background:var(--border);position:relative;overflow:hidden}
+.prog-fill{height:100%;background:var(--lime);width:0%;transition:none}
+
+/* Stage indicator */
+.stage-row{display:flex;align-items:center;justify-content:space-between;padding:14px 18px 10px}
+.stage-dots{display:flex;gap:8px;align-items:center}
+.sdot{width:6px;height:6px;border-radius:50%;background:var(--border2);transition:all .4s}
+.sdot.on{background:var(--lime);width:20px;border-radius:3px}
+.sdot.done{background:var(--lime2)}
+.stage-label{font-size:10px;font-weight:600;letter-spacing:.08em;color:var(--muted);text-transform:uppercase}
+.stage-num{font-size:10px;color:var(--muted);font-weight:500}
+
+/* Main content area */
+.stage-wrap{position:relative;overflow:hidden;height:clamp(345px,62vh,440px)}
+.stage{position:absolute;inset:0;opacity:0;transition:opacity .6s ease;padding:16px 18px;display:flex;flex-direction:column;justify-content:space-between;pointer-events:none}
+.stage.active{opacity:1;pointer-events:all}
+
+/* ── STAGE 0: CHAOS ── */
+.chaos-header{display:flex;align-items:center;gap:8px;margin-bottom:12px}
+.chaos-badge{font-size:9px;font-weight:700;padding:3px 8px;border-radius:4px;background:var(--chaos-badge-bg);color:var(--chaos-badge-text);letter-spacing:.06em}
+.chaos-title{font-size:22px;font-weight:800;color:var(--text);line-height:1.2;margin-bottom:6px}
+.chaos-sub{font-size:12px;color:var(--muted);line-height:1.5;margin-bottom:14px}
+.chaos-desk{background:var(--chaos);border:1px solid var(--chaos-desk-border);border-radius:12px;padding:12px;display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.chaos-card{background:var(--chaos2);border:1px solid var(--chaos-card-border);border-radius:7px;padding:8px}
+.chaos-card-label{font-size:8px;color:var(--chaos-label);font-weight:600;text-transform:uppercase;margin-bottom:4px}
+.chaos-card-val{font-size:18px;font-weight:800;color:var(--chaos-value)}
+.chaos-card-sub{font-size:8px;color:var(--chaos-sub);margin-top:2px}
+.chaos-notes{grid-column:span 2;background:var(--chaos-note-bg);border:1px dashed var(--chaos-note-border);border-radius:6px;padding:7px;font-size:9px;color:var(--chaos-note-text);line-height:1.6}
+.note-line{display:flex;align-items:flex-start;gap:6px}
+.note-line + .note-line{margin-top:3px}
+.note-ic{width:12px;height:12px;border-radius:3px;border:1px solid var(--chaos-note-ic-border);background:var(--chaos-note-ic-bg);color:var(--chaos-note-ic-text);display:inline-flex;align-items:center;justify-content:center;font-size:7px;font-weight:700;line-height:1;flex-shrink:0;margin-top:1px}
+.chaos-strip{display:flex;gap:5px;margin-top:8px}
+.chaos-pill{font-size:8px;padding:3px 7px;border-radius:4px;border:1px solid var(--chaos-pill-border);color:var(--chaos-pill-text);background:var(--chaos-pill-bg)}
+.missed-calls{display:flex;align-items:center;gap:5px;margin-top:8px;padding:7px 10px;background:var(--chaos-calls-bg);border:1px solid var(--chaos-calls-border);border-radius:6px}
+.missed-dot{width:7px;height:7px;border-radius:50%;background:var(--red);animation:mcblink .8s infinite}
+@keyframes mcblink{0%,100%{opacity:1}50%{opacity:.2}}
+.missed-text{font-size:9px;color:var(--chaos-calls-text);font-weight:600}
+.missed-num{font-size:13px;font-weight:800;color:var(--red);margin-left:auto}
+
+/* ── STAGE 1: DISCOVERY ── */
+.disc-title{font-size:22px;font-weight:800;color:var(--text);line-height:1.2;margin-bottom:4px}
+.disc-sub{font-size:12px;color:var(--muted);margin-bottom:14px}
+.chat-window{background:var(--card2);border:1px solid var(--border2);border-radius:12px;overflow:hidden}
+.chat-header{display:flex;align-items:center;gap:8px;padding:9px 12px;border-bottom:1px solid var(--border);background:var(--card)}
+.chat-av{width:24px;height:24px;border-radius:50%;background:var(--limedim);border:1px solid var(--lime);display:flex;align-items:center;justify-content:center;font-size:8px;font-weight:800;color:var(--lime)}
+.chat-name{font-size:11px;font-weight:700;color:var(--text)}
+.chat-online{font-size:8px;color:var(--green);display:flex;align-items:center;gap:3px}
+.chat-online::before{content:'';width:5px;height:5px;border-radius:50%;background:var(--green);display:inline-block}
+.chat-body{padding:10px 12px;display:flex;flex-direction:column;gap:7px;min-height:160px}
+.msg{max-width:80%;padding:7px 10px;border-radius:10px;font-size:10px;line-height:1.5}
+.msg-them{background:var(--card3);border:1px solid var(--border);color:#c0cfc2;border-radius:10px 10px 10px 2px;align-self:flex-start}
+.msg-us{background:var(--limedim);border:1px solid rgba(200,241,53,.2);color:var(--lime);border-radius:10px 10px 2px 10px;align-self:flex-end}
+.msg.typing{display:flex;gap:3px;align-items:center;padding:10px 12px}
+.typing-dot{width:5px;height:5px;border-radius:50%;background:var(--muted);animation:tdot 1.2s infinite}
+.typing-dot:nth-child(2){animation-delay:.2s}.typing-dot:nth-child(3){animation-delay:.4s}
+@keyframes tdot{0%,60%,100%{transform:translateY(0);opacity:.4}30%{transform:translateY(-4px);opacity:1}}
+.wh-reply{background:var(--limedim);border:1px solid rgba(200,241,53,.25);border-radius:8px;padding:8px 10px;margin-top:4px;font-size:9px;color:var(--lime);line-height:1.5}
+.wh-reply strong{color:var(--lime);font-weight:700}
+
+/* ── STAGE 2: TRANSFORMATION ── */
+.transform-title{font-size:22px;font-weight:800;color:var(--text);line-height:1.2;margin-bottom:4px}
+.transform-sub{font-size:12px;color:var(--muted);margin-bottom:8px}
+.build-timeline{display:flex;flex-direction:column;gap:6px}
+.build-item{display:flex;align-items:center;gap:9px;padding:7px 10px;border-radius:8px;border:1px solid var(--border);background:var(--card2);transition:all .5s}
+.build-item.done{border-color:rgba(200,241,53,.3);background:rgba(200,241,53,.04)}
+.build-icon{width:28px;height:28px;border-radius:6px;display:flex;align-items:center;justify-content:center;flex-shrink:0;border:1px solid var(--border2)}
+.build-icon.done{background:var(--limedim);border-color:rgba(200,241,53,.3)}
+.build-icon svg{width:14px;height:14px;stroke:#9fb09f;transition:stroke .3s ease}
+.build-item.done .build-icon svg{stroke:var(--lime)}
+.build-label{font-size:11px;font-weight:600;color:var(--muted);flex:1}
+.build-item.done .build-label{color:var(--text)}
+.build-status{font-size:8px;font-weight:700;letter-spacing:.05em;padding:2px 6px;border-radius:4px}
+.status-pending{background:var(--card3);color:var(--muted);border:1px solid var(--border)}
+.status-live{background:rgba(34,197,94,.15);color:#86efac;border:1px solid rgba(34,197,94,.3)}
+.status-building{background:rgba(251,191,36,.12);color:#fde68a;border:1px solid rgba(251,191,36,.2);animation:statusPulse 1s infinite}
+@keyframes statusPulse{0%,100%{opacity:1}50%{opacity:.5}}
+.deploy-bar{margin-top:8px;background:var(--card2);border:1px solid var(--border);border-radius:8px;padding:7px 10px}
+.deploy-label{display:flex;justify-content:space-between;font-size:9px;color:var(--muted);margin-bottom:5px;font-weight:600}
+.deploy-track{height:4px;background:var(--border);border-radius:2px;overflow:hidden}
+.deploy-fill{height:100%;background:var(--lime);border-radius:2px;animation:deployAnim 2.5s ease both}
+@keyframes deployAnim{from{width:0}to{width:100%}}
+
+/* ── STAGE 3: GROWTH ── */
+.growth-title{font-size:22px;font-weight:800;color:var(--text);line-height:1.2;margin-bottom:4px}
+.growth-sub{font-size:12px;color:var(--muted);margin-bottom:12px}
+.kpi-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-bottom:10px}
+.kpi-box{background:var(--card2);border:1px solid var(--border);border-radius:10px;padding:10px;text-align:center}
+.kpi-box.highlight{border-color:rgba(200,241,53,.4);background:rgba(200,241,53,.05)}
+.kpi-label{font-size:8px;color:var(--muted);text-transform:uppercase;letter-spacing:.06em;margin-bottom:4px;font-weight:600}
+.kpi-val{font-size:22px;font-weight:900;line-height:1}
+.kpi-delta{font-size:9px;color:var(--green);margin-top:3px;font-weight:600}
+.lead-stream{background:var(--card2);border:1px solid var(--border);border-radius:10px;overflow:hidden}
+.ls-header{display:flex;justify-content:space-between;align-items:center;padding:8px 12px;border-bottom:1px solid var(--border)}
+.ls-title{font-size:10px;font-weight:700;color:var(--text)}
+.ls-live{font-size:8px;color:var(--green);display:flex;align-items:center;gap:3px;font-weight:600}
+.ls-live::before{content:'';width:5px;height:5px;border-radius:50%;background:var(--green);animation:mcblink .9s infinite;display:inline-block}
+.lead-row{display:flex;align-items:center;gap:8px;padding:7px 12px;border-bottom:1px solid var(--border);animation:leadIn .5s ease both}
+@keyframes leadIn{from{opacity:0;transform:translateX(-8px)}to{opacity:1;transform:translateX(0)}}
+.lead-av{width:22px;height:22px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:7px;font-weight:800;flex-shrink:0}
+.lead-info{flex:1;min-width:0}
+.lead-n{font-size:10px;font-weight:700;color:var(--text);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.lead-s{font-size:8px;color:var(--muted)}
+.lead-score{font-size:11px;font-weight:800;color:var(--lime)}
+.chart-mini{padding:8px 12px 6px}
+.chart-bars{display:flex;align-items:flex-end;gap:3px;height:40px}
+.cbar{flex:1;border-radius:2px 2px 0 0;background:var(--border);transition:height .5s}
+.cbar.active{background:var(--lime)}
+
+/* ── STAGE 4: AFTER ── */
+.after-badge{display:inline-flex;align-items:center;gap:5px;font-size:9px;font-weight:700;padding:3px 9px;border-radius:4px;background:rgba(200,241,53,.15);color:var(--lime);border:1px solid rgba(200,241,53,.3);letter-spacing:.06em;margin-bottom:10px}
+.after-title{font-size:22px;font-weight:800;line-height:1.15;margin-bottom:4px;color:var(--title)}
+.after-title span{color:var(--lime)}
+.after-sub{font-size:12px;color:var(--muted);margin-bottom:14px;line-height:1.5}
+.after-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:10px}
+.after-card{background:var(--card2);border:1px solid var(--border);border-radius:10px;padding:10px 12px}
+.after-card.lime-border{border-color:rgba(200,241,53,.35);background:rgba(200,241,53,.04)}
+.ac-label{font-size:8px;color:var(--muted);text-transform:uppercase;letter-spacing:.06em;margin-bottom:4px;font-weight:600}
+.ac-val{font-size:20px;font-weight:900;color:var(--lime)}
+.ac-sub{font-size:8px;color:var(--green);margin-top:2px;font-weight:600}
+.after-quote{background:var(--card2);border:1px solid var(--border2);border-radius:10px;padding:10px 12px;display:flex;gap:10px;align-items:flex-start}
+.quote-av{width:30px;height:30px;border-radius:50%;background:rgba(200,241,53,.15);border:1px solid rgba(200,241,53,.4);display:flex;align-items:center;justify-content:center;font-size:9px;font-weight:800;color:var(--lime);flex-shrink:0}
+.quote-text{font-size:10px;color:#b0c0b2;line-height:1.5;font-style:italic}
+.quote-name{font-size:9px;font-weight:700;color:var(--text);margin-top:4px}
+.quote-role{font-size:8px;color:var(--muted)}
+.cta-row{display:flex;gap:8px;margin-top:10px}
+.cta-btn{flex:1;padding:9px;border-radius:8px;font-size:11px;font-weight:700;text-align:center;cursor:pointer;border:none;transition:all .2s}
+.cta-primary{background:var(--lime);color:#0b0d0b}
+.cta-primary:hover{background:var(--lime2)}
+.cta-secondary{background:transparent;color:var(--text);border:1px solid var(--border2)}
+.cta-secondary:hover{border-color:var(--lime);color:var(--lime)}
+
+/* Controls */
+.ctrl-row{display:flex;align-items:center;justify-content:space-between;padding:12px 16px 12px;border-top:1px solid var(--border);margin-top:auto}
+.ctrl-btns{display:flex;gap:6px}
+.ctrl-btn{width:28px;height:28px;border-radius:6px;border:1px solid var(--border2);background:transparent;cursor:pointer;display:flex;align-items:center;justify-content:center;color:var(--muted);transition:all .2s}
+.ctrl-btn:hover{border-color:var(--lime);color:var(--lime)}
+.ctrl-skip{font-size:9px;color:var(--muted);cursor:pointer;font-weight:500;padding:4px 8px;border-radius:5px;border:1px solid var(--border);background:transparent;transition:all .2s}
+.ctrl-skip:hover{color:var(--lime);border-color:var(--lime)}
+.auto-label{font-size:9px;color:var(--muted2)}
+
+@media (max-width: 640px){
+  .stage-wrap{height:380px}
+}
+</style>
+
+<div class="hero">
+  <div class="prog-bar"><div class="prog-fill" id="progFill"></div></div>
+  <div class="stage-row">
+    <div class="stage-dots" id="stageDots"></div>
+    <div style="display:flex;align-items:center;gap:10px">
+      <span class="auto-label" id="autoLabel">Auto-playing</span>
+      <span class="stage-num" id="stageNum">1 / 5</span>
+    </div>
+  </div>
+
+  <div class="stage-wrap">
+
+    <!-- STAGE 0: BEFORE — CHAOS -->
+    <div class="stage active" id="s0">
+      <div>
+        <div class="chaos-header">
+          <span class="chaos-badge">BEFORE WEBBHEADS</span>
+        </div>
+        <div class="chaos-title">Ravi ran a real estate<br>agency. Alone. Struggling.</div>
+        <div class="chaos-sub">No website. No CRM. No leads. Just spreadsheets,<br>missed calls, and zero digital presence.</div>
+        <div class="chaos-desk">
+          <div class="chaos-card">
+            <div class="chaos-card-label">Monthly Leads</div>
+            <div class="chaos-card-val">0</div>
+            <div class="chaos-card-sub">No tracking system</div>
+          </div>
+          <div class="chaos-card">
+            <div class="chaos-card-label">Online Presence</div>
+            <div class="chaos-card-val" style="font-size:13px;margin-top:2px">None</div>
+            <div class="chaos-card-sub">No website · No listings</div>
+          </div>
+          <div class="chaos-notes">
+            <div class="note-line"><span class="note-ic">DB</span><span>Leads tracked in: Excel Sheet (last updated 3 months ago)</span></div>
+            <div class="note-line"><span class="note-ic">CL</span><span>Follow-ups: WhatsApp messages, manual calls</span></div>
+            <div class="note-line"><span class="note-ic">LS</span><span>Listings: Physical brochures only. No photos online.</span></div>
+            <div class="note-line"><span class="note-ic">AD</span><span>Ad budget: ₹0 — "I don't know where to start"</span></div>
+          </div>
+        </div>
+        <div class="missed-calls">
+          <div class="missed-dot"></div>
+          <span class="missed-text">Missed calls this week</span>
+          <span class="missed-num">23</span>
+        </div>
+        <div class="chaos-strip">
+          <span class="chaos-pill">No brand identity</span>
+          <span class="chaos-pill">No CRM</span>
+          <span class="chaos-pill">No digital ads</span>
+          <span class="chaos-pill">No website</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- STAGE 1: DISCOVERY -->
+    <div class="stage" id="s1">
+      <div>
+        <div class="disc-title">Then Ravi found<br>WebbHeads.</div>
+        <div class="disc-sub">One conversation changed everything.</div>
+        <div class="chat-window">
+          <div class="chat-header">
+            <div class="chat-av">W</div>
+            <div>
+              <div class="chat-name">WebbHeads</div>
+              <div class="chat-online">Online now</div>
+            </div>
+          </div>
+          <div class="chat-body" id="chatBody">
+            <div class="msg msg-them" id="cm0" style="opacity:0;transition:opacity .4s">"I have 12 years of real estate experience but zero clients from the internet. I don't even know where to start."</div>
+            <div class="msg msg-us" id="cm1" style="opacity:0;transition:opacity .4s">We've helped 40+ agencies like yours. Let's start with a full digital audit — for free.</div>
+            <div class="msg msg-them" id="cm2" style="opacity:0;transition:opacity .4s">"What would you actually build for me?"</div>
+            <div class="wh-reply" id="cm3" style="opacity:0;transition:opacity .4s">
+              <strong>WebbHeads builds you:</strong> A premium property website · Automated CRM · Meta + Google Ads · Branded listings · 3D virtual tours. <strong>Everything a top agency needs.</strong>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- STAGE 2: TRANSFORMATION -->
+    <div class="stage" id="s2">
+      <div>
+        <div class="transform-title">WebbHeads got to work.<br>Fast.</div>
+        <div class="transform-sub">Everything built in 3 weeks. Zero headache for Ravi.</div>
+        <div class="build-timeline" id="buildList"></div>
+        <div class="deploy-bar">
+          <div class="deploy-label"><span>Deploying Ravi's digital presence</span><span id="deployPct">0%</span></div>
+          <div class="deploy-track"><div class="deploy-fill" id="deployBar" style="width:0"></div></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- STAGE 3: GROWTH -->
+    <div class="stage" id="s3">
+      <div>
+        <div class="growth-title">Leads started pouring in.<br>Week 1.</div>
+        <div class="growth-sub">The dashboard Ravi never had — now his reality.</div>
+        <div class="kpi-grid">
+          <div class="kpi-box highlight">
+            <div class="kpi-label">Monthly Leads</div>
+            <div class="kpi-val" id="g-leads" style="color:var(--lime)">0</div>
+            <div class="kpi-delta" id="g-leads-d"></div>
+          </div>
+          <div class="kpi-box">
+            <div class="kpi-label">Site Visits</div>
+            <div class="kpi-val" id="g-visits" style="color:var(--blue)">0</div>
+            <div class="kpi-delta" id="g-visits-d"></div>
+          </div>
+          <div class="kpi-box">
+            <div class="kpi-label">Revenue</div>
+            <div class="kpi-val" id="g-rev" style="color:var(--green);font-size:16px">₹0</div>
+            <div class="kpi-delta" id="g-rev-d"></div>
+          </div>
+        </div>
+        <div class="lead-stream">
+          <div class="ls-header">
+            <div class="ls-title">Live lead feed</div>
+            <div class="ls-live">Live</div>
+          </div>
+          <div id="leadStream"></div>
+          <div class="chart-mini">
+            <div style="font-size:8px;color:var(--muted);margin-bottom:5px;font-weight:600">LEADS — WEEK BY WEEK</div>
+            <div class="chart-bars" id="chartBars"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- STAGE 4: AFTER -->
+    <div class="stage" id="s4">
+      <div>
+        <div class="after-badge">
+          <svg width="10" height="10" viewBox="0 0 10 10" fill="none"><circle cx="5" cy="5" r="4" stroke="#c8f135" stroke-width="1"/><path d="M3 5l1.5 1.5L7 3.5" stroke="#c8f135" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          AFTER WEBBHEADS
+        </div>
+        <div class="after-title">Ravi's agency is now<br>fully <span>digitalized</span>.<br>Fully growing.</div>
+        <div class="after-sub">Same person. Completely different business.</div>
+        <div class="after-grid">
+          <div class="after-card lime-border">
+            <div class="ac-label">Monthly leads</div>
+            <div class="ac-val">128</div>
+            <div class="ac-sub">↑ from 0 — in 90 days</div>
+          </div>
+          <div class="after-card lime-border">
+            <div class="ac-label">Brand recognition</div>
+            <div class="ac-val" style="font-size:14px;margin-top:2px">Premium</div>
+            <div class="ac-sub">Top 3 in Hyderabad</div>
+          </div>
+          <div class="after-card">
+            <div class="ac-label">Pipeline value</div>
+            <div class="ac-val" style="color:var(--green);font-size:16px">₹50Cr</div>
+            <div class="ac-sub" style="color:var(--green)">Active deals in CRM</div>
+          </div>
+          <div class="after-card">
+            <div class="ac-label">Ad ROI</div>
+            <div class="ac-val" style="color:var(--amber)">8.4×</div>
+            <div class="ac-sub" style="color:var(--amber)">Every rupee spent</div>
+          </div>
+        </div>
+        <div class="after-quote">
+          <div class="quote-av">RK</div>
+          <div>
+            <div class="quote-text">"WebbHeads didn't just build us a website. They built us a business. I went from missing 23 calls a week to having a full CRM running on autopilot."</div>
+            <div class="quote-name">Ravi Kumar</div>
+            <div class="quote-role">Founder, RK Properties · Hyderabad</div>
+          </div>
+        </div>
+        <div class="cta-row">
+          <div class="cta-btn cta-primary">Book a Free Call →</div>
+          <div class="cta-btn cta-secondary">See Case Studies</div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <div class="ctrl-row">
+    <div class="ctrl-btns">
+      <button class="ctrl-btn" onclick="prevStage()" title="Previous">
+        <svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M8 2L4 6l4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </button>
+      <button class="ctrl-btn" onclick="toggleAuto()" id="playBtn" title="Pause">
+        <svg width="12" height="12" viewBox="0 0 12 12" fill="none" id="playIcon"><rect x="3" y="2" width="2.5" height="8" rx="1" fill="currentColor"/><rect x="6.5" y="2" width="2.5" height="8" rx="1" fill="currentColor"/></svg>
+      </button>
+      <button class="ctrl-btn" onclick="nextStage()" title="Next">
+        <svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M4 2l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </button>
+    </div>
+    <button class="ctrl-skip" onclick="goStage(4)">Skip to results →</button>
+  </div>
+</div>
+
+<script>
+const STAGES=5;
+const DURATION=4500;
+let cur=0,autoPlay=true,timer=null,progTimer=null,progStart=null;
+const THEME_KEY='webbheads-theme';
+
+const stageLabels=['Before','Discovery','Building','Growth','After'];
+
+function applyTheme(theme){
+  const resolved=theme==='light'?'light':'dark';
+  document.documentElement.setAttribute('data-theme',resolved);
+}
+
+function syncThemeFromStorage(){
+  try{
+    applyTheme(localStorage.getItem(THEME_KEY)||'dark');
+  }catch{
+    applyTheme('dark');
+  }
+}
+
+window.addEventListener('storage',(event)=>{
+  if(!event.key||event.key===THEME_KEY){
+    syncThemeFromStorage();
+  }
+});
+
+document.addEventListener('visibilitychange',()=>{
+  if(document.visibilityState==='visible')syncThemeFromStorage();
+});
+
+syncThemeFromStorage();
+setInterval(syncThemeFromStorage,1200);
+
+function buildDots(){
+  const d=document.getElementById('stageDots');
+  d.innerHTML='';
+  for(let i=0;i<STAGES;i++){
+    const s=document.createElement('div');
+    s.className='sdot'+(i===cur?' on':i<cur?' done':'');
+    s.onclick=()=>goStage(i);
+    s.style.cursor='pointer';
+    d.appendChild(s);
+  }
+}
+
+function showStage(n){
+  document.querySelectorAll('.stage').forEach((s,i)=>s.classList.toggle('active',i===n));
+  document.getElementById('stageNum').textContent=(n+1)+' / '+STAGES;
+  document.getElementById('autoLabel').textContent=autoPlay?stageLabels[n]:'Paused';
+  buildDots();
+  if(n===1) animChat();
+  if(n===2) animBuild();
+  if(n===3) animGrowth();
+}
+
+function startProg(){
+  clearInterval(progTimer);
+  progStart=Date.now();
+  const fill=document.getElementById('progFill');
+  fill.style.transition='none';fill.style.width='0%';
+  progTimer=setInterval(()=>{
+    const pct=Math.min(((Date.now()-progStart)/DURATION)*100,100);
+    fill.style.width=pct+'%';
+    if(pct>=100)clearInterval(progTimer);
+  },30);
+}
+
+function goStage(n){
+  cur=n;showStage(cur);
+  if(autoPlay)startProg();
+  clearTimeout(timer);
+  if(autoPlay)timer=setTimeout(()=>{goStage((cur+1)%STAGES);},DURATION);
+}
+
+function nextStage(){goStage((cur+1)%STAGES);}
+function prevStage(){goStage((cur-1+STAGES)%STAGES);}
+
+function toggleAuto(){
+  autoPlay=!autoPlay;
+  document.getElementById('autoLabel').textContent=autoPlay?stageLabels[cur]:'Paused';
+  const icon=document.getElementById('playIcon');
+  if(autoPlay){
+    icon.innerHTML='<rect x="3" y="2" width="2.5" height="8" rx="1" fill="currentColor"/><rect x="6.5" y="2" width="2.5" height="8" rx="1" fill="currentColor"/>';
+    goStage(cur);
+  } else {
+    icon.innerHTML='<path d="M3.5 2.5l6 3.5-6 3.5V2.5z" fill="currentColor"/>';
+    clearTimeout(timer);clearInterval(progTimer);
+    document.getElementById('progFill').style.width='0%';
+  }
+}
+
+/* Chat animation */
+function animChat(){
+  const msgs=['cm0','cm1','cm2','cm3'];
+  const delays=[300,1100,2000,2800];
+  msgs.forEach((id)=>{const el=document.getElementById(id);if(el)el.style.opacity='0';});
+  msgs.forEach((id,i)=>setTimeout(()=>{const el=document.getElementById(id);if(el)el.style.opacity='1';},delays[i]));
+}
+
+/* Build animation */
+const buildItems=[
+  {label:'Premium property website',icon:'<svg viewBox="0 0 24 24" fill="none"><path d="M3 12h18M12 3a15 15 0 0 1 0 18M12 3a15 15 0 0 0 0 18M4.5 7.5h15M4.5 16.5h15" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg>',delay:200},
+  {label:'Automated CRM & lead pipeline',icon:'<svg viewBox="0 0 24 24" fill="none"><path d="M4 5h16v14H4zM8 13l2-2 2 2 4-4" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg>',delay:700},
+  {label:'Meta + Google Ads setup',icon:'<svg viewBox="0 0 24 24" fill="none"><path d="M4 14l6-2 9-7-3 10-6 2-6 2zM10 12l6 6" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg>',delay:1200},
+  {label:'3D virtual tours & listings',icon:'<svg viewBox="0 0 24 24" fill="none"><path d="M3 10l9-6 9 6v9l-9 5-9-5zM12 4v15" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg>',delay:1700},
+  {label:'Brand identity & SEO',icon:'<svg viewBox="0 0 24 24" fill="none"><path d="M12 3l2.4 4.9L20 9l-4 3.9.9 5.6-4.9-2.6-4.9 2.6.9-5.6L4 9l5.6-1.1L12 3z" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg>',delay:2200},
+];
+function animBuild(){
+  const list=document.getElementById('buildList');
+  list.innerHTML='';
+  const bar=document.getElementById('deployBar');
+  const pct=document.getElementById('deployPct');
+  if(bar){bar.style.width='0';pct.textContent='0%';}
+  buildItems.forEach((item,i)=>{
+    const div=document.createElement('div');
+    div.className='build-item';
+    div.innerHTML=`<div class="build-icon">${item.icon}</div>
+      <span class="build-label">${item.label}</span>
+      <span class="build-status status-pending" id="bs${i}">Queued</span>`;
+    list.appendChild(div);
+    setTimeout(()=>{
+      div.classList.add('done');
+      const bs=document.getElementById('bs'+i);
+      if(bs){bs.className='build-status status-live';bs.textContent='Live';}
+      const bicon=div.querySelector('.build-icon');
+      if(bicon)bicon.classList.add('done');
+      const p=Math.round(((i+1)/buildItems.length)*100);
+      if(bar){bar.style.transition='width .6s ease';bar.style.width=p+'%';}
+      if(pct)pct.textContent=p+'%';
+    },item.delay);
+  });
+}
+
+/* Growth animation */
+const leadsData=[
+  {av:'AK',bg:'#1a2a0a',color:'#c8f135',name:'Arjun K.',src:'Meta Ads',score:94},
+  {av:'SR',bg:'#0a1a28',color:'#38bdf8',name:'Shreya R.',src:'Google SEO',score:81},
+  {av:'MH',bg:'#1a1228',color:'#a78bfa',name:'Mohammed H.',src:'Retargeting',score:77},
+];
+const barData=[4,9,18,28,42,61,88,128];
+function animCount(id,target,prefix,suffix,dur){
+  const el=document.getElementById(id);if(!el)return;
+  let s=null;
+  const isF=typeof target==='string';
+  function step(ts){
+    if(!s)s=ts;
+    const p=Math.min((ts-s)/dur,1);
+    if(isF){el.textContent=prefix+target+suffix;}
+    else{el.textContent=prefix+Math.round(p*target)+suffix;}
+    if(p<1)requestAnimationFrame(step);
+  }
+  requestAnimationFrame(step);
+}
+function animGrowth(){
+  const leadsEl=document.getElementById('g-leads');if(leadsEl)leadsEl.textContent='0';
+  const visitsEl=document.getElementById('g-visits');if(visitsEl)visitsEl.textContent='0';
+  const revEl=document.getElementById('g-rev');if(revEl)revEl.textContent='₹0';
+  const leadsDelta=document.getElementById('g-leads-d');if(leadsDelta)leadsDelta.textContent='';
+  const visitsDelta=document.getElementById('g-visits-d');if(visitsDelta)visitsDelta.textContent='';
+  const revDelta=document.getElementById('g-rev-d');if(revDelta)revDelta.textContent='';
+  setTimeout(()=>animCount('g-leads',128,'','',1200),200);
+  setTimeout(()=>{document.getElementById('g-leads-d').textContent='↑ from 0 in 90 days';},1400);
+  setTimeout(()=>animCount('g-visits',4800,'','',1000),350);
+  setTimeout(()=>{document.getElementById('g-visits-d').textContent='Monthly unique visits';},1400);
+  setTimeout(()=>{document.getElementById('g-rev').textContent='₹56k';},600);
+  setTimeout(()=>{document.getElementById('g-rev-d').textContent='Commission this month';},1400);
+
+  const stream=document.getElementById('leadStream');
+  stream.innerHTML='';
+  leadsData.forEach((l,i)=>{
+    setTimeout(()=>{
+      const div=document.createElement('div');
+      div.className='lead-row';
+      div.style.animationDelay='0s';
+      div.innerHTML=`<div class="lead-av" style="background:${l.bg};color:${l.color};width:22px;height:22px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:7px;font-weight:800;flex-shrink:0">${l.av}</div>
+        <div class="lead-info"><div class="lead-n">${l.name}</div><div class="lead-s">${l.src}</div></div>
+        <div class="lead-score">${l.score}</div>`;
+      stream.appendChild(div);
+    },i*350+400);
+  });
+
+  const bars=document.getElementById('chartBars');bars.innerHTML='';
+  const max=Math.max(...barData);
+  barData.forEach((v,i)=>{
+    const b=document.createElement('div');
+    b.className='cbar'+(i===barData.length-1?' active':'');
+    b.style.height='0%';b.style.transition='height .5s ease';
+    bars.appendChild(b);
+    setTimeout(()=>{b.style.height=(v/max*100)+'%';},i*100+300);
+  });
+}
+
+buildDots();
+showStage(0);
+startProg();
+timer=setTimeout(()=>goStage(1),DURATION);
+</script>
