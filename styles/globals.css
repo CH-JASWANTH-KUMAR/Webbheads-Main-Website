@@ -1,11 +1,11 @@
 @import "tailwindcss";
 
 :root {
-  --background: #ffffff;
+  --background: #f5f7f5;
   --foreground: #1f4f3a;
   --primary: #1f4f3a;
-  --accent: #dbe94a;
-  --section-alt: #f9fafb;
+  --accent: #f6ff82;
+  --section-alt: #edf1ee;
 }
 
 .dark {
@@ -26,13 +26,27 @@
 /* Smooth scroll (ok, but reduce-motion disables below) */
 html {
   scroll-behavior: smooth;
+  background-color: #f5f7f5;
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
+  background-color: #f5f7f5;
+  color: #0f1f1b;
   font-family: Arial, Helvetica, sans-serif;
   transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+::-webkit-scrollbar {
+  width: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: #f5f7f5;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #b8d0c5;
+  border-radius: 999px;
 }
 
 /* Remove the global "transition everything" rule.

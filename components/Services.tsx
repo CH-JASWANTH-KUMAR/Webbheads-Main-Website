@@ -69,23 +69,52 @@ function ServiceMiniAnimation({
   if (type === 'website') {
     return (
       <svg viewBox="0 0 120 52" className="h-10 w-24" aria-hidden="true">
-        <rect x="5" y="7" width="110" height="38" rx="10" fill={panel} stroke={accent} strokeOpacity="0.35" />
-        <rect x="13" y="14" width="36" height="4" rx="2" fill={accent} fillOpacity="0.8" />
-        <rect x="13" y="22" width="56" height="3" rx="1.5" fill={secondary} fillOpacity="0.5" />
-        <rect x="13" y="29" width="52" height="3" rx="1.5" fill={secondary} fillOpacity="0.35" />
-        <motion.rect
-          x="79"
-          y="18"
-          width="28"
-          height="18"
-          rx="5"
-          fill={accent}
-          fillOpacity="0.18"
+        <rect x="6" y="7" width="108" height="38" rx="10" fill={panel} stroke={accent} strokeOpacity="0.35" />
+        <rect x="14" y="13" width="92" height="5" rx="2.5" fill={accent} fillOpacity="0.18" />
+        <motion.path
+          d="M28 30 L22 26 L28 22"
           stroke={accent}
-          strokeOpacity="0.6"
-          animate={prefersReducedMotion ? { y: 18 } : { y: [18, 15, 18] }}
-          transition={{ duration: 2.4, repeat: Infinity, ease: 'easeInOut' }}
+          strokeWidth="1.8"
+          strokeLinecap="round"
+          strokeLinejoin="round"
+          fill="none"
+          animate={prefersReducedMotion ? { x: 0 } : { x: [-1, 1, -1] }}
+          transition={{ duration: 1.8, repeat: Infinity, ease: 'easeInOut' }}
         />
+        <motion.path
+          d="M46 22 L40 26 L46 30"
+          stroke={accent}
+          strokeWidth="1.8"
+          strokeLinecap="round"
+          strokeLinejoin="round"
+          fill="none"
+          animate={prefersReducedMotion ? { x: 0 } : { x: [1, -1, 1] }}
+          transition={{ duration: 1.8, repeat: Infinity, ease: 'easeInOut' }}
+        />
+        <motion.path
+          d="M54 33 L60 19"
+          stroke={accent}
+          strokeWidth="1.8"
+          strokeLinecap="round"
+          fill="none"
+          animate={prefersReducedMotion ? { opacity: 1 } : { opacity: [0.55, 1, 0.55] }}
+          transition={{ duration: 1.6, repeat: Infinity }}
+        />
+        <motion.rect
+          x="72"
+          y="20"
+          width="34"
+          height="14"
+          rx="4"
+          fill={accent}
+          fillOpacity="0.14"
+          stroke={accent}
+          strokeOpacity="0.5"
+          animate={prefersReducedMotion ? { x: 72 } : { x: [72, 76, 72] }}
+          transition={{ duration: 2.1, repeat: Infinity, ease: 'easeInOut' }}
+        />
+        <circle cx="80" cy="27" r="1.6" fill={accent} fillOpacity="0.75" />
+        <circle cx="87" cy="27" r="1.6" fill={accent} fillOpacity="0.55" />
       </svg>
     );
   }
@@ -273,14 +302,14 @@ export default function Services() {
   };
   
   return (
-    <section className={`relative overflow-hidden py-20 md:py-24 ${isDark ? 'bg-black' : 'bg-white'}`}>
+    <section className={`relative overflow-hidden py-14 md:py-16 ${isDark ? 'bg-black' : 'bg-transparent'}`}>
       <div className="container relative z-10 mx-auto px-6 md:px-12 lg:px-20">
-        <div className="text-center mb-20">
+        <div className="text-center mb-12 md:mb-14">
           <motion.h2 
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
-            className={`text-4xl md:text-5xl font-bold mb-6 ${isDark ? 'text-white' : 'text-[#1f4f3a]'}`}
+            className={`text-3xl md:text-4xl lg:text-5xl font-bold mb-4 ${isDark ? 'text-white' : 'text-[#1f4f3a]'}`}
           >
             Our Expertise in <span className={`${isDark ? 'text-transparent bg-clip-text bg-gradient-to-r from-[#f6ff82] to-[#d4e682]' : 'text-transparent bg-clip-text bg-gradient-to-r from-[#1f4f3a] to-[#2d6a4f]'}`}>Real Estate Tech</span>
           </motion.h2>
@@ -289,7 +318,7 @@ export default function Services() {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ delay: 0.1 }}
-            className={`max-w-2xl mx-auto text-lg ${isDark ? 'text-gray-400' : 'text-gray-600'}`}
+            className={`max-w-2xl mx-auto text-base md:text-lg ${isDark ? 'text-gray-400' : 'text-[#4a6660]'}`}
           >
             Comprehensive digital solutions designed to elevate your real estate business.
           </motion.p>
@@ -300,18 +329,18 @@ export default function Services() {
           initial="hidden"
           whileInView="show"
           viewport={{ once: true, amount: 0.2 }}
-          className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8"
+          className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5 lg:gap-6"
         >
           {services.map((service, index) => (
             <motion.div
               key={index}
               variants={cardVariants}
-              whileHover={prefersReducedMotion ? undefined : { y: -10, scale: 1.015 }}
+              whileHover={prefersReducedMotion ? undefined : { y: -2 }}
               onMouseMove={handleCardMouseMove}
-              className={`group relative isolate overflow-hidden rounded-2xl p-8 md:p-10 shadow-sm transition-all duration-300 [--mx:50%] [--my:50%] ${
+              className={`group relative isolate overflow-hidden rounded-2xl p-6 md:p-7 shadow-sm transition-all duration-200 ease-out [--mx:50%] [--my:50%] ${
                 isDark
                   ? 'bg-white/10 backdrop-blur-md border border-white/10 hover:shadow-[0_24px_60px_rgba(246,255,130,0.12)]'
-                  : 'bg-gradient-to-b from-white to-[#f7fbf8] border border-[#d5e4db] hover:shadow-[0_24px_60px_rgba(31,79,58,0.18)]'
+                  : 'bg-white border border-[#dce8e2] hover:border-[#b8d0c5] hover:shadow-[0_4px_24px_rgba(26,60,52,0.07)]'
               }`}
             >
               <div
@@ -329,24 +358,24 @@ export default function Services() {
                     : 'bg-gradient-to-br from-[#1f4f3a]/70 via-[#2d6a4f]/35 to-[#dbe94a]/80'
                 }`}
               >
-                <div className={`h-full w-full rounded-2xl ${isDark ? 'bg-black/55' : 'bg-white/88'}`} />
+                <div className={`h-full w-full rounded-2xl ${isDark ? 'bg-black/55' : 'bg-white'}`} />
               </div>
 
-              <div className="relative z-10 mb-7 flex items-center justify-between gap-4">
+              <div className="relative z-10 mb-5 flex items-center justify-between gap-3">
                 <motion.div
                   whileHover={prefersReducedMotion ? undefined : { rotate: 6, scale: 1.08 }}
                   transition={{ type: 'spring', stiffness: 260, damping: 18 }}
-                  className={`w-14 h-14 rounded-xl flex items-center justify-center transition-colors duration-300 ${
+                  className={`w-12 h-12 rounded-xl flex items-center justify-center transition-colors duration-300 ${
                     isDark
                       ? 'bg-[#f6ff82]/10 text-[#f6ff82] group-hover:bg-[#f6ff82] group-hover:text-[#003942]'
                       : 'bg-[#1f4f3a]/8 text-[#1f4f3a] group-hover:bg-[#1f4f3a] group-hover:text-[#dbe94a]'
                   }`}
                 >
-                  <service.icon size={28} strokeWidth={1.5} />
+                  <service.icon size={24} strokeWidth={1.5} />
                 </motion.div>
 
                 <div className={`opacity-90 group-hover:opacity-100 transition-opacity duration-300 rounded-lg px-2 py-1 ${
-                  isDark ? 'bg-black/25 border border-white/10' : 'bg-[#f5faf7] border border-[#d8e5dd]'
+                  isDark ? 'bg-black/25 border border-white/10' : 'bg-[#edf1ee] border border-[#dce8e2]'
                 }`}>
                   <ServiceMiniAnimation
                     type={service.animation}
@@ -356,10 +385,10 @@ export default function Services() {
                 </div>
               </div>
 
-              <h3 className={`relative z-10 text-2xl font-bold mb-4 ${isDark ? 'text-white' : 'text-[#1f4f3a]'}`}>
+              <h3 className={`relative z-10 text-xl md:text-2xl font-bold mb-3 ${isDark ? 'text-white' : 'text-[#1f4f3a]'}`}>
                 {service.title}
               </h3>
-              <p className={`relative z-10 leading-relaxed ${isDark ? 'text-gray-400' : 'text-gray-600'}`}>
+              <p className={`relative z-10 text-sm md:text-base leading-relaxed ${isDark ? 'text-gray-400' : 'text-[#4a6660]'}`}>
                 {service.description}
               </p>
             </motion.div>

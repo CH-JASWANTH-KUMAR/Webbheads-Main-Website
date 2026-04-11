@@ -153,18 +153,18 @@ export default function Pricing() {
 
   const brandGradient = "bg-gradient-to-r from-[#f6ff82] to-[#003942]";
   const sectionBg = "bg-transparent";
-  const headerSub = isDark ? "text-white/55" : "text-slate-600";
+  const headerSub = isDark ? "text-white/55" : "text-[#4a6660]";
   const cardBase = isDark
     ? "bg-white/5 shadow-[0_18px_50px_rgba(0,0,0,0.55)] text-white"
-    : "bg-white shadow-[0_18px_50px_rgba(0,0,0,0.12)] text-slate-900";
-  const featureText = isDark ? "text-white/75" : "text-slate-700";
+    : "bg-white border border-[#dce8e2] shadow-[0_4px_24px_rgba(26,60,52,0.07)] text-[#0f1f1b]";
+  const featureText = isDark ? "text-white/75" : "text-[#4a6660]";
   const pill = isDark
     ? "bg-white/5 text-white/75"
-    : "bg-slate-100 text-slate-700";
+    : "bg-[#f6ff82] text-[#1a3c34]";
   const highlightedCard = isDark
     ? "ring-2 ring-[#f6ff82]/70 shadow-[0_24px_60px_rgba(246,255,130,0.22)]"
     : "ring-2 ring-[#003942]/30 shadow-[0_24px_60px_rgba(0,57,66,0.2)]";
-  const planDesc = isDark ? "text-white/55" : "text-slate-600";
+  const planDesc = isDark ? "text-white/55" : "text-[#4a6660]";
   const priceColor = isDark ? "text-[#f6ff82]" : "text-[#003942]";
   const softCard = isDark ? "opacity-90 hover:opacity-100" : "opacity-95 hover:opacity-100";
 

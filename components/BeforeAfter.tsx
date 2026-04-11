@@ -44,17 +44,17 @@ export default function BeforeAfter() {
 
   const shell = isDark
     ? "bg-white/5 border border-white/10 shadow-[0_18px_50px_rgba(0,0,0,0.55)]"
-    : "bg-white border border-[#003942]/10 shadow-[0_18px_50px_rgba(0,0,0,0.12)]";
+    : "bg-white border border-[#dce8e2] shadow-[0_4px_24px_rgba(26,60,52,0.07)]";
 
-  const subText = isDark ? "text-white/55" : "text-slate-600";
+  const subText = isDark ? "text-white/55" : "text-[#4a6660]";
   const pill = isDark
     ? "bg-white/5 text-white/75"
-    : "bg-slate-100 text-slate-700";
+    : "bg-[#f6ff82] text-[#1a3c34]";
 
-  const rowBorder = isDark ? "border-white/10" : "border-slate-200";
-  const headerBg = isDark ? "bg-white/[0.03]" : "bg-slate-50";
-  const beforeText = isDark ? "text-white/70" : "text-slate-700";
-  const afterText = isDark ? "text-white" : "text-slate-900";
+  const rowBorder = isDark ? "border-white/10" : "border-[#dce8e2]";
+  const headerBg = isDark ? "bg-white/[0.03]" : "bg-[#edf1ee]";
+  const beforeText = isDark ? "text-white/70" : "text-[#4a6660]";
+  const afterText = isDark ? "text-white" : "text-[#0f1f1b]";
   const impactBadge = isDark
     ? "bg-[#f6ff82]/15 text-[#f6ff82]"
     : "bg-[#003942]/10 text-[#003942]";
@@ -68,7 +68,7 @@ export default function BeforeAfter() {
           >
             <span
               className={`h-1.5 w-1.5 rounded-full ${
-                isDark ? "bg-[#f6ff82]" : "bg-[#003942]"
+                isDark ? "bg-[#f6ff82]" : "bg-[#1a3c34]"
               }`}
             />
             <span className="tracking-wide">BEFORE & AFTER</span>
@@ -76,7 +76,7 @@ export default function BeforeAfter() {
 
           <h2
             className={`text-3xl md:text-5xl font-bold tracking-tight ${
-              isDark ? "text-white" : "text-slate-900"
+              isDark ? "text-white" : "text-[#0f1f1b]"
             }`}
           >
             Before vs After, made{" "}
@@ -95,11 +95,11 @@ export default function BeforeAfter() {
         {/* Desktop/Table View */}
         <div className={`hidden md:block rounded-3xl overflow-hidden backdrop-blur ${shell}`}>
           <div className={`grid grid-cols-[1.1fr_1.55fr_1.55fr_0.95fr] text-sm font-semibold ${headerBg}`}>
-            <div className={`px-6 py-4 border-b ${rowBorder} ${isDark ? "text-white/80" : "text-slate-900"}`}>
+            <div className={`px-6 py-4 border-b ${rowBorder} ${isDark ? "text-white/80" : "text-[#0f1f1b]"}`}>
               Area
             </div>
             <div className={`px-6 py-4 border-b ${rowBorder} ${beforeText} flex items-center gap-2`}>
-              <span className={`inline-flex h-6 w-6 items-center justify-center rounded-full ${isDark ? "bg-white/10" : "bg-slate-900 text-white"}`}>
+              <span className={`inline-flex h-6 w-6 items-center justify-center rounded-full ${isDark ? "bg-white/10" : "bg-[#1a3c34] text-white"}`}>
                 <X className="h-3.5 w-3.5" />
               </span>
               Before Us
@@ -110,7 +110,7 @@ export default function BeforeAfter() {
               </span>
               After Us
             </div>
-            <div className={`px-6 py-4 border-b ${rowBorder} ${isDark ? "text-white/80" : "text-slate-900"}`}>
+            <div className={`px-6 py-4 border-b ${rowBorder} ${isDark ? "text-white/80" : "text-[#0f1f1b]"}`}>
               Outcome
             </div>
           </div>
@@ -120,9 +120,9 @@ export default function BeforeAfter() {
               key={item.feature}
               className={`grid grid-cols-[1.1fr_1.55fr_1.55fr_0.95fr] ${
                 idx !== comparisons.length - 1 ? `border-b ${rowBorder}` : ""
-              } ${idx % 2 === 0 ? (isDark ? "bg-white/[0.01]" : "bg-white") : (isDark ? "bg-black/10" : "bg-slate-50/55")}`}
+              } ${idx % 2 === 0 ? (isDark ? "bg-white/[0.01]" : "bg-white") : (isDark ? "bg-black/10" : "bg-[#edf1ee]")}`}
             >
-              <div className={`px-6 py-5 font-semibold ${isDark ? "text-white" : "text-slate-900"}`}>
+              <div className={`px-6 py-5 font-semibold ${isDark ? "text-white" : "text-[#0f1f1b]"}`}>
                 {item.feature}
               </div>
               <div className={`px-6 py-5 text-sm leading-relaxed ${beforeText}`}>
@@ -144,11 +144,11 @@ export default function BeforeAfter() {
         <div className="grid grid-cols-1 gap-4 md:hidden">
           {comparisons.map((item) => (
             <div key={item.feature} className={`rounded-2xl p-5 backdrop-blur ${shell}`}>
-              <h3 className={`text-base font-semibold ${isDark ? "text-white" : "text-slate-900"}`}>
+              <h3 className={`text-base font-semibold ${isDark ? "text-white" : "text-[#0f1f1b]"}`}>
                 {item.feature}
               </h3>
 
-              <div className={`mt-3 rounded-xl p-3 ${isDark ? "bg-black/25" : "bg-slate-50"}`}>
+              <div className={`mt-3 rounded-xl p-3 ${isDark ? "bg-black/25" : "bg-[#edf1ee]"}`}>
                 <p className={`text-xs font-semibold uppercase tracking-wide ${beforeText}`}>Before Us</p>
                 <p className={`mt-1 text-sm leading-relaxed ${beforeText}`}>{item.before}</p>
               </div>
@@ -203,7 +203,7 @@ export default function BeforeAfter() {
               ${
                 isDark
                   ? "bg-white/10 text-white hover:bg-white/15"
-                  : "bg-[#003942] text-white"
+                  : "bg-[#1a3c34] text-white"
               }
               shadow-[0_12px_30px_rgba(0,0,0,0.25)]
             `}

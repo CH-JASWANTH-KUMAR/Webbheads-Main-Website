@@ -19,7 +19,7 @@ function HeroDashboardCard({
       className={`w-full h-full rounded-2xl border p-2 md:p-3 overflow-hidden backdrop-blur-sm ${
         isDark
           ? "bg-white/5 border-white/10"
-          : "bg-white/80 border-slate-200"
+          : "bg-white/80 border-[#dce8e2]"
       }`}
     >
       <iframe
@@ -99,11 +99,11 @@ export default function Hero() {
 
   const brandGradient = "bg-gradient-to-r from-[#f6ff82] to-[#003942]";
   const sectionBg = "bg-transparent";
-  const bodyText = isDark ? "text-white/70" : "text-slate-700";
+  const bodyText = isDark ? "text-white/70" : "text-[#4a6660]";
 
   const card = isDark
     ? "bg-white/5 border-white/10 shadow-[0_8px_20px_rgba(0,0,0,0.35)]"
-    : "bg-white border-slate-200 shadow-[0_8px_22px_rgba(15,23,42,0.07)]";
+    : "bg-white border-[#dce8e2] shadow-[0_8px_22px_rgba(15,23,42,0.07)]";
   const primaryButtonClass = isDark
     ? "text-[#07110f] bg-gradient-to-r from-[#f6ff82] via-[#edff86] to-[#d8f566]"
     : "text-white bg-gradient-to-r from-[#003942] via-[#005260] to-[#006477]";
@@ -137,18 +137,18 @@ export default function Hero() {
             <div
               className={`
                 inline-flex items-center gap-2 px-4 py-2 rounded-full mb-6 md:mb-8 text-xs md:text-sm font-medium
-                ${isDark ? "bg-white/5 text-white/75" : "bg-slate-100 text-slate-700"}
+                ${isDark ? "bg-white/5 text-white/75" : "bg-[#f6ff82] text-[#1a3c34]"}
               `}
             >
               <span
                 className={`w-1.5 h-1.5 md:w-2 md:h-2 rounded-full ${
-                  isDark ? "bg-[#f6ff82]" : "bg-[#003942]"
+                  isDark ? "bg-[#f6ff82]" : "bg-[#1a3c34]"
                 }`}
               />
               <span>ABOUT WEBBHEADS</span>
             </div>
 
-            <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold leading-[1.1] mb-6 md:mb-8 tracking-tight max-w-4xl">
+            <h1 className={`text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold leading-[1.1] mb-6 md:mb-8 tracking-tight max-w-4xl ${isDark ? "text-white" : "text-[#0f1f1b]"}`}>
               {headlineWords.map((word, index) => {
                 const wordClass = word === "Solutions" ? `bg-clip-text text-transparent ${brandGradient}` : "";
                 return (

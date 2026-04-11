@@ -7,9 +7,9 @@ import ThemeToggle from "./ThemeToggle";
 import { useTheme } from "@/context/ThemeContext";
 
 const navLinks = [
-  { name: "Home", href: "#hero" },
   { name: "Services", href: "#services" },
-  { name: "About", href: "#about" },
+  { name: "Case Studies", href: "#portfolio" },
+  { name: "Team", href: "#team" },
   { name: "Contact", href: "#contact" },
 ];
 
@@ -36,8 +36,9 @@ export default function Navbar() {
   const tapT = { duration: 0.12, ease } as const;
   const tapScale = prefersReducedMotion ? 1 : 0.985;
 
-  const navSurface = isDark ? "bg-[#16171B]/60" : "bg-white/55";
-  const navSurfaceScrolled = isDark ? "bg-[#16171B]/72" : "bg-white/65";
+  const navSurface = isDark ? "bg-[#16171B]/60" : "bg-[rgba(245,247,245,0.80)]";
+  const navSurfaceScrolled = isDark ? "bg-[#16171B]/72" : "bg-[rgba(245,247,245,0.80)]";
+  const navBorder = isDark ? "border-none" : "border-b border-[#dce8e2]";
 
   const navShadow = isScrolled
     ? "shadow-[0_14px_40px_rgba(0,0,0,0.18)]"
@@ -47,27 +48,27 @@ export default function Navbar() {
 
   const focusRing = isDark
     ? "focus-visible:ring-[#f6ff82]/60"
-    : "focus-visible:ring-[#003942]/35";
+    : "focus-visible:ring-[#1a3c34]/35";
 
   const linkBase =
     `px-4 py-2 text-sm font-medium rounded-full ` +
     `focus:outline-none focus-visible:ring-2 ${focusRing}`;
 
-  const linkTheme = isDark ? "text-white/75" : "text-slate-700";
+  const linkTheme = isDark ? "text-white/75" : "text-[#4a6660]";
   const iconBtn = isDark ? "text-white" : "text-slate-900";
 
   const mobileOverlay = isDark ? "bg-black/60" : "bg-black/30";
-  const mobilePanel = isDark ? "bg-[#16171B]/88" : "bg-white/85";
+  const mobilePanel = isDark ? "bg-[#16171B]/88" : "bg-white";
   const mobileLink = isDark
     ? "text-white/85 border-white/10"
     : "text-slate-800 border-black/10";
 
   const ctaBg = isDark
     ? "bg-gradient-to-r from-[#f6ff82] to-[#dce86f]"
-    : "bg-gradient-to-r from-[#003942] to-[#005766]";
-  const ctaText = "text-white";
-  const ctaTextDesktop = isDark ? "text-[#1D1F23]" : ctaText;
-  const ctaRing = isDark ? "ring-[#f6ff82]/50" : "ring-[#003942]/25";
+    : "bg-[#1a3c34]";
+  const ctaText = isDark ? "text-[#1D1F23]" : "text-white";
+  const ctaTextDesktop = ctaText;
+  const ctaRing = isDark ? "ring-[#f6ff82]/50" : "ring-[#1a3c34]/25";
 
   return (
     <>
@@ -82,12 +83,13 @@ export default function Navbar() {
             px-5 md:px-8 py-3 md:py-3.5 rounded-full
             ${navSurface}
             ${isScrolled ? navSurfaceScrolled : ""}
-            backdrop-blur-xl
+            backdrop-blur-[14px]
             ${navShadow}
-            border-none
+            ${navBorder}
             transition-[box-shadow,background-color] duration-500
             w-full max-w-4xl
           `}
+          style={{ WebkitBackdropFilter: "blur(14px)" }}
         >
           {/* Logo */}
           <a
@@ -189,9 +191,10 @@ export default function Navbar() {
               className={`
                 absolute top-24 left-4 right-4 rounded-3xl overflow-hidden
                 ${mobilePanel} backdrop-blur-2xl
-                border-none
+                ${isDark ? "border-none" : "border border-[#dce8e2]"}
                 shadow-[0_20px_60px_rgba(0,0,0,0.35)]
               `}
+              style={{ WebkitBackdropFilter: "blur(14px)" }}
             >
               <div className="p-6">
                 {navLinks.map((link) => (

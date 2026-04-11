@@ -124,8 +124,8 @@ const imageScaleTransition = {
 };
 
 const CARD_SHELL =
-  "group relative block overflow-hidden rounded-2xl will-change-transform " +
-  "shadow-[0_14px_38px_rgba(0,0,0,0.14)] dark:shadow-[0_18px_50px_rgba(0,0,0,0.30)]";
+  "group relative block overflow-hidden rounded-2xl will-change-transform transition-all duration-200 ease-out " +
+  "dark:shadow-[0_18px_50px_rgba(0,0,0,0.30)]";
 
 function previewPlacement(i: number) {
   if (i === 0) return "col-span-12 sm:col-span-12 lg:col-span-6 row-span-2";
@@ -159,7 +159,11 @@ function CaseStudyCard({
       whileHover="hover"
       animate="rest"
       variants={cardHoverVariants}
-      className={`${CARD_SHELL} ${className}`}
+      className={`${CARD_SHELL} ${className} ${
+        isDark
+          ? "shadow-[0_14px_38px_rgba(0,0,0,0.14)]"
+          : "bg-white border border-[#dce8e2] hover:border-[#b8d0c5] hover:shadow-[0_4px_24px_rgba(26,60,52,0.07)] hover:-translate-y-[2px]"
+      }`}
       style={{ minHeight: 0 }}
     >
       <div
@@ -223,14 +227,14 @@ export default function CaseStudies() {
   const brandGradient = "bg-gradient-to-r from-[#f6ff82] to-[#003942]";
   const sectionBg = "bg-transparent";
 
-  const heading = isDark ? "text-white" : "text-slate-900";
-  const sub = isDark ? "text-white/55" : "text-slate-600";
+  const heading = isDark ? "text-white" : "text-[#0f1f1b]";
+  const sub = isDark ? "text-white/55" : "text-[#4a6660]";
 
   const previewStudies = useMemo(() => caseStudies.slice(0, 6), []);
 
   const modalBackdrop = isDark ? "bg-black" : "bg-white";
-  const modalText = isDark ? "text-white" : "text-slate-900";
-  const modalSubText = isDark ? "text-white/70" : "text-slate-600";
+  const modalText = isDark ? "text-white" : "text-[#0f1f1b]";
+  const modalSubText = isDark ? "text-white/70" : "text-[#4a6660]";
   const modalCloseBtn = isDark
     ? "bg-white/10 hover:bg-white/20"
     : "bg-black/5 hover:bg-black/10";
@@ -238,6 +242,9 @@ export default function CaseStudies() {
   const viewAllPill = isDark
     ? "bg-white/10 text-white hover:bg-white/15"
     : "bg-[#003942] text-white";
+  const labelPill = isDark
+    ? "bg-white/5 text-white/75"
+    : "bg-[#f6ff82] text-[#1a3c34]";
 
   return (
     <section id="portfolio" className={`py-20 md:py-28 ${sectionBg}`}>
@@ -255,16 +262,12 @@ export default function CaseStudies() {
               <div
                 className={`
                   inline-flex items-center gap-2 px-4 py-2 rounded-full mb-6 text-sm font-medium
-                  ${
-                    isDark
-                      ? "bg-white/5 text-white/75"
-                      : "bg-slate-100 text-slate-700"
-                  }
+                  ${labelPill}
                 `}
               >
                 <span
                   className={`w-2 h-2 rounded-full ${
-                    isDark ? "bg-[#f6ff82]" : "bg-[#003942]"
+                    isDark ? "bg-[#f6ff82]" : "bg-[#1a3c34]"
                   }`}
                 />
                 <span>Our Work</span>

@@ -5,126 +5,90 @@
  * PROCESS SECTION - Our Workflow with Popup Details
  * ==========================================================================
  * Features:
- * - 6-step process with clickable cards
- * - Popup modal with detailed overview for each stage
+ * - 4-step process with hoverable cards
+ * - Hover-to-view detail popover for each stage
  * - Scroll-synced loading animation (completes when section hits middle)
  * - Animation reverses when scrolling back up
  * ==========================================================================
  */
 
 import { motion, useScroll, useTransform, useSpring, AnimatePresence } from "framer-motion";
-import { MessageSquare, Search, PenTool, Code2, Rocket, BarChart, CheckCircle2, Clock } from "lucide-react";
+import { Search, Crosshair, PenTool, Send, CheckCircle2, ClipboardList } from "lucide-react";
 import { useRef, useState } from "react";
 import { useTheme } from '@/context/ThemeContext';
 
 // Process steps with detailed information for popups
 const steps = [
   {
-    icon: MessageSquare,
-    title: "Discovery",
-    desc: "Understanding your vision",
+    icon: Search,
+    title: "Discover",
+    desc: "Market scan, comparables & opportunity mapping",
     details: {
-      heading: "Discovery Phase",
-      overview: "We start by deeply understanding your business, goals, target audience, and competitive landscape. This phase sets the foundation for everything we build.",
+      heading: "Discover",
+      overview: "Understand the market before touching the property.",
+      deliverable: "Opportunity Brief + Market Snapshot",
+      duration: "3–5 Days",
       points: [
-        "In-depth consultation call to understand your vision",
-        "Analysis of your current digital presence",
-        "Competitor research and market positioning",
-        "Define target audience and user personas",
-        "Document requirements and success metrics",
-        "Set project timeline and milestones"
-      ],
-      duration: "1-2 Weeks"
+        "Kickoff to capture goals, constraints & outcomes",
+        "Hyperlocal comparables — active & recently sold",
+        "Buyer persona & demand-segment mapping",
+        "Risk and upside review before any planning",
+        "Baseline KPIs locked in for campaign tracking"
+      ]
     }
   },
   {
-    icon: Search,
-    title: "Strategy",
-    desc: "Planning the roadmap",
+    icon: Crosshair,
+    title: "Define",
+    desc: "Data-backed pricing, channels & campaign plan",
     details: {
-      heading: "Strategy Phase",
-      overview: "Based on our discovery findings, we craft a comprehensive strategy that aligns with your business goals and maximizes ROI.",
+      heading: "Define",
+      overview: "Convert insights into a locked execution blueprint.",
+      deliverable: "Go-To-Market Blueprint",
+      duration: "2–4 Days",
       points: [
-        "Define technology stack and architecture",
-        "Create detailed project roadmap",
-        "Plan content strategy and SEO approach",
-        "Design user journey and conversion funnels",
-        "Establish KPIs and measurement framework",
-        "Present strategy for approval"
-      ],
-      duration: "1 Week"
+        "Pricing window with clear rationale",
+        "Channel mix — portals, social & direct outreach",
+        "Timeline with launch sequence & milestones",
+        "Budget allocation & lead volume projections",
+        "Strategy deck ready for client sign-off"
+      ]
     }
   },
   {
     icon: PenTool,
     title: "Design",
-    desc: "Crafting the visual identity",
+    desc: "Assets built to attract qualified buyers",
     details: {
-      heading: "Design Phase",
-      overview: "Our design team creates stunning, conversion-focused designs that reflect your brand's luxury positioning and resonate with your target audience.",
+      heading: "Design",
+      overview: "Every asset crafted for conversion, not just attention.",
+      deliverable: "Listing Asset Kit",
+      duration: "4–7 Days",
       points: [
-        "Mood boards and design direction",
-        "Wireframes for all key pages",
-        "High-fidelity UI design mockups",
-        "Mobile-responsive design variations",
-        "Interactive prototypes for user testing",
-        "Design revisions based on feedback"
-      ],
-      duration: "2-3 Weeks"
+        "Photo & video brief aligned to target buyer",
+        "Listing narrative with clear feature hierarchy",
+        "Virtual tour plan & flow mapping",
+        "Ad creatives per acquisition channel",
+        "Landing page copy & inquiry form refinement"
+      ]
     }
   },
   {
-    icon: Code2,
-    title: "Development",
-    desc: "Building the solution",
+    icon: Send,
+    title: "Deliver",
+    desc: "Execute, close & feed the next cycle",
     details: {
-      heading: "Development Phase",
-      overview: "Our expert developers bring the designs to life with clean, performant code. We build for speed, scalability, and maintainability.",
+      heading: "Deliver",
+      overview: "Full execution — from first lead to signed contract.",
+      deliverable: "Deal Closure + Performance Review",
+      duration: "Through Closure",
       points: [
-        "Frontend development with modern frameworks",
-        "Backend systems and API integration",
-        "CRM and automation setup",
-        "Performance optimization",
-        "Cross-browser and device testing",
-        "Security implementation and testing"
-      ],
-      duration: "3-4 Weeks"
-    }
-  },
-  {
-    icon: Rocket,
-    title: "Launch",
-    desc: "Going live to the world",
-    details: {
-      heading: "Launch Phase",
-      overview: "We handle the entire launch process, ensuring a smooth transition with zero downtime and maximum impact.",
-      points: [
-        "Pre-launch checklist and QA testing",
-        "Domain and hosting configuration",
-        "SSL certificate and security setup",
-        "Analytics and tracking implementation",
-        "SEO optimization and submission",
-        "Launch day support and monitoring"
-      ],
-      duration: "1 Week"
-    }
-  },
-  {
-    icon: BarChart,
-    title: "Growth",
-    desc: "Scaling and optimization",
-    details: {
-      heading: "Growth Phase",
-      overview: "Post-launch, we continue to optimize, maintain, and grow your digital presence with ongoing support and data-driven improvements.",
-      points: [
-        "Performance monitoring and reporting",
-        "A/B testing and conversion optimization",
-        "Content updates and maintenance",
-        "Feature enhancements and updates",
-        "Scaling infrastructure as you grow",
-        "Dedicated support and consultation"
-      ],
-      duration: "Ongoing"
+        "Campaign launch & lead capture operations",
+        "Qualification, follow-up cadence & CRM updates",
+        "Offer management & negotiation support",
+        "Settlement & documentation coordination",
+        "Post-deal retrospective fed into next Discover"
+      ]
     }
   }
 ];
@@ -170,13 +134,13 @@ export default function Process() {
           >
             <div className="inline-flex items-center gap-2 px-4 py-2 bg-[#f6ff82] rounded-full mb-6">
               <span className="w-2 h-2 bg-[#003942] rounded-full" />
-              <span className="text-sm font-medium text-[#003942]">How We Work</span>
+              <span className="text-sm font-medium text-[#003942]">The WebbHeads Method</span>
             </div>
             <h2 className={`text-4xl md:text-5xl font-bold mb-4 ${isDark ? 'text-white' : 'text-[#003942]'}`}>
-              Our <span className={`${isDark ? 'text-transparent bg-clip-text bg-gradient-to-r from-[#f6ff82] to-[#d4e682]' : 'text-transparent bg-clip-text bg-gradient-to-r from-[#003942] to-[#005f73]'}`}>Process</span>
+              Our <span className={`${isDark ? 'text-transparent bg-clip-text bg-gradient-to-r from-[#f6ff82] to-[#d4e682]' : 'text-transparent bg-clip-text bg-gradient-to-r from-[#003942] to-[#005f73]'}`}>4D Process</span>
             </h2>
-            <p className={`text-lg max-w-2xl mx-auto ${isDark ? 'text-gray-400' : 'text-gray-600'}`}>
-              A focused 4-step workflow designed to deliver exceptional results. Hover over any stage to learn more.
+            <p className={`text-lg max-w-3xl mx-auto ${isDark ? 'text-gray-400' : 'text-[#4a6660]'}`}>
+              Hover over each step to explore it in detail. Discover, Define, Design, Deliver gives you a repeatable system with clear outputs at every stage.
             </p>
           </motion.div>
 
@@ -201,7 +165,7 @@ export default function Process() {
                   transition={{ delay: index * 0.1 + 0.2, duration: 0.5 }}
                   onHoverStart={() => setHoveredStep(index)}
                   onHoverEnd={() => setHoveredStep(null)}
-                  className="flex flex-col items-center text-center cursor-pointer group relative"
+                  className="flex flex-col items-center text-center cursor-pointer group relative min-h-[13rem]"
                 >
                   {/* Step Circle - Animated based on scroll with gradient */}
                   <motion.div
@@ -265,7 +229,7 @@ export default function Process() {
                       color: useTransform(
                         progressValue,
                         [index, index + 0.5],
-                        [isDark ? "#6B7280" : "#9CA3AF", isDark ? "#f6ff82" : "#003942"]
+                        [isDark ? "#6B7280" : "#8aaba3", isDark ? "#f6ff82" : "#1a3c34"]
                       ),
                     }}
                   >
@@ -288,12 +252,12 @@ export default function Process() {
 
                   {/* Step Description */}
                   <motion.p
-                    className="text-xs lg:text-sm leading-relaxed transition-colors duration-300"
+                    className="text-xs lg:text-sm leading-relaxed transition-colors duration-300 max-w-[15rem]"
                     style={{
                       color: useTransform(
                         progressValue,
                         [index, index + 0.5],
-                        [isDark ? "#6B7280" : "#D1D5DB", isDark ? "#9CA3AF" : "#6B7280"]
+                        [isDark ? "#6B7280" : "#8aaba3", isDark ? "#9CA3AF" : "#4a6660"]
                       ),
                     }}
                   >
@@ -310,7 +274,7 @@ export default function Process() {
                         transition={{ duration: 0.2, ease: "easeOut" }}
                         className={`absolute bottom-full mb-4 w-[min(22rem,calc(100vw-2rem))] lg:w-72 z-50 pointer-events-none ${getHoverPositionClass(index)}`}
                       >
-                        <div className={`rounded-xl shadow-2xl border overflow-hidden ${isDark ? 'bg-[#002428] border-[#003942]' : 'bg-white border-gray-200'}`}>
+                        <div className={`rounded-xl shadow-2xl border overflow-hidden ${isDark ? 'bg-[#002428] border-[#003942]' : 'bg-white border-[#dce8e2]'}`}>
                           {/* Header with gradient */}
                           <div className="bg-gradient-to-r from-[#f6ff82] via-[#e8f074] to-[#d4e066] p-4">
                             <div className="flex items-center gap-3">
@@ -331,28 +295,33 @@ export default function Process() {
                           {/* Content */}
                           <div className="p-4 space-y-3">
                             {/* Overview */}
-                            <p className={`text-xs leading-relaxed ${isDark ? 'text-gray-300' : 'text-gray-700'}`}>
+                            <p className={`text-xs leading-relaxed ${isDark ? 'text-gray-300' : 'text-[#4a6660]'}`}>
                               {step.details.overview}
                             </p>
 
-                            {/* Duration Badge */}
-                            <div className="flex items-center gap-2">
-                              <Clock className="w-3.5 h-3.5 text-[#f6ff82]" />
-                              <span className={`text-xs font-medium ${isDark ? 'text-[#f6ff82]' : 'text-[#003942]'}`}>
-                                {step.details.duration}
-                              </span>
+                            {/* Deliverable + Duration */}
+                            <div className="space-y-2">
+                              <div className="flex items-start gap-2">
+                                <ClipboardList className="w-3.5 h-3.5 text-[#f6ff82] shrink-0 mt-0.5" />
+                                <span className={`text-xs font-medium ${isDark ? 'text-[#f6ff82]' : 'text-[#003942]'}`}>
+                                  Deliverable: {step.details.deliverable}
+                                </span>
+                              </div>
+                              <p className={`text-xs ${isDark ? 'text-gray-400' : 'text-[#4a6660]'}`}>
+                                Typical timeline: {step.details.duration}
+                              </p>
                             </div>
 
                             {/* Key Points - Show first 3 */}
                             <div>
                               <h4 className={`font-bold mb-2 text-xs ${isDark ? 'text-white' : 'text-[#003942]'}`}>
-                                Key Deliverables:
+                                What You Get:
                               </h4>
                               <ul className="space-y-1.5">
                                 {step.details.points.slice(0, 3).map((point, idx) => (
                                   <li key={idx} className="flex items-start gap-2 text-xs">
                                     <CheckCircle2 className="w-3 h-3 text-[#f6ff82] shrink-0 mt-0.5" />
-                                    <span className={isDark ? 'text-gray-400' : 'text-gray-600'}>
+                                    <span className={isDark ? 'text-gray-400' : 'text-[#4a6660]'}>
                                       {point}
                                     </span>
                                   </li>
@@ -369,7 +338,7 @@ export default function Process() {
                           </div>
 
                           {/* Arrow pointer */}
-                          <div className={`w-3 h-3 absolute -bottom-1.5 left-1/2 -translate-x-1/2 rotate-45 ${isDark ? 'bg-[#002428] border-r border-b border-[#003942]' : 'bg-white border-r border-b border-gray-200'}`} />
+                          <div className={`w-3 h-3 absolute -bottom-1.5 left-1/2 -translate-x-1/2 rotate-45 ${isDark ? 'bg-[#002428] border-r border-b border-[#003942]' : 'bg-white border-r border-b border-[#dce8e2]'}`} />
                         </div>
                       </motion.div>
                     )}

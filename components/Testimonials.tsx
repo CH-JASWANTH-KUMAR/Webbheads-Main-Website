@@ -6,57 +6,48 @@ import { useTheme } from "@/context/ThemeContext";
 
 const testimonials = [
   {
-    name: "Jessica Martinez",
-    role: "Marketing Director",
+    name: "Dr. Isha Medha",
+    role: "Co-Founder, Director & CEO",
     company: "Prestige Realty Group",
     image:
       "https://images.unsplash.com/photo-1580489944761-15a19d654956?auto=format&fit=crop&q=80&w=200",
-    text: `Honestly, I was skeptical at first. We'd worked with agencies before and got burned. But WebbHeads? Completely different story. They actually listened to what we needed, not just what they wanted to sell us. Our lead generation went through the roof - we're talking 3x more qualified buyers reaching out.`,
+    text: `Professional and creative team! They turned our ideas into a stunning digital product with great UI/UX. The AI features they added save us hours every day.`,
     rating: 5,
   },
   {
-    name: "David Thompson",
-    role: "Founder & CEO",
+    name: "Gitam Institutuion",
+    role: "Educational Institutional",
     company: "Thompson Luxury Homes",
     image:
       "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&q=80&w=200",
-    text: `Look, I've been in real estate for 22 years. I've seen tech come and go. What impressed me about WebbHeads is they get our industry. They didn't just build us a pretty website - they built a sales machine. The virtual tour integration alone has saved us countless showing hours.`,
+    text: `Super impressed with their work! The UI/UX is smooth, and the app performs perfectly. Their smart AI solutions really boosted our productivity`,
     rating: 5,
   },
   {
-    name: "Amanda Chen",
-    role: "Operations Manager",
-    company: "Pacific Coast Properties",
+    name: "Srikanth",
+    role: "Founder, CEO",
+    company: "sri chess academy",
     image:
       "https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?auto=format&fit=crop&q=80&w=200",
-    text: `The chatbot they built for us handles probably 60% of initial inquiries now. That's huge for a team our size. And it actually sounds human - clients don't even realize they're talking to AI half the time. Game changer for after-hours leads.`,
+    text: `Best decision we made for our business! Their website and app designs are top-notch, and the AI automation feels like magic. Everything works flawlessly`,
     rating: 5,
   },
   {
-    name: "Michael Rodriguez",
-    role: "Sales Director",
-    company: "Elite Properties NYC",
+    name: "Chilaka Venkata Ramesh",
+    role: "Founder",
+    company: "Aum free yoga",
     image:
       "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?auto=format&fit=crop&q=80&w=200",
-    text: `We went from losing 70% of leads due to slow follow-up to having a 95% response rate within 5 minutes. The automation system WebbHeads set up completely transformed our sales process. ROI was visible within the first month.`,
+    text: `They built our website and app exactly how we imagined! The design is clean, modern, and super user-friendly. Their AI automation made our workflow so much easier.`,
     rating: 5,
   },
   {
-    name: "Sarah Williams",
-    role: "Agency Owner",
-    company: "Coastal Realty Co.",
+    name: "Sai Vamsi palivela",
+    role: "Founder and CEO",
+    company: "Out D Box",
     image:
       "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?auto=format&fit=crop&q=80&w=200",
-    text: `I was spending 5 hours a day on admin work. Now it's maybe 30 minutes. The CRM and automation setup they did gave me my life back. Plus, our conversion rate went from 15% to 42%. Best investment we ever made.`,
-    rating: 5,
-  },
-  {
-    name: "Robert Kim",
-    role: "Broker",
-    company: "Metro Living Realty",
-    image:
-      "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&q=80&w=200",
-    text: `The website they built loads in under 2 seconds. Our old site took 8 seconds. That change alone cut our bounce rate by 60%. More people staying on site = more leads = more sales. Simple math, huge results.`,
+    text: `We needed a website that was fast, clean, and easy to manage — Webbheads delivered exactly that. The team understood our requirements perfectly and created a seamless experience for our customers.`,
     rating: 5,
   },
 ];
@@ -74,16 +65,16 @@ function TestimonialCard({
 
   const cardBase = isDark
     ? "bg-white/5 shadow-[0_10px_30px_rgba(0,0,0,0.55)]"
-    : "bg-white shadow-[0_10px_30px_rgba(15,23,42,0.08)]";
+    : "bg-white border border-[#dce8e2] shadow-[0_4px_24px_rgba(26,60,52,0.07)]";
 
-  const textMain = isDark ? "text-white/80" : "text-slate-800";
-  const textMuted = isDark ? "text-white/55" : "text-slate-600";
-  const dividerBg = isDark ? "bg-white/10" : "bg-slate-200";
+  const textMain = isDark ? "text-white/80" : "text-[#0f1f1b]";
+  const textMuted = isDark ? "text-white/55" : "text-[#4a6660]";
+  const dividerBg = isDark ? "bg-white/10" : "bg-[#dce8e2]";
 
   return (
     // Updated width to be responsive: 300px on mobile, 400px on md+
     <div
-      className={`flex-shrink-0 w-[300px] md:w-[400px] rounded-2xl p-5 md:p-6 backdrop-blur mx-3 ${cardBase}`}
+      className={`flex-shrink-0 w-[300px] md:w-[400px] rounded-2xl p-5 md:p-6 backdrop-blur mx-3 transition-all duration-200 ease-out hover:-translate-y-[2px] ${cardBase}`}
     >
       <div className="mb-4 text-black/10 dark:text-white/10">
         <Quote size={28} className="md:w-8 md:h-8" fill="currentColor" />
@@ -117,7 +108,7 @@ function TestimonialCard({
         <div className="min-w-0">
           <h4
             className={`font-semibold ${
-              isDark ? "text-white" : "text-slate-900"
+              isDark ? "text-white" : "text-[#0f1f1b]"
             } text-sm truncate`}
           >
             {testimonial.name}
@@ -125,7 +116,7 @@ function TestimonialCard({
           <p className={`${textMuted} text-xs truncate`}>{testimonial.role}</p>
           <p
             className={`${
-              isDark ? "text-white/70" : "text-slate-700"
+              isDark ? "text-white/70" : "text-[#4a6660]"
             } text-xs font-medium truncate`}
           >
             {testimonial.company}
@@ -141,19 +132,19 @@ export default function Testimonials() {
 
   const brandGradient = "bg-gradient-to-r from-[#f6ff82] to-[#003942]";
   const sectionBg = "bg-transparent";
-  const subText = isDark ? "text-white/55" : "text-slate-600";
-  const overlayFrom = isDark ? "from-[#05060A]" : "from-white";
+  const subText = isDark ? "text-white/55" : "text-[#4a6660]";
+  const overlayFrom = isDark ? "from-[#05060A]" : "from-[#f5f7f5]";
 
   const pillBg = isDark
     ? "bg-white/5 text-white/80"
-    : "bg-slate-100 text-slate-700";
+    : "bg-[#f6ff82] text-[#1a3c34]";
 
   // Bottom avatars: first 3 same, 4th replaced with Robert (testimonials[5])
   const bottomAvatars = [
     testimonials[0],
     testimonials[1],
     testimonials[2],
-    testimonials[5],
+    testimonials[4],
   ];
 
   return (
@@ -167,7 +158,7 @@ export default function Testimonials() {
           >
             <span
               className={`w-1.5 h-1.5 md:w-2 md:h-2 rounded-full ${
-                isDark ? "bg-[#f6ff82]" : "bg-[#003942]"
+                isDark ? "bg-[#f6ff82]" : "bg-[#1a3c34]"
               }`}
             />
             Client Stories
@@ -177,7 +168,7 @@ export default function Testimonials() {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             className={`text-3xl md:text-4xl font-bold mb-4 ${
-              isDark ? "text-white" : "text-slate-900"
+              isDark ? "text-white" : "text-[#0f1f1b]"
             }`}
           >
             Our Customers{" "}
@@ -215,7 +206,7 @@ export default function Testimonials() {
             x: {
               repeat: Infinity,
               repeatType: "loop",
-              duration: 40,
+              duration: 20,
               ease: "linear",
             },
           }}
@@ -255,7 +246,7 @@ export default function Testimonials() {
             <span
               className={`font-semibold bg-clip-text text-transparent ${brandGradient}`}
             >
-              Over 40+
+              Over 10+
             </span>{" "}
             people gave us review
           </p>

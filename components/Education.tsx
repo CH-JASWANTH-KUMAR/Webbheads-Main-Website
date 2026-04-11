@@ -24,14 +24,14 @@ const marqueeItems = [
 export default function Education() {
   const { isDark } = useTheme();
 
-  const sectionBg = isDark ? "bg-black" : "bg-[#F7FAFC]";
+  const sectionBg = isDark ? "bg-black" : "bg-transparent";
 
-  const heading = isDark ? "text-white" : "text-slate-900";
-  const sub = isDark ? "text-white/55" : "text-slate-600";
+  const heading = isDark ? "text-white" : "text-[#0f1f1b]";
+  const sub = isDark ? "text-white/55" : "text-[#4a6660]";
 
   const cardClass = isDark
     ? "bg-[#11151C] border border-white/10 shadow-[0_22px_58px_rgba(0,0,0,0.45)]"
-    : "bg-white border border-[#003942]/10 shadow-[0_18px_50px_rgba(0,0,0,0.12)]";
+    : "bg-white border border-[#dce8e2] shadow-[0_4px_24px_rgba(26,60,52,0.07)]";
 
   // Circle bg rule:
   // - Dark: grayish (no yellow)
@@ -57,7 +57,7 @@ export default function Education() {
               <div
                 className={`
                   relative w-full aspect-video rounded-3xl overflow-hidden
-                  ${isDark ? "bg-black/20" : "bg-slate-100"}
+                  ${isDark ? "bg-black/20" : "bg-[#edf1ee]"}
                 `}
               >
                 <iframe
@@ -107,7 +107,7 @@ export default function Education() {
 
                     <p
                       className={`text-sm md:text-base leading-snug ${
-                        isDark ? "text-white/75" : "text-slate-700"
+                        isDark ? "text-white/75" : "text-[#4a6660]"
                       }`}
                     >
                       {text}
@@ -150,7 +150,7 @@ export default function Education() {
                     key={index}
                     className={`
                     shrink-0 flex items-center gap-2 md:gap-3 px-4 md:px-6 py-2 md:py-3 rounded-full
-                    ${isDark ? "bg-white/5" : "bg-slate-100"}
+                    ${isDark ? "bg-white/5" : "bg-[#edf1ee]"}
                     shadow-none
                   `}
                   >

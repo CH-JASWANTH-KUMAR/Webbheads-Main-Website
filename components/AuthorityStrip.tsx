@@ -35,7 +35,7 @@ export default function AuthorityStrip() {
   const { isDark } = useTheme();
   
   return (
-    <section className={`py-12 border-b overflow-hidden ${isDark ? 'bg-[#002428] border-[#003942]' : 'bg-white border-gray-100'}`}>
+    <section className={`py-12 border-b overflow-hidden ${isDark ? 'bg-[#002428] border-[#003942]' : 'bg-[#edf1ee] border-[#dce8e2]'}`}>
       <div className="container mx-auto px-6">
         <p className={`text-center text-xs font-bold uppercase tracking-[0.2em] mb-10 ${isDark ? 'text-gray-400' : 'text-gray-500'}`}>Trusted by Industry Leaders</p>
         

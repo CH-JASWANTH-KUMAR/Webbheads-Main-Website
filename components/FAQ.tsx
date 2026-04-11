@@ -53,13 +53,13 @@ export default function FAQ() {
   const [openIndex, setOpenIndex] = useState<number | null>(null);
 
   const brandGradient = "bg-gradient-to-r from-[#f6ff82] to-[#003942]";
-  const sectionBg = isDark ? "bg-transparent" : "bg-[#f3f7fb]";
-  const heading = isDark ? "text-white" : "text-slate-900";
-  const sub = isDark ? "text-white/55" : "text-slate-600";
+  const sectionBg = "bg-transparent";
+  const heading = isDark ? "text-white" : "text-[#0f1f1b]";
+  const sub = isDark ? "text-white/55" : "text-[#4a6660]";
 
   const card = isDark
     ? "bg-white/5 border border-white/10 shadow-[0_10px_30px_rgba(0,0,0,0.55)]"
-    : "bg-white border border-[#003942]/12 shadow-[0_12px_30px_rgba(15,23,42,0.08)]";
+    : "bg-white border border-[#dce8e2] shadow-[0_4px_24px_rgba(26,60,52,0.07)]";
 
   const leftFaqs = faqs.filter((_, i) => i % 2 === 0);
   const rightFaqs = faqs.filter((_, i) => i % 2 === 1);
@@ -84,7 +84,7 @@ export default function FAQ() {
         className={`
           w-full rounded-2xl md:rounded-3xl p-5 md:p-6 backdrop-blur select-none overflow-hidden
           ${card}
-          ${isDark ? "hover:bg-white/10" : "hover:bg-slate-50"}
+          ${isDark ? "hover:bg-white/10" : "hover:border-[#b8d0c5]"}
           ${isOpen ? (isDark ? "bg-white/10" : "bg-white") : ""}
         `}
       >
@@ -98,7 +98,7 @@ export default function FAQ() {
           <motion.div layout="position" className="flex items-center justify-between gap-4">
             <h3
               className={`text-base md:text-lg font-semibold pr-4 md:pr-8 ${
-                isDark ? "text-white" : "text-slate-900"
+                isDark ? "text-white" : "text-[#0f1f1b]"
               }`}
             >
               {faq.question}
@@ -144,7 +144,7 @@ export default function FAQ() {
                 transition={{ duration: 1.15, delay: 0.18, ease: [0.65, 0, 0.35, 1] }}
                 className={`
                   pt-4 leading-relaxed text-sm md:text-base
-                  ${isDark ? "text-white/70" : "text-slate-700"}
+                  ${isDark ? "text-white/70" : "text-[#4a6660]"}
                 `}
               >
                 {faq.answer}
@@ -164,12 +164,12 @@ export default function FAQ() {
           <div
             className={`
               inline-flex items-center gap-2 px-4 py-2 rounded-full mb-6 text-xs md:text-sm font-medium
-              ${isDark ? "bg-white/5 text-white/75" : "bg-slate-100 text-slate-700"}
+              ${isDark ? "bg-white/5 text-white/75" : "bg-[#f6ff82] text-[#1a3c34]"}
             `}
           >
             <span
               className={`w-1.5 h-1.5 md:w-2 md:h-2 rounded-full ${
-                isDark ? "bg-[#f6ff82]" : "bg-[#003942]"
+                isDark ? "bg-[#f6ff82]" : "bg-[#1a3c34]"
               }`}
             />
             <span>FAQ</span>

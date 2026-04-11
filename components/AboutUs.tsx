@@ -17,29 +17,44 @@ type TeamMember = {
 const TEAM_MEMBERS: TeamMember[] = [
     {
     id: "member-1",
+    name: "DJ Kushal",
+    role: "Founder and CEO",
+    bio: "A curious learner with a positive mindset and a strong work ethic, always eager to grow",
+    photoUrl: "/team/Kushal.jpeg",
+    linkedinUrl: "https://www.linkedin.com/in/menda-srividhya-662450345?utm_source=share_via&utm_content=profile&utm_medium=member_ios",
+  },
+    {
+    id: "member-2",
     name: "Ch Jaswanth Kumar",
-    role: "Tech Member",
+    role: "Full stack Developer Intern",
     bio: "A passionate coder and problem solver.",
     photoUrl: "/team/JASWANTH KUMAR CHETTUPALLI.png",
     linkedinUrl: "https://linkedin.com/in/jaswanth-kumar-chettupalli-7b0809333",
   },
     {
-    id: "member-2",
+    id: "member-3",
     name: "Ch Pavan Kumar",
     role: "Full stack Developer Intern",
     bio: "A passionate coder and problem solver.",
-    photoUrl: "/team/CHERUKURI PAVAN KUMAR.png",
+    photoUrl: "/team/Pavan.jpeg",
     linkedinUrl: "https://www.linkedin.com/in/cherukuripavankumar369/",
   },
     {
-    id: "member-3",
+    id: "member-4",
     name: "Revanth Peethala",
     role: "Web Developer Intern",
     bio: "A passionate coder and problem solver.",
     photoUrl: "/team/REVANTH.jpeg",
     linkedinUrl: "www.linkedin.com/in/revanthpeethala",
   },
-
+    {
+    id: "member-5",
+    name: "Menda Srividhya",
+    role: "Sales and marketing",
+    bio: "A curious learner with a positive mindset and a strong work ethic, always eager to grow",
+    photoUrl: "/team/MENDA SRIVIDHYA.jpeg",
+    linkedinUrl: "https://www.linkedin.com/in/menda-srividhya-662450345?utm_source=share_via&utm_content=profile&utm_medium=member_ios",
+  },
 
 ];
 
@@ -48,18 +63,18 @@ const EMPTY_CARD_COUNT = 5;
 export default function AboutUs() {
   const { isDark } = useTheme();
 
-  const sectionBg = isDark ? "bg-transparent" : "bg-[#f2f4f8]";
-  const titleColor = isDark ? "text-white" : "text-[#0a0f1a]";
-  const copyColor = isDark ? "text-white/70" : "text-slate-600";
+  const sectionBg = "bg-transparent";
+  const titleColor = isDark ? "text-white" : "text-[#0f1f1b]";
+  const copyColor = isDark ? "text-white/70" : "text-[#4a6660]";
   const primaryButtonClass = isDark
     ? "bg-white/10 border border-white/20 text-white hover:bg-white/15"
-    : "bg-white border border-slate-300 text-slate-800 hover:bg-slate-50";
+    : "bg-white border border-[#dce8e2] text-[#0f1f1b] hover:border-[#b8d0c5]";
   const cardClass = isDark
     ? "bg-white/[0.04] border border-white/15"
-    : "bg-white border border-slate-200";
-  const roleColor = isDark ? "text-white/50" : "text-slate-500";
-  const bioColor = isDark ? "text-white/55" : "text-slate-600";
-  const mutedSurface = isDark ? "bg-white/10" : "bg-slate-100";
+    : "bg-white border border-[#dce8e2] hover:border-[#b8d0c5] hover:shadow-[0_4px_24px_rgba(26,60,52,0.07)]";
+  const roleColor = isDark ? "text-white/50" : "text-[#8aaba3]";
+  const bioColor = isDark ? "text-white/55" : "text-[#4a6660]";
+  const mutedSurface = isDark ? "bg-white/10" : "bg-[#edf1ee]";
 
   const cards =
     TEAM_MEMBERS.length > 0
@@ -74,7 +89,7 @@ export default function AboutUs() {
         }));
 
   return (
-    <section className={`py-12 md:py-16 ${sectionBg}`}>
+    <section id="team" className={`py-12 md:py-16 ${sectionBg}`}>
       <div className="container mx-auto px-6 md:px-12 lg:px-20">
         <motion.div
           initial={{ opacity: 0, y: 16 }}
@@ -125,7 +140,7 @@ export default function AboutUs() {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true, amount: 0.15 }}
                 transition={{ duration: 0.4, delay: index * 0.03 }}
-                className={`mx-auto w-full max-w-[340px] sm:max-w-none rounded-3xl p-4 ${cardClass}`}
+                className={`mx-auto w-full max-w-[340px] sm:max-w-none rounded-3xl p-4 transition-all duration-200 ease-out hover:-translate-y-[2px] ${cardClass}`}
               >
                 <div
                   className={`relative overflow-hidden rounded-2xl aspect-[4/4] ${mutedSurface}`}
@@ -149,7 +164,7 @@ export default function AboutUs() {
                       className={`absolute right-3 top-3 inline-flex h-9 w-9 items-center justify-center rounded-full transition-colors ${
                         isDark
                           ? "bg-black/45 text-white hover:bg-black/60"
-                          : "bg-white/90 text-slate-700 hover:bg-white"
+                          : "bg-white text-[#4a6660]"
                       }`}
                     >
                       <Linkedin className="h-4 w-4" />
