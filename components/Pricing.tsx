@@ -60,7 +60,7 @@ const plans: Plan[] = [
     name: "Dominate",
     badge: "For Market Leaders",
     subTitle: "Market Domination System (Elite 360)",
-    priceMain: "₹1,20K - ₹1,80K",
+    priceMain: "₹1.2L - ₹1.8L",
     priceUnit: "/month",
     description: "Own your market with a full sales system built for sustained deal velocity.",
     keyBenefits: [
@@ -151,7 +151,9 @@ export default function Pricing() {
     };
   }, [isComparisonOpen]);
 
-  const brandGradient = "bg-gradient-to-r from-[#f6ff82] to-[#003942]";
+  const gradientTextClass = isDark
+    ? "bg-clip-text text-transparent bg-gradient-to-r from-[#f6ff82] via-[#ecfa98] to-[#d8ea7c]"
+    : "bg-clip-text text-transparent bg-gradient-to-r from-[#1a3c34] via-[#155461] to-[#0b6a78]";
   const sectionBg = "bg-transparent";
   const headerSub = isDark ? "text-white/55" : "text-[#4a6660]";
   const cardBase = isDark
@@ -163,7 +165,7 @@ export default function Pricing() {
     : "bg-[#f6ff82] text-[#1a3c34]";
   const highlightedCard = isDark
     ? "ring-2 ring-[#f6ff82]/70 shadow-[0_24px_60px_rgba(246,255,130,0.22)]"
-    : "ring-2 ring-[#003942]/30 shadow-[0_24px_60px_rgba(0,57,66,0.2)]";
+    : "border-2 border-[#1a3c34] ring-0 shadow-[0_20px_44px_rgba(26,60,52,0.2)]";
   const planDesc = isDark ? "text-white/55" : "text-[#4a6660]";
   const priceColor = isDark ? "text-[#f6ff82]" : "text-[#003942]";
   const softCard = isDark ? "opacity-90 hover:opacity-100" : "opacity-95 hover:opacity-100";
@@ -221,7 +223,7 @@ export default function Pricing() {
             }`}
           >
             3 Levels of Growth{" "}
-            <span className={`bg-clip-text text-transparent ${brandGradient}`}>
+            <span className={gradientTextClass}>
               Systems
             </span>
           </h2>
@@ -251,7 +253,7 @@ export default function Pricing() {
               className={`
                 relative rounded-2xl p-6 backdrop-blur flex flex-col overflow-hidden h-full
                 ${cardBase}
-                ${plan.highlight ? `${highlightedCard} md:-translate-y-2` : softCard}
+                ${plan.highlight ? `${highlightedCard} md:-translate-y-3` : softCard}
               `}
             >
               {plan.highlight && (
@@ -285,17 +287,17 @@ export default function Pricing() {
                   >
                     {plan.badge}
                   </span>
-                  {/* {plan.highlight ? (
+                  {plan.highlight ? (
                     <span
                       className={`rounded-full px-3 py-1 text-[10px] md:text-xs font-bold uppercase tracking-wider ${
                         isDark
                           ? "bg-[#f6ff82] text-[#003942]"
-                          : "bg-[#003942] text-white"
+                          : "bg-[#1a3c34] text-white"
                       }`}
                     >
-                      Most Chosen by Agencies
+                      Most Popular
                     </span>
-                  ) : null} */}
+                  ) : null}
                 </div>
 
                 <h3 className="text-xl font-bold mb-1">{plan.name}</h3>

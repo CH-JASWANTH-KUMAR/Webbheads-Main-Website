@@ -18,40 +18,40 @@ const services = [
   {
     icon: Code,
     title: 'Website Development',
-    description: 'Bespoke, high-performance websites tailored for luxury property listings and agencies.',
+    description: 'Your property listings, beautifully presented online. Buyers find you, trust you, and call you - without you lifting a finger.',
     animation: 'website'
   },
   {
     icon: Smartphone,
     title: 'App Development',
-    description: 'Native mobile applications that connect agents with buyers seamlessly.',
+    description: 'A mobile app your buyers actually want to use. Browse properties, book viewings, and close deals - all from their phone.',
     animation: 'app'
   },
   {
     icon: Bot,
     title: 'AI Automation',
-    description: 'Intelligent chatbots and workflow automation to streamline your operations.',
+    description: 'Never lose a lead to slow replies again. AI responds to every inquiry instantly - even at 2am - so you wake up to warm leads.',
     animation: 'ai'
   },
   {
     icon: Calendar,
     title: 'Booking Systems',
-    description: 'Custom scheduling solutions for property viewings and open houses.',
+    description: 'Buyers pick a time, show up, and you close. No back-and-forth calls. No missed viewings. Just a full calendar that runs itself.',
     animation: 'booking'
   },
   {
     icon: BarChart3,
     title: 'CRM & Dashboards',
-    description: 'Centralized platforms to manage leads, properties, and performance analytics.',
+    description: 'See every lead, every deal, and every rupee - in one place. Know exactly what is working and where your next deal is coming from.',
     animation: 'dashboard'
   },
   {
     icon: Box,
     title: 'Virtual Staging',
-    description: 'Immersive 3D tours and virtual staging to showcase properties remotely.',
+    description: 'Let buyers walk through your property from their sofa. No travel, no empty rooms - just a stunning tour that sells the feeling.',
     animation: 'staging'
   }
-];
+]
 
 function ServiceMiniAnimation({
   type,
@@ -289,6 +289,9 @@ const cardVariants = {
 export default function Services() {
   const { isDark } = useTheme();
   const prefersReducedMotion = useReducedMotion() ?? false;
+  const gradientTextClass = isDark
+    ? 'text-transparent bg-clip-text bg-gradient-to-r from-[#f6ff82] via-[#ecfa98] to-[#d8ea7c]'
+    : 'text-transparent bg-clip-text bg-gradient-to-r from-[#1a3c34] via-[#155461] to-[#0b6a78]';
 
   const handleCardMouseMove = (
     event: React.MouseEvent<HTMLDivElement, MouseEvent>
@@ -311,7 +314,7 @@ export default function Services() {
             viewport={{ once: true }}
             className={`text-3xl md:text-4xl lg:text-5xl font-bold mb-4 ${isDark ? 'text-white' : 'text-[#1f4f3a]'}`}
           >
-            Our Expertise in <span className={`${isDark ? 'text-transparent bg-clip-text bg-gradient-to-r from-[#f6ff82] to-[#d4e682]' : 'text-transparent bg-clip-text bg-gradient-to-r from-[#1f4f3a] to-[#2d6a4f]'}`}>Real Estate Tech</span>
+            Our Expertise in <span className={gradientTextClass}>Real Estate Tech</span>
           </motion.h2>
           <motion.p 
             initial={{ opacity: 0, y: 20 }}
@@ -335,12 +338,18 @@ export default function Services() {
             <motion.div
               key={index}
               variants={cardVariants}
-              whileHover={prefersReducedMotion ? undefined : { y: -2 }}
+              whileHover={
+                prefersReducedMotion
+                  ? undefined
+                  : isDark
+                  ? { y: -2 }
+                  : { y: -3 }
+              }
               onMouseMove={handleCardMouseMove}
               className={`group relative isolate overflow-hidden rounded-2xl p-6 md:p-7 shadow-sm transition-all duration-200 ease-out [--mx:50%] [--my:50%] ${
                 isDark
                   ? 'bg-white/10 backdrop-blur-md border border-white/10 hover:shadow-[0_24px_60px_rgba(246,255,130,0.12)]'
-                  : 'bg-white border border-[#dce8e2] hover:border-[#b8d0c5] hover:shadow-[0_4px_24px_rgba(26,60,52,0.07)]'
+                  : 'bg-white border border-[#dce8e2] hover:border-[#1a3c34] hover:shadow-[0_8px_24px_rgba(26,60,52,0.08)]'
               }`}
             >
               <div

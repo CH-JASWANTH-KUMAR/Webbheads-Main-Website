@@ -97,6 +97,9 @@ export default function Process() {
   const sectionRef = useRef<HTMLDivElement>(null);
   const [hoveredStep, setHoveredStep] = useState<number | null>(null);
   const { isDark } = useTheme();
+  const gradientTextClass = isDark
+    ? 'text-transparent bg-clip-text bg-gradient-to-r from-[#f6ff82] via-[#ecfa98] to-[#d8ea7c]'
+    : 'text-transparent bg-clip-text bg-gradient-to-r from-[#1a3c34] via-[#155461] to-[#0b6a78]';
 
   // Scroll-based animation - synced with scroll position
   const { scrollYProgress } = useScroll({
@@ -137,7 +140,7 @@ export default function Process() {
               <span className="text-sm font-medium text-[#003942]">The WebbHeads Method</span>
             </div>
             <h2 className={`text-4xl md:text-5xl font-bold mb-4 ${isDark ? 'text-white' : 'text-[#003942]'}`}>
-              Our <span className={`${isDark ? 'text-transparent bg-clip-text bg-gradient-to-r from-[#f6ff82] to-[#d4e682]' : 'text-transparent bg-clip-text bg-gradient-to-r from-[#003942] to-[#005f73]'}`}>4D Process</span>
+              Our <span className={gradientTextClass}>4D Process</span>
             </h2>
             <p className={`text-lg max-w-3xl mx-auto ${isDark ? 'text-gray-400' : 'text-[#4a6660]'}`}>
               Hover over each step to explore it in detail. Discover, Define, Design, Deliver gives you a repeatable system with clear outputs at every stage.
@@ -272,20 +275,20 @@ export default function Process() {
                         animate={{ opacity: 1, y: 0, scale: 1 }}
                         exit={{ opacity: 0, y: 10, scale: 0.95 }}
                         transition={{ duration: 0.2, ease: "easeOut" }}
-                        className={`absolute bottom-full mb-4 w-[min(22rem,calc(100vw-2rem))] lg:w-72 z-50 pointer-events-none ${getHoverPositionClass(index)}`}
+                        className={`absolute bottom-full mb-4 w-[min(24rem,calc(100vw-2rem))] lg:w-80 z-50 pointer-events-none ${getHoverPositionClass(index)}`}
                       >
-                        <div className={`rounded-xl shadow-2xl border overflow-hidden ${isDark ? 'bg-[#002428] border-[#003942]' : 'bg-white border-[#dce8e2]'}`}>
+                        <div className={`rounded-2xl shadow-[0_18px_48px_rgba(0,0,0,0.22)] border overflow-hidden ${isDark ? 'bg-[#002428] border-[#003942]' : 'bg-white border-[#dce8e2]'}`}>
                           {/* Header with gradient */}
-                          <div className="bg-gradient-to-r from-[#f6ff82] via-[#e8f074] to-[#d4e066] p-4">
-                            <div className="flex items-center gap-3">
-                              <div className="w-10 h-10 rounded-lg bg-[#003942]/20 flex items-center justify-center flex-shrink-0">
+                          <div className="bg-gradient-to-r from-[#f6ff82] via-[#e8f074] to-[#d4e066] px-4 py-3.5">
+                            <div className="flex items-center gap-3 text-left">
+                              <div className="w-10 h-10 rounded-xl bg-[#003942]/20 flex items-center justify-center flex-shrink-0">
                                 <step.icon className="w-5 h-5 text-[#003942]" />
                               </div>
-                              <div>
-                                <span className="text-[#003942] text-xs font-medium">
+                              <div className="min-w-0">
+                                <span className="block text-[#003942] text-[11px] font-semibold uppercase tracking-[0.12em]">
                                   Stage 0{index + 1}
                                 </span>
-                                <h3 className="text-base font-bold text-[#003942]">
+                                <h3 className="text-base font-bold leading-tight text-[#003942]">
                                   {step.details.heading}
                                 </h3>
                               </div>
@@ -293,35 +296,35 @@ export default function Process() {
                           </div>
 
                           {/* Content */}
-                          <div className="p-4 space-y-3">
+                          <div className="p-4 space-y-4 text-left">
                             {/* Overview */}
-                            <p className={`text-xs leading-relaxed ${isDark ? 'text-gray-300' : 'text-[#4a6660]'}`}>
+                            <p className={`text-[13px] leading-relaxed ${isDark ? 'text-gray-300' : 'text-[#4a6660]'}`}>
                               {step.details.overview}
                             </p>
 
                             {/* Deliverable + Duration */}
-                            <div className="space-y-2">
+                            <div className={`grid grid-cols-1 gap-2.5 rounded-xl p-3 ${isDark ? 'bg-white/5 border border-white/10' : 'bg-[#f8faf8] border border-[#e8f0ec]'}`}>
                               <div className="flex items-start gap-2">
-                                <ClipboardList className="w-3.5 h-3.5 text-[#f6ff82] shrink-0 mt-0.5" />
-                                <span className={`text-xs font-medium ${isDark ? 'text-[#f6ff82]' : 'text-[#003942]'}`}>
+                                <ClipboardList className={`w-3.5 h-3.5 shrink-0 mt-0.5 ${isDark ? 'text-[#f6ff82]' : 'text-[#1a3c34]'}`} />
+                                <span className={`text-xs leading-relaxed font-medium ${isDark ? 'text-white' : 'text-[#1a3c34]'}`}>
                                   Deliverable: {step.details.deliverable}
                                 </span>
                               </div>
-                              <p className={`text-xs ${isDark ? 'text-gray-400' : 'text-[#4a6660]'}`}>
+                              <p className={`text-xs leading-relaxed ${isDark ? 'text-gray-300' : 'text-[#4a6660]'}`}>
                                 Typical timeline: {step.details.duration}
                               </p>
                             </div>
 
                             {/* Key Points - Show first 3 */}
                             <div>
-                              <h4 className={`font-bold mb-2 text-xs ${isDark ? 'text-white' : 'text-[#003942]'}`}>
+                              <h4 className={`font-semibold mb-2 text-xs uppercase tracking-[0.1em] ${isDark ? 'text-white/85' : 'text-[#003942]'}`}>
                                 What You Get:
                               </h4>
-                              <ul className="space-y-1.5">
+                              <ul className="space-y-2">
                                 {step.details.points.slice(0, 3).map((point, idx) => (
-                                  <li key={idx} className="flex items-start gap-2 text-xs">
-                                    <CheckCircle2 className="w-3 h-3 text-[#f6ff82] shrink-0 mt-0.5" />
-                                    <span className={isDark ? 'text-gray-400' : 'text-[#4a6660]'}>
+                                  <li key={idx} className="flex items-start gap-2 text-xs leading-relaxed">
+                                    <CheckCircle2 className={`w-3.5 h-3.5 shrink-0 mt-0.5 ${isDark ? 'text-[#f6ff82]' : 'text-[#1a3c34]'}`} />
+                                    <span className={isDark ? 'text-gray-300' : 'text-[#4a6660]'}>
                                       {point}
                                     </span>
                                   </li>

@@ -7,13 +7,14 @@ import { useTheme } from "@/context/ThemeContext";
 export default function ContactUs() {
   const { isDark } = useTheme();
 
-  const brandGradient = "bg-gradient-to-r from-[#f6ff82] to-[#003942]";
-  const sectionBg = isDark ? "bg-transparent" : "bg-[#f9faf9]";
+  const darkGradientTextClass =
+    "bg-clip-text text-transparent bg-gradient-to-r from-[#f6ff82] via-[#ecfa98] to-[#d8ea7c]";
+  const sectionBg = "bg-transparent";
 
   // Removed borders here (no "border", no "*border-*")
   const shell = isDark
     ? "bg-white/5 border border-white/10 shadow-[0_12px_34px_rgba(0,0,0,0.55)]"
-    : "bg-white border border-[#e2ece6]";
+    : "bg-white border border-[#e2ece6] shadow-[0_18px_48px_rgba(26,60,52,0.12)]";
 
   const leftText = isDark ? "text-white/80" : "text-[#0f1f1b]";
   const leftSub = isDark ? "text-white/75" : "text-[#3d5c54]";
@@ -40,7 +41,7 @@ export default function ContactUs() {
     : "focus-visible:ring-[#003942]/35";
 
   return (
-    <section className={`py-16 md:py-24 ${sectionBg}`}>
+    <section id="contact" className={`py-16 md:py-24 ${sectionBg}`}>
       <div className="container mx-auto px-6 md:px-12 lg:px-20">
         {/* Main container */}
         <div className={`${isDark ? "rounded-3xl md:rounded-[2.25rem]" : "rounded-[16px]"} overflow-hidden ${shell}`}>
@@ -74,7 +75,7 @@ export default function ContactUs() {
                 className={`text-3xl md:text-5xl font-bold mb-4 md:mb-6 leading-tight ${isDark ? "text-white" : "text-[#0f1f1b]"}`}
               >
                 Ready to{" "}
-                <span className={isDark ? `bg-clip-text text-transparent ${brandGradient}` : "text-[#1a3c34]"}>transform</span>{" "}
+                <span className={isDark ? darkGradientTextClass : "text-[#1a3c34]"}>transform</span>{" "}
                 your digital presence?
               </motion.h2>
 
@@ -98,7 +99,8 @@ export default function ContactUs() {
                       isDark ? "text-white" : "text-[#0f1f1b]"
                     }`}
                   >
-                    webbheadsmarketing@gmail.com
+                    <span className="block">sales@webbheads.com</span>
+                    <span className="block">contact@webbheads.com</span>
                   </a>
                 </div>
 
@@ -111,7 +113,7 @@ export default function ContactUs() {
                     Phone
                   </h4>
                   <p className={`text-lg md:text-2xl font-semibold ${isDark ? "text-white" : "text-[#0f1f1b]"}`}>
-                    +1 (555) 123-4567
+                    9494259453
                   </p>
                 </div>
               </div>
@@ -126,32 +128,30 @@ export default function ContactUs() {
               className={`${isDark ? "rounded-2xl md:rounded-3xl" : "rounded-[14px]"} p-6 md:p-10 backdrop-blur ${formCard}`}
             >
               <form className="space-y-4 md:space-y-6">
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-6">
-                  <div>
-                    <label className={`block text-xs md:text-sm font-medium mb-2 ${label}`}>First Name</label>
-                    <input
-                      type="text"
-                      className={`w-full px-4 py-3 rounded-lg outline-none transition-all ${inputBase} text-sm md:text-base`}
-                      placeholder="John"
-                    />
-                  </div>
-
-                  <div>
-                    <label className={`block text-xs md:text-sm font-medium mb-2 ${label}`}>Last Name</label>
-                    <input
-                      type="text"
-                      className={`w-full px-4 py-3 rounded-lg outline-none transition-all ${inputBase} text-sm md:text-base`}
-                      placeholder="Doe"
-                    />
-                  </div>
+                <div>
+                  <label className={`block text-xs md:text-sm font-medium mb-2 ${label}`}>Name</label>
+                  <input
+                    type="text"
+                    className={`w-full px-4 py-3 rounded-lg outline-none transition-all ${inputBase} text-sm md:text-base`}
+                    placeholder="Your name"
+                  />
                 </div>
 
                 <div>
-                  <label className={`block text-xs md:text-sm font-medium mb-2 ${label}`}>Email Address</label>
+                  <label className={`block text-xs md:text-sm font-medium mb-2 ${label}`}>Email</label>
                   <input
                     type="email"
                     className={`w-full px-4 py-3 rounded-lg outline-none transition-all ${inputBase} text-sm md:text-base`}
-                    placeholder="john@example.com"
+                    placeholder="your@email.com"
+                  />
+                </div>
+
+                <div>
+                  <label className={`block text-xs md:text-sm font-medium mb-2 ${label}`}>Contact Number</label>
+                  <input
+                    type="tel"
+                    className={`w-full px-4 py-3 rounded-lg outline-none transition-all ${inputBase} text-sm md:text-base`}
+                    placeholder="Phone number"
                   />
                 </div>
 
@@ -181,7 +181,7 @@ export default function ContactUs() {
                   <ArrowRight className="w-4 h-4 md:w-5 md:h-5 group-hover:translate-x-1 transition-transform" />
                 </button>
 
-                <p className={`text-xs ${isDark ? "text-white/40" : "text-white/60"} mt-4`}>
+                <p className={`text-xs mt-4 ${isDark ? "text-white/40" : "text-[#7a9e95]"}`}>
                   By submitting this form, you agree to be contacted about your inquiry.
                 </p>
               </form>
@@ -189,7 +189,6 @@ export default function ContactUs() {
           </div>
         </div>
       </div>
-      {!isDark && <div className="h-px bg-[#e2ece6]" />}
     </section>
   );
 }

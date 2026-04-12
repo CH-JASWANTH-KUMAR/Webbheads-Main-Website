@@ -17,65 +17,64 @@ import { useTheme } from "@/context/ThemeContext";
 
 export default function Home() {
   const { isDark } = useTheme();
-  const sectionBase = isDark ? "bg-transparent" : "bg-[#f5f7f5]";
-  const sectionAlt = isDark ? "bg-transparent" : "bg-[#edf1ee]";
-  const contactSection = isDark ? "bg-transparent" : "bg-[#1a3c34]";
-  const footerSection = isDark ? "bg-transparent" : "bg-[#0f1f1b]";
+  const sectionClass = isDark
+    ? "bg-transparent"
+    : "bg-[#f8faf8] border-t border-[#e8f0ec]";
 
   return (
     <main
       className={`
         relative isolate min-h-screen overflow-x-hidden
         transition-colors duration-300
-        ${isDark ? "bg-[#05060A]" : "bg-[#f5f7f5]"}
+        ${isDark ? "bg-[#05060A]" : "bg-[#f8faf8]"}
       `}
     >
       <Navbar />
-      <section className={sectionBase}>
+      <section className={sectionClass}>
         <Hero />
       </section>
 
-      <section id="services" className={sectionAlt}>
+      <section id="services" className={sectionClass}>
         <Services />
       </section>
 
-      <section className={sectionBase}>
+      <section className={sectionClass}>
         <Education />
       </section>
 
-      <section id="process" className={sectionBase}>
+      <section id="process" className={sectionClass}>
         <Process />
       </section>
 
-      <section id="portfolio" className={sectionAlt}>
+      <section id="portfolio" className={sectionClass}>
         <CaseStudies />
       </section>
 
-      <section id="pricing" className={sectionAlt}>
+      <section id="pricing" className={sectionClass}>
         <Pricing />
       </section>
 
-      <section id="about" className={sectionBase}>
+      <section id="about" className={sectionClass}>
         <AboutUs />
       </section>
 
-      <section className={sectionAlt}>
+      <section className={sectionClass}>
         <BeforeAfter />
       </section>
 
-      <section className={sectionBase}>
+      <section className={sectionClass}>
         <Testimonials />
       </section>
 
-      <section className={sectionAlt}>
+      <section className={sectionClass}>
         <FAQ />
       </section>
 
-      <section id="contact" className={contactSection}>
+      <section id="contact" className={sectionClass}>
         <ContactUs />
       </section>
 
-      <section className={footerSection}>
+      <section className={sectionClass}>
         <Footer />
       </section>
     </main>

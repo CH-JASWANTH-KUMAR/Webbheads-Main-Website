@@ -120,7 +120,30 @@ export default function Education() {
         </motion.div>
 
         {/* Marquee */}
-        <div className="w-full overflow-hidden">
+        <div
+          className={`relative w-full overflow-hidden rounded-[20px] py-5 ${
+            isDark ? "bg-black" : "bg-[#1a3c34]"
+          }`}
+        >
+          <p className="mb-[14px] text-center text-[11px] font-medium uppercase tracking-[0.1em] text-[rgba(246,255,130,0.7)]">
+            Our Full Stack of Services
+          </p>
+
+          <div
+            className={`absolute inset-y-0 left-0 z-10 w-12 md:w-20 pointer-events-none ${
+              isDark
+                ? "bg-gradient-to-r from-[#000000] to-transparent"
+                : "bg-gradient-to-r from-[#1a3c34] to-transparent"
+            }`}
+          />
+          <div
+            className={`absolute inset-y-0 right-0 z-10 w-12 md:w-20 pointer-events-none ${
+              isDark
+                ? "bg-gradient-to-l from-[#000000] to-transparent"
+                : "bg-gradient-to-l from-[#1a3c34] to-transparent"
+            }`}
+          />
+
           <div
             className={`
               relative
@@ -148,23 +171,14 @@ export default function Education() {
                 (item, index) => (
                   <div
                     key={index}
-                    className={`
-                    shrink-0 flex items-center gap-2 md:gap-3 px-4 md:px-6 py-2 md:py-3 rounded-full
-                    ${isDark ? "bg-white/5" : "bg-[#edf1ee]"}
-                    shadow-none
-                  `}
+                    className={`shrink-0 flex items-center gap-2 px-[18px] py-2 rounded-full border text-[13px] font-medium whitespace-nowrap ${
+                      isDark
+                        ? "bg-[rgba(255,255,255,0.05)] border-[rgba(255,255,255,0.08)] text-[rgba(255,255,255,0.8)]"
+                        : "bg-[rgba(255,255,255,0.08)] border-[rgba(255,255,255,0.12)] text-white"
+                    }`}
                   >
-                    {/* Marquee dot */}
-                    <span
-                      className={`w-1.5 h-1.5 md:w-2 md:h-2 rounded-full ${
-                        isDark ? "bg-[#f6ff82]" : "bg-[#003942]"
-                      }`}
-                    />
-                    <span
-                      className={`text-xs md:text-sm font-medium whitespace-nowrap ${heading}`}
-                    >
-                      {item}
-                    </span>
+                    <span className="w-[6px] h-[6px] rounded-full bg-[#f6ff82]" />
+                    <span>{item}</span>
                   </div>
                 )
               )}

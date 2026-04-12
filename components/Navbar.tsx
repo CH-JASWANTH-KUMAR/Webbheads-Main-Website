@@ -5,6 +5,7 @@ import { motion, AnimatePresence, useReducedMotion } from "framer-motion";
 import { Menu, X } from "lucide-react";
 import ThemeToggle from "./ThemeToggle";
 import { useTheme } from "@/context/ThemeContext";
+import Image from "next/image";
 
 const navLinks = [
   { name: "Services", href: "#services" },
@@ -43,8 +44,6 @@ export default function Navbar() {
   const navShadow = isScrolled
     ? "shadow-[0_14px_40px_rgba(0,0,0,0.18)]"
     : "shadow-[0_10px_30px_rgba(0,0,0,0.12)]";
-
-  const brandAccent = isDark ? "text-[#f6ff82]" : "text-[#003942]";
 
   const focusRing = isDark
     ? "focus-visible:ring-[#f6ff82]/60"
@@ -99,13 +98,17 @@ export default function Navbar() {
               scrollToSection("#hero");
             }}
             className="flex items-center shrink-0"
+            aria-label="Go to top"
           >
-            <span
-              className={`text-lg md:text-2xl font-bold ${
-                isDark ? "text-white" : "text-slate-900"
-              }`}
-            >
-              Webb<span className={brandAccent}>Heads</span>
+            <span className="relative block h-8 w-[128px] md:h-10 md:w-[164px]">
+              <Image
+                src={isDark ? "/logos/darkmode1.png" : "/logos/Lightmode1.png"}
+                alt="WebbHeads"
+                fill
+                priority
+                sizes="(max-width: 768px) 128px, 164px"
+                className="object-contain object-left"
+              />
             </span>
           </a>
 

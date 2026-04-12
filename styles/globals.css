@@ -157,3 +157,137 @@ img {
 .after-title {
   color: var(--color-foreground);
 }
+
+@keyframes shimmer {
+  0% {
+    background-position: 200% center;
+  }
+  100% {
+    background-position: -200% center;
+  }
+}
+
+@keyframes watermarkTrace {
+  0% {
+    stroke-dashoffset: 1800;
+  }
+  100% {
+    stroke-dashoffset: -1800;
+  }
+}
+
+@keyframes watermarkFill {
+  0% {
+    opacity: 0;
+  }
+  18% {
+    opacity: 0;
+  }
+  34% {
+    opacity: 1;
+  }
+  58% {
+    opacity: 1;
+  }
+  74% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 0;
+  }
+}
+
+@keyframes watermarkLetterReveal {
+  0% {
+    clip-path: inset(0 100% 0 0);
+    opacity: 0;
+  }
+  21.25% {
+    clip-path: inset(0 0% 0 0);
+    opacity: 1;
+  }
+  75% {
+    clip-path: inset(0 0% 0 0);
+    opacity: 1;
+  }
+  87.5% {
+    clip-path: inset(0 0% 0 0);
+    opacity: 0;
+  }
+  100% {
+    clip-path: inset(0 100% 0 0);
+    opacity: 0;
+  }
+}
+
+@keyframes watermarkFillLoop {
+  0% {
+    opacity: 0;
+  }
+  31.25% {
+    opacity: 0;
+  }
+  43.75% {
+    opacity: 1;
+  }
+  75% {
+    opacity: 1;
+  }
+  87.5% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 0;
+  }
+}
+
+@keyframes watermarkSweepSingle {
+  0% {
+    opacity: 0;
+    background-position: 200% center;
+  }
+  43.74% {
+    opacity: 0;
+    background-position: 200% center;
+  }
+  43.75% {
+    opacity: 1;
+    background-position: 200% center;
+  }
+  68.75% {
+    opacity: 1;
+    background-position: -200% center;
+  }
+  68.76% {
+    opacity: 0;
+    background-position: -200% center;
+  }
+  100% {
+    opacity: 0;
+    background-position: -200% center;
+  }
+}
+
+.watermark-letter-reveal {
+  clip-path: inset(0 100% 0 0);
+  animation: watermarkLetterReveal 8s linear infinite;
+}
+
+.watermark-fill-loop {
+  opacity: 0;
+  animation: watermarkFillLoop 8s ease-in-out infinite;
+}
+
+.watermark-sweep-single {
+  opacity: 0;
+  background-size: 200% 100%;
+  background-position: 200% center;
+  animation: watermarkSweepSingle 8s linear infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .watermark-force-anim {
+    animation-duration: 8s !important;
+    animation-iteration-count: infinite !important;
+  }
+}

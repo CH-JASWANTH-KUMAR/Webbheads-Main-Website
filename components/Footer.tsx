@@ -7,7 +7,7 @@ import { useTheme } from "@/context/ThemeContext";
 export default function Footer() {
   const { isDark } = useTheme();
 
-  const sectionBg = isDark ? "bg-transparent" : "bg-[#f9faf9] border-t border-[#e2ece6]";
+  const sectionBg = "bg-transparent";
   const heading = isDark ? "text-white" : "text-[#0f1f1b]";
   const body = isDark ? "text-white/65" : "text-[#3d5c54]";
   const muted = isDark ? "text-white/45" : "text-[#7a9e95]";
@@ -184,7 +184,7 @@ export default function Footer() {
             border-t pt-8 flex flex-col md:flex-row justify-between items-center ${
               isDark ? "text-xs md:text-sm" : "text-[13px]"
             }
-            ${isDark ? "border-white/10" : "border-[#e2ece6] bg-[#f1f5f2]"}
+            ${isDark ? "border-white/10" : "border-[#e8f0ec]"}
             ${muted}
           `}
         >
@@ -211,6 +211,68 @@ export default function Footer() {
             </a>
           </div>
         </motion.div>
+
+        <div
+          className="relative mt-10 text-center select-none pointer-events-none"
+          style={{ fontSize: "clamp(64px, 12vw, 160px)" }}
+          aria-hidden="true"
+        >
+          <div className="relative inline-block w-fit mx-auto font-extrabold leading-none tracking-[-0.02em]">
+            <span
+              className="block whitespace-pre"
+              style={{
+                color: "transparent",
+                WebkitTextStroke: isDark
+                  ? "2px rgba(255,255,255,0.08)"
+                  : "2px rgba(26,60,52,0.15)",
+              }}
+            >
+              WebbHeads
+            </span>
+
+            <span className="absolute inset-0 flex items-center justify-center">
+              {"WebbHeads".split("").map((char, index) => (
+                <span
+                  key={`${char}-${index}`}
+                  className="inline-block whitespace-pre watermark-letter-reveal watermark-force-anim"
+                  style={{
+                    color: "transparent",
+                    WebkitTextStroke: isDark
+                      ? "2px rgba(255,255,255,0.2)"
+                      : "2px rgba(26,60,52,0.28)",
+                    animationDelay: `${index * 0.1}s`,
+                  }}
+                >
+                  {char}
+                </span>
+              ))}
+            </span>
+
+            <span
+              className="absolute inset-0 block whitespace-pre watermark-fill-loop watermark-force-anim"
+              style={{
+                color: isDark ? "rgba(255,255,255,0.06)" : "rgba(26,60,52,0.10)",
+              }}
+            >
+              WebbHeads
+            </span>
+
+            <span
+              className="absolute inset-0 block whitespace-pre watermark-sweep-single watermark-force-anim"
+              style={{
+                backgroundImage:
+                  "linear-gradient(105deg, transparent 36%, rgba(246,255,130,0.95) 50%, transparent 64%)",
+                backgroundClip: "text",
+                WebkitBackgroundClip: "text",
+                color: "transparent",
+                WebkitTextFillColor: "transparent",
+                filter: "drop-shadow(0 0 12px #f6ff82)",
+              }}
+            >
+              WebbHeads
+            </span>
+          </div>
+        </div>
       </div>
     </footer>
   );

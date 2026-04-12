@@ -97,7 +97,9 @@ export default function Hero() {
     });
   };
 
-  const brandGradient = "bg-gradient-to-r from-[#f6ff82] to-[#003942]";
+  const gradientTextClass = isDark
+    ? "bg-clip-text text-transparent bg-gradient-to-r from-[#f6ff82] via-[#ecfa98] to-[#d8ea7c]"
+    : "bg-clip-text text-transparent bg-gradient-to-r from-[#1a3c34] via-[#155461] to-[#0b6a78]";
   const sectionBg = "bg-transparent";
   const bodyText = isDark ? "text-white/70" : "text-[#4a6660]";
 
@@ -150,7 +152,7 @@ export default function Hero() {
 
             <h1 className={`text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold leading-[1.1] mb-6 md:mb-8 tracking-tight max-w-4xl ${isDark ? "text-white" : "text-[#0f1f1b]"}`}>
               {headlineWords.map((word, index) => {
-                const wordClass = word === "Solutions" ? `bg-clip-text text-transparent ${brandGradient}` : "";
+                const wordClass = word === "Solutions" ? gradientTextClass : "";
                 return (
                   <span
                     key={word}

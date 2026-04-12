@@ -224,7 +224,9 @@ export default function CaseStudies() {
   const [showAll, setShowAll] = useState(false);
   const { isDark } = useTheme();
 
-  const brandGradient = "bg-gradient-to-r from-[#f6ff82] to-[#003942]";
+  const gradientTextClass = isDark
+    ? "bg-clip-text text-transparent bg-gradient-to-r from-[#f6ff82] via-[#ecfa98] to-[#d8ea7c]"
+    : "bg-clip-text text-transparent bg-gradient-to-r from-[#1a3c34] via-[#155461] to-[#0b6a78]";
   const sectionBg = "bg-transparent";
 
   const heading = isDark ? "text-white" : "text-[#0f1f1b]";
@@ -277,9 +279,7 @@ export default function CaseStudies() {
                 className={`text-3xl md:text-4xl lg:text-5xl font-bold mb-4 ${heading}`}
               >
                 Case{" "}
-                <span
-                  className={`bg-clip-text text-transparent ${brandGradient}`}
-                >
+                <span className={gradientTextClass}>
                   Studies
                 </span>
               </h2>
@@ -384,9 +384,7 @@ export default function CaseStudies() {
                   className={`text-3xl md:text-5xl font-bold mb-4 ${modalText}`}
                 >
                   All{" "}
-                  <span
-                    className={`bg-clip-text text-transparent ${brandGradient}`}
-                  >
+                  <span className={gradientTextClass}>
                     Case Studies
                   </span>
                 </h2>

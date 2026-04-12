@@ -52,7 +52,9 @@ export default function FAQ() {
   const { isDark } = useTheme();
   const [openIndex, setOpenIndex] = useState<number | null>(null);
 
-  const brandGradient = "bg-gradient-to-r from-[#f6ff82] to-[#003942]";
+  const gradientTextClass = isDark
+    ? "bg-clip-text text-transparent bg-gradient-to-r from-[#f6ff82] via-[#ecfa98] to-[#d8ea7c]"
+    : "bg-clip-text text-transparent bg-gradient-to-r from-[#1a3c34] via-[#155461] to-[#0b6a78]";
   const sectionBg = "bg-transparent";
   const heading = isDark ? "text-white" : "text-[#0f1f1b]";
   const sub = isDark ? "text-white/55" : "text-[#4a6660]";
@@ -176,7 +178,7 @@ export default function FAQ() {
           </div>
 
           <h2 className={`text-3xl md:text-5xl font-bold ${heading} mb-4`}>
-            Questions <span className={`bg-clip-text text-transparent ${brandGradient}`}>Answered</span>
+            Questions <span className={gradientTextClass}>Answered</span>
           </h2>
 
           <p className={`${sub} text-base md:text-lg max-w-2xl mx-auto`}>

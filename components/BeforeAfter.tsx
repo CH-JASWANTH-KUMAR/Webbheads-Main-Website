@@ -40,7 +40,9 @@ export default function BeforeAfter() {
   const { isDark } = useTheme();
 
   const sectionBg = "bg-transparent";
-  const brandGradient = "bg-gradient-to-r from-[#f6ff82] to-[#003942]";
+  const gradientTextClass = isDark
+    ? "bg-clip-text text-transparent bg-gradient-to-r from-[#f6ff82] via-[#ecfa98] to-[#d8ea7c]"
+    : "bg-clip-text text-transparent bg-gradient-to-r from-[#1a3c34] via-[#155461] to-[#0b6a78]";
 
   const shell = isDark
     ? "bg-white/5 border border-white/10 shadow-[0_18px_50px_rgba(0,0,0,0.55)]"
@@ -80,7 +82,7 @@ export default function BeforeAfter() {
             }`}
           >
             Before vs After, made{" "}
-            <span className={`bg-clip-text text-transparent ${brandGradient}`}>
+            <span className={gradientTextClass}>
               crystal clear
             </span>
           </h2>
@@ -105,7 +107,7 @@ export default function BeforeAfter() {
               Before Us
             </div>
             <div className={`px-6 py-4 border-b ${rowBorder} ${afterText} flex items-center gap-2`}>
-              <span className={`inline-flex h-6 w-6 items-center justify-center rounded-full ${brandGradient}`}>
+              <span className="inline-flex h-6 w-6 items-center justify-center rounded-full bg-gradient-to-r from-[#f6ff82] via-[#ecfa98] to-[#d8ea7c]">
                 <Check className="h-3.5 w-3.5 text-[#003942]" />
               </span>
               After Us
@@ -179,9 +181,7 @@ export default function BeforeAfter() {
               className={`rounded-2xl p-5 text-center backdrop-blur ${shell}`}
             >
               <div className={`text-2xl md:text-3xl font-semibold`}>
-                <span
-                  className={`bg-clip-text text-transparent ${brandGradient}`}
-                >
+                <span className={gradientTextClass}>
                   {item.stat}
                 </span>
               </div>
