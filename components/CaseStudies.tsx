@@ -4,6 +4,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import { ArrowUpRight, X } from "lucide-react";
 import { useLayoutEffect, useMemo, useState } from "react";
 import { useTheme } from "@/context/ThemeContext";
+import { useLanguage } from "@/context/LanguageContext";
 
 function ScrollLock() {
   useLayoutEffect(() => {
@@ -223,6 +224,7 @@ function CaseStudyCard({
 export default function CaseStudies() {
   const [showAll, setShowAll] = useState(false);
   const { isDark } = useTheme();
+  const { tr } = useLanguage();
 
   const gradientTextClass = isDark
     ? "bg-clip-text text-transparent bg-gradient-to-r from-[#f6ff82] via-[#ecfa98] to-[#d8ea7c]"
@@ -232,7 +234,62 @@ export default function CaseStudies() {
   const heading = isDark ? "text-white" : "text-[#0f1f1b]";
   const sub = isDark ? "text-white/55" : "text-[#4a6660]";
 
-  const previewStudies = useMemo(() => caseStudies.slice(0, 6), []);
+  const localizedStudies = useMemo(
+    () =>
+      caseStudies.map((study) => ({
+        ...study,
+        title: tr(study.title, study.title),
+        category:
+          {
+            "Luxury Real Estate Website": tr("Luxury Real Estate Website", "లగ్జరీ రియల్ ఎస్టేట్ వెబ్‌సైట్"),
+            "Mobile App Development": tr("Mobile App Development", "మొబైల్ యాప్ డెవలప్‌మెంట్"),
+            "AI Automation & CRM": tr("AI Automation & CRM", "AI ఆటోమేషన్ & CRM"),
+            "Web Development": tr("Web Development", "వెబ్ డెవలప్‌మెంట్"),
+            "Virtual Tours": tr("Virtual Tours", "వర్చువల్ టూర్స్"),
+            "Branding & Design": tr("Branding & Design", "బ్రాండింగ్ & డిజైన్"),
+            "Landing Page + SEO": tr("Landing Page + SEO", "ల్యాండింగ్ పేజ్ + SEO"),
+            "Performance Rebuild": tr("Performance Rebuild", "పర్ఫార్మెన్స్ రీబిల్డ్"),
+          }[study.category] ?? study.category,
+        description:
+          {
+            "Complete digital transformation for a $50M luxury villa portfolio with 3D virtual tours and lead automation.": tr(
+              "Complete digital transformation for a $50M luxury villa portfolio with 3D virtual tours and lead automation.",
+              "3D వర్చువల్ టూర్స్ మరియు లీడ్ ఆటోమేషన్‌తో లగ్జరీ విల్లా పోర్ట్‌ఫోలియోకు పూర్తి డిజిటల్ మార్పు."
+            ),
+            "Premium mobile application for high-rise apartment sales with AR property viewing and instant booking.": tr(
+              "Premium mobile application for high-rise apartment sales with AR property viewing and instant booking.",
+              "AR ప్రాపర్టీ వ్యూయింగ్ మరియు ఇన్‌స్టంట్ బుకింగ్‌తో హై-రైజ్ అపార్ట్మెంట్ సేల్స్ కోసం ప్రిమియం మొబైల్ యాప్."
+            ),
+            "End-to-end CRM integration with AI-powered lead scoring and automated follow-up sequences.": tr(
+              "End-to-end CRM integration with AI-powered lead scoring and automated follow-up sequences.",
+              "AI ఆధారిత లీడ్ స్కోరింగ్ మరియు ఆటోమేటెడ్ ఫాలో-అప్స్‌తో ఎండ్-టు-ఎండ్ CRM ఇంటిగ్రేషన్."
+            ),
+            "Luxury beachfront property website with virtual tours and integrated booking system.": tr(
+              "Luxury beachfront property website with virtual tours and integrated booking system.",
+              "వర్చువల్ టూర్స్ మరియు ఇంటిగ్రేటెడ్ బుకింగ్ సిస్టమ్‌తో లగ్జరీ బీచ్‌ఫ్రంట్ ప్రాపర్టీ వెబ్‌సైట్."
+            ),
+            "360° interactive property tours with hotspots and integrated floor plans.": tr(
+              "360° interactive property tours with hotspots and integrated floor plans.",
+              "హాట్‌స్పాట్స్ మరియు ఇంటిగ్రేటెడ్ ఫ్లోర్ ప్లాన్స్‌తో 360° ఇంటరాక్టివ్ ప్రాపర్టీ టూర్స్."
+            ),
+            "Complete brand identity and marketing collateral for commercial real estate.": tr(
+              "Complete brand identity and marketing collateral for commercial real estate.",
+              "కమర్షియల్ రియల్ ఎస్టేట్ కోసం పూర్తి బ్రాండ్ ఐడెంటిటీ మరియు మార్కెటింగ్ మెటీరియల్."
+            ),
+            "Conversion-first landing pages and local SEO to drive qualified buyer inquiries.": tr(
+              "Conversion-first landing pages and local SEO to drive qualified buyer inquiries.",
+              "నాణ్యమైన కొనుగోలుదారుల ఇన్‌క్వైరీలను పెంచడానికి కన్వర్షన్-ఫోకస్ ల్యాండింగ్ పేజీలు మరియు లోకల్ SEO."
+            ),
+            "Speed-focused rebuild with improved Lighthouse scores and streamlined lead capture.": tr(
+              "Speed-focused rebuild with improved Lighthouse scores and streamlined lead capture.",
+              "మెరుగైన Lighthouse స్కోర్లు మరియు వేగవంతమైన లీడ్ క్యాప్చర్‌తో స్పీడ్-ఫోకస్ రీబిల్డ్."
+            ),
+          }[study.description] ?? study.description,
+      })),
+    [tr]
+  );
+
+  const previewStudies = useMemo(() => localizedStudies.slice(0, 6), [localizedStudies]);
 
   const modalBackdrop = isDark ? "bg-black" : "bg-white";
   const modalText = isDark ? "text-white" : "text-[#0f1f1b]";
@@ -272,21 +329,23 @@ export default function CaseStudies() {
                     isDark ? "bg-[#f6ff82]" : "bg-[#1a3c34]"
                   }`}
                 />
-                <span>Our Work</span>
+                <span>{tr("Our Work", "మా పని")}</span>
               </div>
 
               <h2
                 className={`text-3xl md:text-4xl lg:text-5xl font-bold mb-4 ${heading}`}
               >
-                Case{" "}
+                {tr("Case", "కేస్")}{" "}
                 <span className={gradientTextClass}>
-                  Studies
+                  {tr("Studies", "స్టడీస్")}
                 </span>
               </h2>
 
               <p className={`text-lg ${sub}`}>
-                See how we&apos;ve helped leading real estate agencies transform
-                their digital presence.
+                {tr(
+                  "See how we've helped leading real estate agencies transform their digital presence.",
+                  "ప్రമുഖ రియల్ ఎస్టేట్ ఏజెన్సీల డిజిటల్ ప్రెజెన్స్‌ను మేము ఎలా మార్చామో చూడండి."
+                )}
               </p>
             </div>
 
@@ -302,7 +361,7 @@ export default function CaseStudies() {
                   ${viewAllPill}
                 `}
               >
-                View All Projects
+                {tr("View All Projects", "అన్ని ప్రాజెక్టులు చూడండి")}
                 <ArrowUpRight className="h-4 w-4" />
               </button>
             </div>
@@ -342,7 +401,7 @@ export default function CaseStudies() {
               ${viewAllPill}
             `}
           >
-            View All Projects
+            {tr("View All Projects", "అన్ని ప్రాజెక్టులు చూడండి")}
             <ArrowUpRight className="h-4 w-4" />
           </button>
         </div>
@@ -365,7 +424,7 @@ export default function CaseStudies() {
             <button
               onClick={() => setShowAll(false)}
               className={`fixed top-6 right-6 z-[110] w-12 h-12 rounded-full ${modalCloseBtn} flex items-center justify-center transition-colors shadow-lg`}
-              aria-label="Close"
+              aria-label={tr("Close", "మూసివేయండి")}
               type="button"
             >
               <X className={`w-6 h-6 ${modalCloseIcon}`} />
@@ -383,19 +442,21 @@ export default function CaseStudies() {
                 <h2
                   className={`text-3xl md:text-5xl font-bold mb-4 ${modalText}`}
                 >
-                  All{" "}
+                  {tr("All", "అన్ని")}{" "}
                   <span className={gradientTextClass}>
-                    Case Studies
+                    {tr("Case Studies", "కేస్ స్టడీస్")}
                   </span>
                 </h2>
                 <p className={`text-lg ${modalSubText}`}>
-                  Explore our complete portfolio of {caseStudies.length}+
-                  successful projects delivered for clients worldwide.
+                  {tr(
+                    `Explore our complete portfolio of ${caseStudies.length}+ successful projects delivered for clients worldwide.`,
+                    `ప్రపంచవ్యాప్తంగా క్లయింట్ల కోసం డెలివర్ చేసిన ${caseStudies.length}+ విజయవంతమైన ప్రాజెక్టుల మా పూర్తి పోర్ట్‌ఫోలియోను చూడండి.`
+                  )}
                 </p>
               </div>
 
               <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-8 max-w-7xl mx-auto">
-                {caseStudies.map((study) => (
+                {localizedStudies.map((study) => (
                   <CaseStudyCard
                     key={study.id}
                     study={study}

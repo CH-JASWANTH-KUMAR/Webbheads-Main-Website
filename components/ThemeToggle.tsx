@@ -7,9 +7,11 @@
 import { motion } from "framer-motion";
 import { Sun, Moon } from "lucide-react";
 import { useTheme } from "@/context/ThemeContext";
+import { useLanguage } from "@/context/LanguageContext";
 
 export default function ThemeToggle() {
   const { toggleTheme, isDark } = useTheme();
+  const { tr } = useLanguage();
 
   const iconColor = isDark ? "text-white" : "text-slate-900";
   const labelColor = isDark ? "text-white/90" : "text-slate-800";
@@ -31,8 +33,16 @@ export default function ThemeToggle() {
         ${btnSurface} ${iconColor}
         focus:outline-none focus-visible:ring-2 ${focusRing}
       `}
-      aria-label={`Switch to ${isDark ? "light" : "dark"} mode`}
-      title={`Switch to ${isDark ? "light" : "dark"} mode`}
+      aria-label={
+        isDark
+          ? tr("Switch to light mode", "లైట్ మోడ్‌కి మార్చండి")
+          : tr("Switch to dark mode", "డార్క్ మోడ్‌కి మార్చండి")
+      }
+      title={
+        isDark
+          ? tr("Switch to light mode", "లైట్ మోడ్‌కి మార్చండి")
+          : tr("Switch to dark mode", "డార్క్ మోడ్‌కి మార్చండి")
+      }
     >
       <span className="relative w-[18px] h-[18px] flex items-center justify-center">
         <motion.div
@@ -61,7 +71,7 @@ export default function ThemeToggle() {
       </span>
 
       <span className={`text-xs font-semibold tracking-wide ${labelColor}`}>
-        {isDark ? "Dark" : "Light"}
+        {isDark ? tr("Dark", "డార్క్") : tr("Light", "లైట్")}
       </span>
     </motion.button>
   );

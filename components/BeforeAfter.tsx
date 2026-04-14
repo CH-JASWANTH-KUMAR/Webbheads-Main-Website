@@ -2,6 +2,7 @@
 
 import { Check, X, ArrowRight } from "lucide-react";
 import { useTheme } from "@/context/ThemeContext";
+import { useLanguage } from "@/context/LanguageContext";
 
 const comparisons = [
   {
@@ -38,6 +39,7 @@ const comparisons = [
 
 export default function BeforeAfter() {
   const { isDark } = useTheme();
+  const { tr } = useLanguage();
 
   const sectionBg = "bg-transparent";
   const gradientTextClass = isDark
@@ -61,6 +63,54 @@ export default function BeforeAfter() {
     ? "bg-[#f6ff82]/15 text-[#f6ff82]"
     : "bg-[#003942]/10 text-[#003942]";
 
+  const localizedComparisons = comparisons.map((item) => {
+    const map = {
+      "Lead Response Time": {
+        feature: "లీడ్ ప్రతిస్పందన సమయం",
+        before: "మాన్యువల్ ఫాలో-అప్స్ గంటలు పడతాయి, లీడ్స్ చల్లబడిపోతాయి.",
+        after: "ఆటోమేటెడ్ స్పందనలు నిమిషాల్లో చేరతాయి, 24/7.",
+        impact: "వేగవంతమైన మొదటి స్పందన",
+      },
+      "Daily Productivity": {
+        feature: "రోజువారీ ఉత్పాదకత",
+        before: "టీమ్‌లు పునరావృత అడ్మిన్ పనులపై 5+ గంటలు ఖర్చు చేస్తాయి.",
+        after: "ఆటోమేషన్ రోజుకు 4+ గంటలు సేవ్ చేస్తుంది.",
+        impact: "అధిక విలువైన పనికి సమయం",
+      },
+      "Lead Tracking": {
+        feature: "లీడ్ ట్రాకింగ్",
+        before: "లీడ్స్ ఇమెయిల్స్, కాల్స్, షీట్లలో విడిపోయి ఉంటాయి.",
+        after: "ప్రతి లీడ్ ఒకే CRM మరియు డ్యాష్‌బోర్డ్‌లో ట్రాక్ అవుతుంది.",
+        impact: "స్పష్టమైన పైప్‌లైన్",
+      },
+      "Conversion Rate": {
+        feature: "కన్వర్షన్ రేట్",
+        before: "అసమంజసమైన ఫాలో-అప్స్ వల్ల క్లోజింగ్ రేట్స్ తగ్గుతాయి.",
+        after: "సంఘటిత వర్క్‌ఫ్లోలు కన్వర్షన్‌ను మెరుగుపరుస్తాయి.",
+        impact: "ఉన్నత క్లోజ్ రేట్స్",
+      },
+      "Work-Life Balance": {
+        feature: "వర్క్-లైఫ్ బ్యాలెన్స్",
+        before: "ఏజెంట్లు రాత్రింబవళ్లు అందుబాటులో ఉండాల్సి వస్తుంది.",
+        after: "స్మార్ట్ సిస్టమ్స్ ఆఫ్టర్-ఆవర్స్‌ను హ్యాండిల్ చేస్తాయి.",
+        impact: "స్థిరమైన కార్యకలాపాలు",
+      },
+    } as Record<string, { feature: string; before: string; after: string; impact: string }>;
+
+    const localized = map[item.feature];
+    if (!localized) {
+      return item;
+    }
+
+    return {
+      ...item,
+      feature: tr(item.feature, localized.feature),
+      before: tr(item.before, localized.before),
+      after: tr(item.after, localized.after),
+      impact: tr(item.impact, localized.impact),
+    };
+  });
+
   return (
     <section className={`py-12 md:py-20 ${sectionBg}`}>
       <div className="container mx-auto px-6 md:px-12 lg:px-20">
@@ -73,7 +123,7 @@ export default function BeforeAfter() {
                 isDark ? "bg-[#f6ff82]" : "bg-[#1a3c34]"
               }`}
             />
-            <span className="tracking-wide">BEFORE & AFTER</span>
+            <span className="tracking-wide">{tr("BEFORE & AFTER", "ముందు & తర్వాత")}</span>
           </div>
 
           <h2
@@ -81,16 +131,19 @@ export default function BeforeAfter() {
               isDark ? "text-white" : "text-[#0f1f1b]"
             }`}
           >
-            Before vs After, made{" "}
+            {tr("Before vs After, made", "ముందు vs తర్వాత,")}{" "}
             <span className={gradientTextClass}>
-              crystal clear
+              {tr("crystal clear", "స్పష్టంగా")}
             </span>
           </h2>
 
           <p
             className={`mx-auto mt-3 max-w-2xl text-sm md:text-base leading-relaxed ${subText}`}
           >
-            A clean side-by-side comparison so users quickly understand the value shift after working with us.
+            {tr(
+              "A clean side-by-side comparison so users quickly understand the value shift after working with us.",
+              "మాతో పనిచేసిన తర్వాత విలువ ఎలా మారుతుందో త్వరగా అర్థమయ్యే స్పష్టమైన పోలిక."
+            )}
           </p>
         </div>
 
@@ -98,26 +151,26 @@ export default function BeforeAfter() {
         <div className={`hidden md:block rounded-3xl overflow-hidden backdrop-blur ${shell}`}>
           <div className={`grid grid-cols-[1.1fr_1.55fr_1.55fr_0.95fr] text-sm font-semibold ${headerBg}`}>
             <div className={`px-6 py-4 border-b ${rowBorder} ${isDark ? "text-white/80" : "text-[#0f1f1b]"}`}>
-              Area
+              {tr("Area", "ప్రాంతం")}
             </div>
             <div className={`px-6 py-4 border-b ${rowBorder} ${beforeText} flex items-center gap-2`}>
               <span className={`inline-flex h-6 w-6 items-center justify-center rounded-full ${isDark ? "bg-white/10" : "bg-[#1a3c34] text-white"}`}>
                 <X className="h-3.5 w-3.5" />
               </span>
-              Before Us
+              {tr("Before Us", "ముందు")}
             </div>
             <div className={`px-6 py-4 border-b ${rowBorder} ${afterText} flex items-center gap-2`}>
               <span className="inline-flex h-6 w-6 items-center justify-center rounded-full bg-gradient-to-r from-[#f6ff82] via-[#ecfa98] to-[#d8ea7c]">
                 <Check className="h-3.5 w-3.5 text-[#003942]" />
               </span>
-              After Us
+              {tr("After Us", "తర్వాత")}
             </div>
             <div className={`px-6 py-4 border-b ${rowBorder} ${isDark ? "text-white/80" : "text-[#0f1f1b]"}`}>
-              Outcome
+              {tr("Outcome", "ఫలితం")}
             </div>
           </div>
 
-          {comparisons.map((item, idx) => (
+          {localizedComparisons.map((item, idx) => (
             <div
               key={item.feature}
               className={`grid grid-cols-[1.1fr_1.55fr_1.55fr_0.95fr] ${
@@ -144,19 +197,19 @@ export default function BeforeAfter() {
 
         {/* Mobile View */}
         <div className="grid grid-cols-1 gap-4 md:hidden">
-          {comparisons.map((item) => (
+          {localizedComparisons.map((item) => (
             <div key={item.feature} className={`rounded-2xl p-5 backdrop-blur ${shell}`}>
               <h3 className={`text-base font-semibold ${isDark ? "text-white" : "text-[#0f1f1b]"}`}>
                 {item.feature}
               </h3>
 
               <div className={`mt-3 rounded-xl p-3 ${isDark ? "bg-black/25" : "bg-[#edf1ee]"}`}>
-                <p className={`text-xs font-semibold uppercase tracking-wide ${beforeText}`}>Before Us</p>
+                <p className={`text-xs font-semibold uppercase tracking-wide ${beforeText}`}>{tr("Before Us", "ముందు")}</p>
                 <p className={`mt-1 text-sm leading-relaxed ${beforeText}`}>{item.before}</p>
               </div>
 
               <div className={`mt-2 rounded-xl p-3 ${isDark ? "bg-[#f6ff82]/10" : "bg-[#003942]/5"}`}>
-                <p className={`text-xs font-semibold uppercase tracking-wide ${afterText}`}>After Us</p>
+                <p className={`text-xs font-semibold uppercase tracking-wide ${afterText}`}>{tr("After Us", "తర్వాత")}</p>
                 <p className={`mt-1 text-sm leading-relaxed ${afterText}`}>{item.after}</p>
               </div>
 
@@ -208,7 +261,7 @@ export default function BeforeAfter() {
               shadow-[0_12px_30px_rgba(0,0,0,0.25)]
             `}
           >
-            <span>Start now</span>
+            <span>{tr("Start now", "ఇప్పుడే ప్రారంభించండి")}</span>
             <ArrowRight className="h-4 w-4" />
           </a>
         </div>

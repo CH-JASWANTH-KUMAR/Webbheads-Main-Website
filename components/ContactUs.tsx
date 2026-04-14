@@ -3,9 +3,11 @@
 import { motion } from "framer-motion";
 import { ArrowRight } from "lucide-react";
 import { useTheme } from "@/context/ThemeContext";
+import { useLanguage } from "@/context/LanguageContext";
 
 export default function ContactUs() {
   const { isDark } = useTheme();
+  const { tr } = useLanguage();
 
   const darkGradientTextClass =
     "bg-clip-text text-transparent bg-gradient-to-r from-[#f6ff82] via-[#ecfa98] to-[#d8ea7c]";
@@ -64,7 +66,7 @@ export default function ContactUs() {
                 `}
               >
                   <span className={`h-1.5 w-1.5 md:h-2 md:w-2 rounded-full ${isDark ? "bg-[#f6ff82]" : "bg-[#1a3c34]"}`} />
-                <span>Contact</span>
+                  <span>{tr("Contact", "సంప్రదించండి")}</span>
               </motion.div>
 
               <motion.h2
@@ -74,13 +76,16 @@ export default function ContactUs() {
                 transition={{ duration: 0.35, ease: "easeOut" }}
                 className={`text-3xl md:text-5xl font-bold mb-4 md:mb-6 leading-tight ${isDark ? "text-white" : "text-[#0f1f1b]"}`}
               >
-                Ready to{" "}
-                <span className={isDark ? darkGradientTextClass : "text-[#1a3c34]"}>transform</span>{" "}
-                your digital presence?
+                {tr("Ready to", "మీ డిజిటల్ ప్రెజెన్స్‌ను")}{" "}
+                <span className={isDark ? darkGradientTextClass : "text-[#1a3c34]"}>{tr("transform", "మార్చేందుకు")}</span>{" "}
+                {tr("your digital presence?", "సిద్ధమేనా?")}
               </motion.h2>
 
               <p className={`text-base md:text-lg mb-8 md:mb-10 leading-relaxed max-w-md ${leftSub}`}>
-                Let&apos;s discuss how we can elevate your real estate brand with premium digital solutions.
+                {tr(
+                  "Let's discuss how we can elevate your real estate brand with premium digital solutions.",
+                  "ప్రిమియం డిజిటల్ పరిష్కారాలతో మీ రియల్ ఎస్టేట్ బ్రాండ్‌ను ఎలా ముందుకు తీసుకెళ్లాలో మాట్లాడుకుందాం."
+                )}
               </p>
 
               <div className="space-y-6 md:space-y-8">
@@ -90,7 +95,7 @@ export default function ContactUs() {
                       isDark ? "text-xs md:text-sm text-white/60" : "text-[#7a9e95] text-[11px] tracking-[0.08em]"
                     }`}
                   >
-                    Email
+                    {tr("Email", "ఇమెయిల్")}
                   </h4>
                   {/* Fixed link syntax */}
                   <a
@@ -110,7 +115,7 @@ export default function ContactUs() {
                       isDark ? "text-xs md:text-sm text-white/60" : "text-[#7a9e95] text-[11px] tracking-[0.08em]"
                     }`}
                   >
-                    Phone
+                    {tr("Phone", "ఫోన్")}
                   </h4>
                   <p className={`text-lg md:text-2xl font-semibold ${isDark ? "text-white" : "text-[#0f1f1b]"}`}>
                     9494259453
@@ -129,38 +134,38 @@ export default function ContactUs() {
             >
               <form className="space-y-4 md:space-y-6">
                 <div>
-                  <label className={`block text-xs md:text-sm font-medium mb-2 ${label}`}>Name</label>
+                  <label className={`block text-xs md:text-sm font-medium mb-2 ${label}`}>{tr("Name", "పేరు")}</label>
                   <input
                     type="text"
                     className={`w-full px-4 py-3 rounded-lg outline-none transition-all ${inputBase} text-sm md:text-base`}
-                    placeholder="Your name"
+                    placeholder={tr("Your name", "మీ పేరు")}
                   />
                 </div>
 
                 <div>
-                  <label className={`block text-xs md:text-sm font-medium mb-2 ${label}`}>Email</label>
+                  <label className={`block text-xs md:text-sm font-medium mb-2 ${label}`}>{tr("Email", "ఇమెయిల్")}</label>
                   <input
                     type="email"
                     className={`w-full px-4 py-3 rounded-lg outline-none transition-all ${inputBase} text-sm md:text-base`}
-                    placeholder="your@email.com"
+                    placeholder={tr("your@email.com", "మీ@email.com")}
                   />
                 </div>
 
                 <div>
-                  <label className={`block text-xs md:text-sm font-medium mb-2 ${label}`}>Contact Number</label>
+                  <label className={`block text-xs md:text-sm font-medium mb-2 ${label}`}>{tr("Contact Number", "సంప్రదింపు నంబర్")}</label>
                   <input
                     type="tel"
                     className={`w-full px-4 py-3 rounded-lg outline-none transition-all ${inputBase} text-sm md:text-base`}
-                    placeholder="Phone number"
+                    placeholder={tr("Phone number", "ఫోన్ నంబర్")}
                   />
                 </div>
 
                 <div>
-                  <label className={`block text-xs md:text-sm font-medium mb-2 ${label}`}>Message</label>
+                  <label className={`block text-xs md:text-sm font-medium mb-2 ${label}`}>{tr("Message", "సందేశం")}</label>
                   <textarea
                     rows={4}
                     className={`w-full px-4 py-3 rounded-lg outline-none transition-all resize-none ${inputBase} text-sm md:text-base`}
-                    placeholder="Tell us about your project..."
+                    placeholder={tr("Tell us about your project...", "మీ ప్రాజెక్ట్ గురించి చెప్పండి...")}
                   />
                 </div>
 
@@ -177,12 +182,15 @@ export default function ContactUs() {
                     group
                   `}
                 >
-                  Send Message
+                  {tr("Send Message", "సందేశం పంపండి")}
                   <ArrowRight className="w-4 h-4 md:w-5 md:h-5 group-hover:translate-x-1 transition-transform" />
                 </button>
 
                 <p className={`text-xs mt-4 ${isDark ? "text-white/40" : "text-[#7a9e95]"}`}>
-                  By submitting this form, you agree to be contacted about your inquiry.
+                  {tr(
+                    "By submitting this form, you agree to be contacted about your inquiry.",
+                    "ఈ ఫారమ్ సమర్పించడం ద్వారా మీ అభ్యర్థనకు సంబంధించి మిమ్మల్ని సంప్రదించడానికి మీరు అంగీకరిస్తున్నారు."
+                  )}
                 </p>
               </form>
             </motion.div>

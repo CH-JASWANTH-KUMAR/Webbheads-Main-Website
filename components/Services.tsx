@@ -12,6 +12,7 @@
 import { motion, useReducedMotion } from 'framer-motion';
 import { Code, Smartphone, Bot, Calendar, BarChart3, Box } from 'lucide-react';
 import { useTheme } from '@/context/ThemeContext';
+import { useLanguage } from '@/context/LanguageContext';
 
 // Service offerings data - each has an icon, title, and description
 const services = [
@@ -288,6 +289,7 @@ const cardVariants = {
 
 export default function Services() {
   const { isDark } = useTheme();
+  const { tr } = useLanguage();
   const prefersReducedMotion = useReducedMotion() ?? false;
   const gradientTextClass = isDark
     ? 'text-transparent bg-clip-text bg-gradient-to-r from-[#f6ff82] via-[#ecfa98] to-[#d8ea7c]'
@@ -303,6 +305,50 @@ export default function Services() {
     event.currentTarget.style.setProperty('--mx', `${x}px`);
     event.currentTarget.style.setProperty('--my', `${y}px`);
   };
+
+  const localizedServices = services.map((service) => {
+    const translated = {
+      'Website Development': tr('Website Development', 'వెబ్‌సైట్ డెవలప్‌మెంట్'),
+      'App Development': tr('App Development', 'యాప్ డెవలప్‌మెంట్'),
+      'AI Automation': tr('AI Automation', 'AI ఆటోమేషన్'),
+      'Booking Systems': tr('Booking Systems', 'బుకింగ్ సిస్టమ్స్'),
+      'CRM & Dashboards': tr('CRM & Dashboards', 'CRM & డాష్‌బోర్డ్స్'),
+      'Virtual Staging': tr('Virtual Staging', 'వర్చువల్ స్టేజింగ్'),
+    } as Record<string, string>;
+
+    const translatedDescription = {
+      'Website Development': tr(
+        'Your property listings, beautifully presented online. Buyers find you, trust you, and call you - without you lifting a finger.',
+        'మీ ప్రాపర్టీ లిస్టింగ్స్ ఆన్‌లైన్‌లో అద్భుతంగా కనిపించేలా చేస్తాం. కొనుగోలుదారులు మిమ్మల్ని కనుగొని, నమ్మి, మీకే కాల్ చేస్తారు.'
+      ),
+      'App Development': tr(
+        'A mobile app your buyers actually want to use. Browse properties, book viewings, and close deals - all from their phone.',
+        'మీ కొనుగోలుదారులు నిజంగా ఉపయోగించే మొబైల్ యాప్. ప్రాపర్టీలు చూడటం, విజిట్ బుక్ చేయటం, డీల్ క్లోజ్ చేయటం అన్నీ ఫోన్‌లోనే.'
+      ),
+      'AI Automation': tr(
+        'Never lose a lead to slow replies again. AI responds to every inquiry instantly - even at 2am - so you wake up to warm leads.',
+        'స్లో రిప్లై వల్ల లీడ్ కోల్పోకండి. AI ప్రతి ఇన్‌క్వైరీకి వెంటనే స్పందిస్తుంది, రాత్రి సమయంలో కూడా.'
+      ),
+      'Booking Systems': tr(
+        'Buyers pick a time, show up, and you close. No back-and-forth calls. No missed viewings. Just a full calendar that runs itself.',
+        'కొనుగోలుదారులు సమయం ఎంచుకుని వస్తారు, మీరు డీల్ క్లోజ్ చేస్తారు. అటూ ఇటూ కాల్స్ అవసరం లేదు, మిస్‌డ్ విజిట్స్ ఉండవు.'
+      ),
+      'CRM & Dashboards': tr(
+        'See every lead, every deal, and every rupee - in one place. Know exactly what is working and where your next deal is coming from.',
+        'ప్రతి లీడ్, ప్రతి డీల్, ప్రతి రూపాయి ఒకే చోట కనిపిస్తుంది. ఏది పని చేస్తోందో స్పష్టంగా తెలుస్తుంది.'
+      ),
+      'Virtual Staging': tr(
+        'Let buyers walk through your property from their sofa. No travel, no empty rooms - just a stunning tour that sells the feeling.',
+        'కొనుగోలుదారులు ఇంటి నుంచే మీ ప్రాపర్టీని అనుభవించేలా చేస్తాం. ప్రయాణం అవసరం లేదు, గదులు ఖాళీగా కనిపించవు.'
+      ),
+    } as Record<string, string>;
+
+    return {
+      ...service,
+      title: translated[service.title] ?? service.title,
+      description: translatedDescription[service.title] ?? service.description,
+    };
+  });
   
   return (
     <section className={`relative overflow-hidden py-14 md:py-16 ${isDark ? 'bg-black' : 'bg-transparent'}`}>
@@ -314,7 +360,7 @@ export default function Services() {
             viewport={{ once: true }}
             className={`text-3xl md:text-4xl lg:text-5xl font-bold mb-4 ${isDark ? 'text-white' : 'text-[#1f4f3a]'}`}
           >
-            Our Expertise in <span className={gradientTextClass}>Real Estate Tech</span>
+            {tr('Our Expertise in', 'మా నైపుణ్యం')} <span className={gradientTextClass}>{tr('Real Estate Tech', 'రియల్ ఎస్టేట్ టెక్')}</span>
           </motion.h2>
           <motion.p 
             initial={{ opacity: 0, y: 20 }}
@@ -323,7 +369,10 @@ export default function Services() {
             transition={{ delay: 0.1 }}
             className={`max-w-2xl mx-auto text-base md:text-lg ${isDark ? 'text-gray-400' : 'text-[#4a6660]'}`}
           >
-            Comprehensive digital solutions designed to elevate your real estate business.
+            {tr(
+              'Comprehensive digital solutions designed to elevate your real estate business.',
+              'మీ రియల్ ఎస్టేట్ బిజినెస్‌ను ముందుకు తీసుకెళ్లే సమగ్ర డిజిటల్ పరిష్కారాలు.'
+            )}
           </motion.p>
         </div>
         
@@ -334,7 +383,7 @@ export default function Services() {
           viewport={{ once: true, amount: 0.2 }}
           className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5 lg:gap-6"
         >
-          {services.map((service, index) => (
+          {localizedServices.map((service, index) => (
             <motion.div
               key={index}
               variants={cardVariants}

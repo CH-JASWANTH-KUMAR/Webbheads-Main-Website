@@ -3,6 +3,7 @@
 import { motion } from "framer-motion";
 import { Check } from "lucide-react";
 import { useTheme } from "@/context/ThemeContext";
+import { useLanguage } from "@/context/LanguageContext";
 
 const checklist = [
   "Tailored solutions for your business needs",
@@ -23,6 +24,7 @@ const marqueeItems = [
 
 export default function Education() {
   const { isDark } = useTheme();
+  const { tr, language } = useLanguage();
 
   const sectionBg = isDark ? "bg-black" : "bg-transparent";
 
@@ -38,6 +40,37 @@ export default function Education() {
   // - Light: #003942
   const circleBg = isDark ? "bg-[#2B2D31]" : "bg-[#003942]";
   const circleText = "text-white";
+
+  const localizedChecklist = checklist.map((item) =>
+    ({
+      "Tailored solutions for your business needs": tr(
+        "Tailored solutions for your business needs",
+        "మీ వ్యాపార అవసరాలకు సరిపోయే ప్రత్యేక పరిష్కారాలు"
+      ),
+      "Engaging visuals that tell your brand story": tr(
+        "Engaging visuals that tell your brand story",
+        "మీ బ్రాండ్ కథను చెప్పే ఆకర్షణీయమైన విజువల్స్"
+      ),
+      "Proven strategies for maximum impact": tr(
+        "Proven strategies for maximum impact",
+        "గరిష్ట ఫలితాల కోసం నిరూపిత వ్యూహాలు"
+      ),
+    } as Record<string, string>)[item] ?? item
+  );
+
+  const localizedMarquee =
+    language === "te"
+      ? [
+          "ప్రిమియం వెబ్‌సైట్లు",
+          "AI ఆటోమేషన్",
+          "లీడ్ జనరేషన్",
+          "CRM ఇంటిగ్రేషన్",
+          "ప్రాపర్టీ లిస్టింగ్స్",
+          "వర్చువల్ టూర్స్",
+          "అనలిటిక్స్ డ్యాష్‌బోర్డ్",
+          "SEO ఆప్టిమైజేషన్",
+        ]
+      : marqueeItems;
 
   return (
     <section className={`relative py-16 md:py-28 overflow-hidden ${sectionBg}`}>
@@ -79,18 +112,20 @@ export default function Education() {
               >
                 Experience{" "}
                 <span className={isDark ? "text-[#f6ff82]" : "text-[#003942]"}>
-                  Innovation
+                  {tr("Innovation", "ఇన్నోవేషన్")}
                 </span>
-                , See the Impact
+                {tr(", See the Impact", ", ప్రభావాన్ని చూడండి")}
               </h2>
 
               <p className={`mt-4 text-base md:text-lg ${sub} max-w-xl`}>
-                Discover why top agencies are embracing digital solutions and
-                how you can stay ahead of the competition.
+                {tr(
+                  "Discover why top agencies are embracing digital solutions and how you can stay ahead of the competition.",
+                  "టాప్ ఏజెన్సీలు డిజిటల్ పరిష్కారాలను ఎందుకు స్వీకరిస్తున్నాయో తెలుసుకోండి, పోటీలో మీరు ఎలా ముందుండాలో చూడండి."
+                )}
               </p>
 
               <div className="mt-8 space-y-4 md:space-y-5 w-full max-w-xl">
-                {checklist.map((text) => (
+                {localizedChecklist.map((text) => (
                   <div
                     key={text}
                     className="flex items-start md:items-center gap-4 justify-start"
@@ -126,7 +161,7 @@ export default function Education() {
           }`}
         >
           <p className="mb-[14px] text-center text-[11px] font-medium uppercase tracking-[0.1em] text-[rgba(246,255,130,0.7)]">
-            Our Full Stack of Services
+            {tr("Our Full Stack of Services", "మా పూర్తి సేవల సమాహారం")}
           </p>
 
           <div
@@ -167,7 +202,7 @@ export default function Education() {
                 },
               }}
             >
-              {[...marqueeItems, ...marqueeItems, ...marqueeItems].map(
+              {[...localizedMarquee, ...localizedMarquee, ...localizedMarquee].map(
                 (item, index) => (
                   <div
                     key={index}

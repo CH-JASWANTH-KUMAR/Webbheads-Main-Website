@@ -4,6 +4,7 @@ import { useState } from "react";
 import { motion } from "framer-motion";
 import { ChevronRight, Linkedin, X } from "lucide-react";
 import { useTheme } from "@/context/ThemeContext";
+import { useLanguage } from "@/context/LanguageContext";
 import Image from "next/image";
 
 type TeamMember = {
@@ -69,6 +70,7 @@ const EMPTY_CARD_COUNT = 5;
 
 export default function AboutUs() {
   const { isDark } = useTheme();
+  const { tr } = useLanguage();
   const [selectedMemberId, setSelectedMemberId] = useState<string>("");
 
   const sectionBg = "bg-transparent";
@@ -104,6 +106,20 @@ export default function AboutUs() {
 
   const selectedMember = cards.find((member) => member.id === selectedMemberId);
 
+  const roleMap: Record<string, string> = {
+    "Founder and CEO": "స్థాపకుడు మరియు CEO",
+    "Full stack Developer": "ఫుల్ స్టాక్ డెవలపర్",
+    "Web Developer": "వెబ్ డెవలపర్",
+    "Sales and marketing": "సేల్స్ మరియు మార్కెటింగ్",
+  };
+
+  const bioMap: Record<string, string> = {
+    "A curious learner with a positive mindset and a strong work ethic, always eager to grow": "ధనాత్మక దృక్పథం మరియు బలమైన పని నైతికతతో ఎప్పుడూ నేర్చుకోవడానికి సిద్ధంగా ఉండే వ్యక్తి.",
+    "Ships clean, thinks in systems, and never leaves a bug for tomorrow.": "శుభ్రమైన కోడ్, వ్యవస్థాత్మక ఆలోచన, మరియు సమస్యలను వెంటనే పరిష్కరించే అభ్యాసం.",
+    "Equally comfortable on the front and the back — the kind of dev who reads error logs for fun": "ఫ్రంట్ ఎండ్, బ్యాక్ ఎండ్ రెండింటిలోనూ సమాన నైపుణ్యం కలిగిన డెవలపర్.",
+    "Four years of learning distilled into one thing — building web experiences that actually work.": "నాలుగు సంవత్సరాల అభ్యాసాన్ని నిజంగా పనిచేసే వెబ్ అనుభవాలుగా మార్చిన అభివృద్ధి కర్త.",
+  };
+
   return (
     <section id="team" className={`py-12 md:py-16 ${sectionBg}`}>
       <div className="container mx-auto px-6 md:px-12 lg:px-20">
@@ -119,15 +135,16 @@ export default function AboutUs() {
               <h2
                 className={`text-3xl leading-[1.02] font-bold tracking-[-0.03em] md:text-5xl ${titleColor}`}
               >
-                Meet the Builders Behind
+                {tr("Meet the Builders Behind", "వెనుక ఉన్న సృష్టికర్తలను కలవండి")}
                 <br />
                 WebbHeads
               </h2>
 
               <p className={`mt-5 max-w-2xl text-base md:text-lg leading-relaxed ${copyColor}`}>
-                We&apos;re a hands-on team building high-performance websites,
-                automation systems, and growth-focused digital experiences for
-                modern brands.
+                {tr(
+                  "We're a hands-on team building high-performance websites, automation systems, and growth-focused digital experiences for modern brands.",
+                  "ఆధునిక బ్రాండ్ల కోసం హై-పర్ఫార్మెన్స్ వెబ్‌సైట్లు, ఆటోమేషన్ సిస్టమ్స్, మరియు వృద్ధి-కేంద్రీకృత డిజిటల్ అనుభవాలను నిర్మించే జట్టు మేము."
+                )}
               </p>
             </div>
 
@@ -139,7 +156,7 @@ export default function AboutUs() {
                 transition={{ duration: 0.2 }}
                 className={`rounded-2xl px-6 py-3 text-sm font-semibold transition-colors duration-200 ${primaryButtonClass}`}
               >
-                Meet Everyone
+                {tr("Meet Everyone", "అందరినీ కలవండి")}
               </motion.button>
             </div>
           </div>
@@ -176,7 +193,7 @@ export default function AboutUs() {
                       href={member.linkedinUrl}
                       target="_blank"
                       rel="noopener noreferrer"
-                      aria-label="Open LinkedIn profile"
+                      aria-label={tr("Open LinkedIn profile", "LinkedIn ప్రొఫైల్ తెరవండి")}
                       className={`absolute right-3 top-3 inline-flex h-9 w-9 items-center justify-center rounded-full transition-colors ${
                         isDark
                           ? "bg-black/45 text-white hover:bg-black/60"
@@ -193,10 +210,10 @@ export default function AboutUs() {
                     {member.name}
                   </h3>
                   <p className={`text-xs font-semibold uppercase tracking-[0.14em] ${roleColor}`}>
-                    {member.role}
+                    {tr(member.role, roleMap[member.role] ?? member.role)}
                   </p>
                   <p className={`pt-1 text-sm leading-relaxed line-clamp-2 ${bioColor}`}>
-                    {member.bio}
+                    {tr(member.bio, bioMap[member.bio] ?? member.bio)}
                   </p>
                 </div>
 
@@ -204,20 +221,20 @@ export default function AboutUs() {
                   <button
                     type="button"
                     onClick={() => setSelectedMemberId(member.id)}
-                    aria-label={`Show details for ${member.name}`}
+                    aria-label={tr(`Show details for ${member.name}`, `${member.name} వివరాలు చూపండి`)}
                     className={`mt-auto inline-flex items-center gap-1 rounded-full px-3 py-1.5 text-xs font-semibold transition-colors ${
                       isDark
                         ? "bg-white/10 text-white/80 hover:bg-white/15"
                         : "bg-[#f1f6f3] text-[#4a6660] hover:bg-[#e8f2ed]"
                     }`}
                   >
-                    Details
+                    {tr("Details", "వివరాలు")}
                     <ChevronRight className="h-4 w-4" />
                   </button>
                 ) : null}
 
                 {!hasContent ? (
-                  <span className="sr-only">Empty team member slot</span>
+                  <span className="sr-only">{tr("Empty team member slot", "ఖాళీ టీమ్ సభ్యుడు స్థానం")}</span>
                 ) : null}
               </motion.article>
             );
@@ -230,7 +247,7 @@ export default function AboutUs() {
           className={`fixed inset-0 z-50 flex items-center justify-center p-4 md:p-6 ${modalOverlay}`}
           role="dialog"
           aria-modal="true"
-          aria-label={`${selectedMember.name} details`}
+          aria-label={tr(`${selectedMember.name} details`, `${selectedMember.name} వివరాలు`)}
           onClick={() => setSelectedMemberId("")}
         >
           <motion.div
@@ -244,7 +261,7 @@ export default function AboutUs() {
             <button
               type="button"
               onClick={() => setSelectedMemberId("")}
-              aria-label="Close member details"
+              aria-label={tr("Close member details", "సభ్యుడి వివరాలు మూసివేయండి")}
               className={`absolute right-4 top-4 inline-flex h-9 w-9 items-center justify-center rounded-full transition-colors ${
                 isDark
                   ? "bg-white/10 text-white hover:bg-white/20"
@@ -272,10 +289,13 @@ export default function AboutUs() {
                   {selectedMember.name}
                 </h3>
                 <p className={`mt-1 text-xs font-semibold uppercase tracking-[0.14em] ${roleColor}`}>
-                  {selectedMember.role}
+                  {tr(selectedMember.role, roleMap[selectedMember.role] ?? selectedMember.role)}
                 </p>
                 <p className={`mt-4 text-sm md:text-base leading-relaxed ${detailTextColor}`}>
-                  {selectedMember.detailDescription || selectedMember.bio || "Add member detailed description here."}
+                  {tr(
+                    selectedMember.detailDescription || selectedMember.bio || "Add member detailed description here.",
+                    selectedMember.detailDescription || bioMap[selectedMember.bio] || "సభ్యుడి వివరమైన వివరణను ఇక్కడ చేర్చండి."
+                  )}
                 </p>
               </div>
             </div>

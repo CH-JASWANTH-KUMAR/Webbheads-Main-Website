@@ -3,6 +3,7 @@
 import { motion } from "framer-motion";
 import { Quote } from "lucide-react";
 import { useTheme } from "@/context/ThemeContext";
+import { useLanguage } from "@/context/LanguageContext";
 
 const testimonials = [
   {
@@ -129,6 +130,7 @@ function TestimonialCard({
 
 export default function Testimonials() {
   const { isDark } = useTheme();
+  const { tr } = useLanguage();
 
   const brandGradient = "bg-gradient-to-r from-[#f6ff82] to-[#003942]";
   const sectionBg = "bg-transparent";
@@ -147,6 +149,27 @@ export default function Testimonials() {
     testimonials[4],
   ];
 
+  const localizedTestimonials = doubledTestimonials.map((item) => {
+    const textMap: Record<string, string> = {
+      "Professional and creative team! They turned our ideas into a stunning digital product with great UI/UX. The AI features they added save us hours every day.":
+        "చాలా ప్రొఫెషనల్ మరియు క్రియేటివ్ టీమ్. మా ఆలోచనలను అద్భుతమైన డిజిటల్ ఉత్పత్తిగా మార్చారు. AI ఫీచర్లు మాకు ప్రతిరోజూ గంటల సమయం సేవ్ చేస్తున్నాయి.",
+      "Super impressed with their work! The UI/UX is smooth, and the app performs perfectly. Their smart AI solutions really boosted our productivity":
+        "వారి పనితో చాలా ఇంప్రెస్ అయ్యాం. UI/UX స్మూత్‌గా ఉంది, యాప్ అద్భుతంగా పనిచేస్తోంది. వారి AI పరిష్కారాలు మా ఉత్పాదకతను పెంచాయి.",
+      "Best decision we made for our business! Their website and app designs are top-notch, and the AI automation feels like magic. Everything works flawlessly":
+        "మా వ్యాపారానికి తీసుకున్న ఉత్తమ నిర్ణయం ఇదే. వారి వెబ్‌సైట్, యాప్ డిజైన్లు అద్భుతంగా ఉన్నాయి, AI ఆటోమేషన్ అద్భుతంగా పనిచేస్తోంది.",
+      "They built our website and app exactly how we imagined! The design is clean, modern, and super user-friendly. Their AI automation made our workflow so much easier.":
+        "మేము ఊహించినట్టుగానే వెబ్‌సైట్, యాప్ రూపొందించారు. డిజైన్ క్లీన్గా, ఆధునికంగా, యూజర్ ఫ్రెండ్లీగా ఉంది. AI ఆటోమేషన్ మా వర్క్‌ఫ్లోను చాలా సులభం చేసింది.",
+      "We needed a website that was fast, clean, and easy to manage — Webbheads delivered exactly that. The team understood our requirements perfectly and created a seamless experience for our customers.":
+        "వేగంగా, శుభ్రంగా, సులభంగా నిర్వహించగల వెబ్‌సైట్ కావాలనుకున్నాం. WebbHeads ఖచ్చితంగా అదే అందించింది. మా అవసరాలను బాగా అర్థం చేసుకుని కస్టమర్లకు సులభమైన అనుభవాన్ని అందించారు.",
+    };
+
+    return {
+      ...item,
+      role: tr(item.role, item.role),
+      text: tr(item.text, textMap[item.text] ?? item.text),
+    };
+  });
+
   return (
     <section className={`py-16 md:py-20 overflow-hidden ${sectionBg}`}>
       <div className="container mx-auto px-6 md:px-12 lg:px-20 mb-8 md:mb-12">
@@ -161,7 +184,7 @@ export default function Testimonials() {
                 isDark ? "bg-[#f6ff82]" : "bg-[#1a3c34]"
               }`}
             />
-            Client Stories
+            {tr("Client Stories", "క్లయింట్ కథలు")}
           </motion.span>
 
           <motion.h2
@@ -171,9 +194,9 @@ export default function Testimonials() {
               isDark ? "text-white" : "text-[#0f1f1b]"
             }`}
           >
-            Our Customers{" "}
+            {tr("Our Customers", "మా కస్టమర్లు")}{" "}
             <span className={`bg-clip-text text-transparent ${brandGradient}`}>
-              Love Us
+              {tr("Love Us", "మమ్మల్ని ప్రేమిస్తున్నారు")}
             </span>
           </motion.h2>
 
@@ -183,8 +206,10 @@ export default function Testimonials() {
             transition={{ delay: 0.1 }}
             className={`${subText} max-w-lg mx-auto text-sm md:text-base`}
           >
-            Real feedback from teams and individuals who rely on us to power
-            their real estate business.
+            {tr(
+              "Real feedback from teams and individuals who rely on us to power their real estate business.",
+              "వారి రియల్ ఎస్టేట్ వ్యాపారానికి మాపై ఆధారపడే టీమ్‌లు మరియు వ్యక్తుల నిజమైన అభిప్రాయాలు."
+            )}
           </motion.p>
         </div>
       </div>
@@ -211,7 +236,7 @@ export default function Testimonials() {
             },
           }}
         >
-          {doubledTestimonials.map((testimonial, index) => (
+          {localizedTestimonials.map((testimonial, index) => (
             <TestimonialCard
               key={index}
               testimonial={testimonial}
@@ -248,7 +273,7 @@ export default function Testimonials() {
             >
               Over 10+
             </span>{" "}
-            people gave us review
+            {tr("people gave us review", "మాకు సమీక్ష ఇచ్చిన వారు")}
           </p>
         </div>
       </div>

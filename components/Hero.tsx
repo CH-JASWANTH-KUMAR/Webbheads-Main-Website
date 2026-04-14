@@ -3,6 +3,7 @@
 import { useEffect, useRef, type MouseEvent } from "react";
 import { motion, useReducedMotion } from "framer-motion";
 import { useTheme } from "@/context/ThemeContext";
+import { useLanguage } from "@/context/LanguageContext";
 import { ArrowUpRight } from "lucide-react";
 import gsap from "gsap";
 
@@ -34,6 +35,7 @@ function HeroDashboardCard({
 
 export default function Hero() {
   const { isDark } = useTheme();
+  const { language, tr } = useLanguage();
   const prefersReducedMotion = useReducedMotion();
   const heroRef = useRef<HTMLElement | null>(null);
   const headlineWordRefs = useRef<(HTMLSpanElement | null)[]>([]);
@@ -116,7 +118,10 @@ export default function Hero() {
   const ease = [0.22, 1, 0.36, 1] as const;
   const tapT = { duration: 0.12, ease } as const;
   const tapScale = prefersReducedMotion ? 1 : 0.985;
-  const headlineWords = ["Premium", "Digital", "Solutions", "for", "Real", "Estate"];
+  const headlineWords =
+    language === "te"
+      ? ["రియల్", "ఎస్టేట్", "కోసం", "ప్రిమియం", "డిజిటల్", "పరిష్కారాలు"]
+      : ["Premium", "Digital", "Solutions", "for", "Real", "Estate"];
 
   return (
     <section
@@ -147,12 +152,13 @@ export default function Hero() {
                   isDark ? "bg-[#f6ff82]" : "bg-[#1a3c34]"
                 }`}
               />
-              <span>ABOUT WEBBHEADS</span>
+              <span>{tr("ABOUT WEBBHEADS", "WEBBHEADS గురించి")}</span>
             </div>
 
             <h1 className={`text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold leading-[1.1] mb-6 md:mb-8 tracking-tight max-w-4xl ${isDark ? "text-white" : "text-[#0f1f1b]"}`}>
               {headlineWords.map((word, index) => {
-                const wordClass = word === "Solutions" ? gradientTextClass : "";
+                const highlightIndex = language === "te" ? 5 : 2;
+                const wordClass = index === highlightIndex ? gradientTextClass : "";
                 return (
                   <span
                     key={word}
@@ -174,9 +180,10 @@ export default function Hero() {
                 ${bodyText}
               `}
             >
-              We craft high-end websites, custom apps, and intelligent automation
-              systems specifically designed for property developers and luxury
-              agencies.
+              {tr(
+                "We craft high-end websites, custom apps, and intelligent automation systems specifically designed for property developers and luxury agencies.",
+                "ప్రాపర్టీ డెవలపర్లు మరియు లగ్జరీ ఏజెన్సీల కోసం ప్రత్యేకంగా రూపొందించిన హై-ఎండ్ వెబ్‌సైట్లు, కస్టమ్ యాప్‌లు, మరియు ఇంటెలిజెంట్ ఆటోమేషన్ సిస్టమ్‌లను మేము రూపొందిస్తాము."
+              )}
             </p>
 
             <div className="flex flex-col sm:flex-row flex-wrap justify-center lg:justify-start gap-4 w-full sm:w-auto">
@@ -205,7 +212,7 @@ export default function Hero() {
                   : "0 10px 26px rgba(15,23,42,0.25)",
               }}
             >
-              <span>Explore Plans</span>
+              <span>{tr("Explore Plans", "ప్లాన్‌లను చూడండి")}</span>
               <span className="relative w-5 h-5 overflow-hidden">
                 <ArrowUpRight className="absolute inset-0 w-5 h-5 transition-all duration-300 group-hover:translate-x-4 group-hover:-translate-y-1 group-hover:opacity-0" />
                 <ArrowUpRight className="absolute inset-0 w-5 h-5 -translate-x-4 translate-y-1 opacity-0 transition-all duration-300 group-hover:translate-x-0 group-hover:translate-y-0 group-hover:opacity-100" />
@@ -235,7 +242,7 @@ export default function Hero() {
                   : "0 8px 18px rgba(15,23,42,0.08)",
               }}
             >
-              <span>Our Case Studies</span>
+              <span>{tr("Our Case Studies", "మా కేస్ స్టడీస్")}</span>
               <ArrowUpRight className="w-5 h-5" />
             </motion.a>
             </div>

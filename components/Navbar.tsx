@@ -4,20 +4,23 @@ import { useState, useEffect } from "react";
 import { motion, AnimatePresence, useReducedMotion } from "framer-motion";
 import { Menu, X } from "lucide-react";
 import ThemeToggle from "./ThemeToggle";
+import LanguageToggle from "./LanguageToggle";
 import { useTheme } from "@/context/ThemeContext";
+import { useLanguage } from "@/context/LanguageContext";
 import Image from "next/image";
-
-const navLinks = [
-  { name: "Services", href: "#services" },
-  { name: "Case Studies", href: "#portfolio" },
-  { name: "Team", href: "#team" },
-  { name: "Contact", href: "#contact" },
-];
 
 export default function Navbar() {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const { isDark } = useTheme();
+  const { tr } = useLanguage();
+
+  const navLinks = [
+    { name: tr("Services", "సేవలు"), href: "#services" },
+    { name: tr("Case Studies", "కేస్ స్టడీస్"), href: "#portfolio" },
+    { name: tr("Team", "టీమ్"), href: "#team" },
+    { name: tr("Contact", "సంప్రదించండి"), href: "#contact" },
+  ];
 
   const prefersReducedMotion = useReducedMotion();
 
@@ -50,7 +53,7 @@ export default function Navbar() {
     : "focus-visible:ring-[#1a3c34]/35";
 
   const linkBase =
-    `px-4 py-2 text-sm font-medium rounded-full ` +
+    `px-4 py-2 text-sm font-medium rounded-full whitespace-nowrap ` +
     `focus:outline-none focus-visible:ring-2 ${focusRing}`;
 
   const linkTheme = isDark ? "text-white/75" : "text-[#4a6660]";
@@ -98,7 +101,7 @@ export default function Navbar() {
               scrollToSection("#hero");
             }}
             className="flex items-center shrink-0"
-            aria-label="Go to top"
+            aria-label={tr("Go to top", "పైకి వెళ్లండి")}
           >
             <span className="relative block h-8 w-[128px] md:h-10 md:w-[164px]">
               <Image
@@ -130,8 +133,9 @@ export default function Navbar() {
           </div>
 
           {/* Right side (Desktop) */}
-          <div className="hidden md:flex items-center gap-3 shrink-0">
+          <div className="hidden md:flex items-center justify-end gap-2 lg:gap-3 shrink-0">
             <ThemeToggle />
+            <LanguageToggle />
 
             <motion.a
               href="https://cal.com/webb-heads"
@@ -149,13 +153,14 @@ export default function Navbar() {
               `}
               style={{ boxShadow: isDark ? "0 14px 34px rgba(246,255,130,0.24)" : "0 14px 34px rgba(0,57,66,0.24)" }}
             >
-              Book a Call
+              {tr("Book a Call", "కాల్ బుక్ చేయండి")}
             </motion.a>
           </div>
 
           {/* Mobile controls */}
-          <div className="md:hidden flex items-center gap-2">
+          <div className="md:hidden flex items-center gap-1.5">
             <ThemeToggle />
+            <LanguageToggle />
 
             <motion.button
               type="button"
@@ -163,7 +168,7 @@ export default function Navbar() {
               whileTap={{ scale: prefersReducedMotion ? 1 : 0.96 }}
               transition={tapT}
               className={`p-2 rounded-full ${iconBtn} focus:outline-none focus-visible:ring-2 ${focusRing}`}
-              aria-label="Toggle menu"
+              aria-label={tr("Toggle menu", "మెను మార్చండి")}
             >
               {isMobileMenuOpen ? <X size={22} /> : <Menu size={22} />}
             </motion.button>
@@ -233,7 +238,7 @@ export default function Navbar() {
                   `}
                   style={{ boxShadow: isDark ? "0 14px 34px rgba(246,255,130,0.24)" : "0 14px 34px rgba(0,57,66,0.24)" }}
                 >
-                  Book a Call
+                  {tr("Book a Call", "కాల్ బుక్ చేయండి")}
                 </motion.a>
               </div>
             </motion.div>

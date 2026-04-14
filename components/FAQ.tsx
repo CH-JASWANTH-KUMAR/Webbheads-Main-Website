@@ -4,6 +4,7 @@ import { useState } from "react";
 import { Plus } from "lucide-react";
 import { AnimatePresence, LayoutGroup, MotionConfig, motion } from "framer-motion";
 import { useTheme } from "@/context/ThemeContext";
+import { useLanguage } from "@/context/LanguageContext";
 
 const faqs = [
   {
@@ -50,6 +51,7 @@ const faqs = [
 
 export default function FAQ() {
   const { isDark } = useTheme();
+  const { tr } = useLanguage();
   const [openIndex, setOpenIndex] = useState<number | null>(null);
 
   const gradientTextClass = isDark
@@ -63,8 +65,50 @@ export default function FAQ() {
     ? "bg-white/5 border border-white/10 shadow-[0_10px_30px_rgba(0,0,0,0.55)]"
     : "bg-white border border-[#dce8e2] shadow-[0_4px_24px_rgba(26,60,52,0.07)]";
 
-  const leftFaqs = faqs.filter((_, i) => i % 2 === 0);
-  const rightFaqs = faqs.filter((_, i) => i % 2 === 1);
+  const localizedFaqs = faqs.map((faq) => {
+    const map = {
+      "How does the design process work?": {
+        q: "డిజైన్ ప్రక్రియ ఎలా జరుగుతుంది?",
+        a: "ముందుగా మీ లక్ష్యాలు, టార్గెట్ ఆడియన్స్, మరియు బ్రాండ్ విజన్‌ను అర్థం చేసుకోవడానికి డిస్కవరీ కాల్ చేస్తాం. తర్వాత రీసెర్చ్, వైర్‌ఫ్రేమ్, డిజైన్, డెవలప్‌మెంట్, మరియు లాంచ్ దశల్లో ముందుకు వెళ్తాం.",
+      },
+      "How long does it take to complete a project?": {
+        q: "ఒక ప్రాజెక్ట్ పూర్తి కావడానికి ఎంత సమయం పడుతుంది?",
+        a: "ప్రాజెక్ట్ విస్తృతిపై ఆధారపడి టైమ్‌లైన్ మారుతుంది. ల్యాండింగ్ పేజ్ 1-2 వారాలు, పూర్తి వెబ్‌సైట్ సాధారణంగా 4-8 వారాలు పడుతుంది.",
+      },
+      "How do we communicate throughout the project?": {
+        q: "ప్రాజెక్ట్ మొత్తం సమయంలో కమ్యూనికేషన్ ఎలా ఉంటుంది?",
+        a: "షెడ్యూల్ చేసిన వీడియో కాల్స్, త్వరిత అప్డేట్స్ కోసం WhatsApp, మరియు ప్రోగ్రెస్ ట్రాకింగ్ టూల్స్ ద్వారా కమ్యూనికేట్ చేస్తాం.",
+      },
+      "Do you offer end-to-end product development?": {
+        q: "మీరు ఎండ్-టు-ఎండ్ ప్రోడక్ట్ డెవలప్‌మెంట్ అందిస్తారా?",
+        a: "అవును. స్ట్రాటజీ, డిజైన్, డెవలప్‌మెంట్, టెస్టింగ్, డిప్లాయ్‌మెంట్, మరియు కొనసాగింపు సపోర్ట్ వరకు పూర్తిగా నిర్వహిస్తాం.",
+      },
+      "What if I need more revisions?": {
+        q: "నాకు మరిన్ని రివిజన్లు కావాలంటే?",
+        a: "మా ప్యాకేజీల్లో రివిజన్ రౌండ్లు ఉంటాయి. అవసరమైతే అదనపు రివిజన్లను కూడా ఫ్లెక్సిబుల్‌గా అందిస్తాం.",
+      },
+      "Do you offer custom solutions?": {
+        q: "మీరు కస్టమ్ పరిష్కారాలు ఇస్తారా?",
+        a: "ఖచ్చితంగా. మీ అవసరాలు, బడ్జెట్‌కు సరిపోయేలా టైలర్డ్ ప్యాకేజ్ రూపొందిస్తాం.",
+      },
+      "How can you assure a proper workflow?": {
+        q: "సరైన వర్క్‌ఫ్లోను మీరు ఎలా నిర్ధారిస్తారు?",
+        a: "క్లియర్ మైల్స్‌టోన్స్, రెగ్యులర్ చెక్-ఇన్స్, మరియు ట్రాన్స్‌పరెంట్ రిపోర్టింగ్‌తో నిరూపిత అజైల్ విధానాన్ని అనుసరిస్తాం.",
+      },
+      "How can we get started?": {
+        q: "మనం ఎలా ప్రారంభించాలి?",
+        a: "కింద ఉన్న బటన్ ద్వారా ఫ్రీ కన్సల్టేషన్ కాల్ బుక్ చేయండి. మీ అవసరాలకు సరిపోయే స్పష్టమైన ప్రతిపాదనను అందిస్తాం.",
+      },
+    } as Record<string, { q: string; a: string }>;
+
+    const localized = map[faq.question];
+    return {
+      question: localized ? tr(faq.question, localized.q) : faq.question,
+      answer: localized ? tr(faq.answer, localized.a) : faq.answer,
+    };
+  });
+  const localizedLeftFaqs = localizedFaqs.filter((_, i) => i % 2 === 0);
+  const localizedRightFaqs = localizedFaqs.filter((_, i) => i % 2 === 1);
 
   const toggleFAQ = (index: number) => {
     setOpenIndex((prev) => (prev === index ? null : index));
@@ -174,28 +218,28 @@ export default function FAQ() {
                 isDark ? "bg-[#f6ff82]" : "bg-[#1a3c34]"
               }`}
             />
-            <span>FAQ</span>
+              <span>{tr("FAQ", "ప్రశ్నలు")}</span>
           </div>
 
           <h2 className={`text-3xl md:text-5xl font-bold ${heading} mb-4`}>
-            Questions <span className={gradientTextClass}>Answered</span>
+            {tr("Questions", "ప్రశ్నలు")} <span className={gradientTextClass}>{tr("Answered", "సమాధానాలు")}</span>
           </h2>
 
           <p className={`${sub} text-base md:text-lg max-w-2xl mx-auto`}>
-            Find answers to the most common questions below.
+            {tr("Find answers to the most common questions below.", "క్రింద సాధారణంగా అడిగే ప్రశ్నలకు సమాధానాలు చూడండి.")}
           </p>
         </div>
 
         <LayoutGroup>
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 md:gap-6 items-start">
             <div className="space-y-4">
-              {leftFaqs.map((faq, colIdx) => (
+              {localizedLeftFaqs.map((faq, colIdx) => (
                 <FaqItem key={faq.question} faq={faq} index={colIdx * 2} />
               ))}
             </div>
 
             <div className="space-y-4">
-              {rightFaqs.map((faq, colIdx) => (
+              {localizedRightFaqs.map((faq, colIdx) => (
                 <FaqItem key={faq.question} faq={faq} index={colIdx * 2 + 1} />
               ))}
             </div>

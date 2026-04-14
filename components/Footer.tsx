@@ -3,9 +3,11 @@
 import { Facebook, Instagram, Linkedin, X as XIcon } from "lucide-react";
 import { motion } from "framer-motion";
 import { useTheme } from "@/context/ThemeContext";
+import { useLanguage } from "@/context/LanguageContext";
 
 export default function Footer() {
   const { isDark } = useTheme();
+  const { tr } = useLanguage();
 
   const sectionBg = "bg-transparent";
   const heading = isDark ? "text-white" : "text-[#0f1f1b]";
@@ -39,8 +41,10 @@ export default function Footer() {
               Webb<span className={accentText}>Heads</span>
             </h3>
             <p className={`${body} text-sm md:text-base max-w-sm leading-relaxed`}>
-              Crafting premium digital experiences for the modern real estate
-              industry. We blend luxury design with cutting-edge technology.
+              {tr(
+                "Crafting premium digital experiences for the modern real estate industry. We blend luxury design with cutting-edge technology.",
+                "ఆధునిక రియల్ ఎస్టేట్ రంగానికి ప్రిమియం డిజిటల్ అనుభవాలను రూపొందిస్తున్నాం. లగ్జరీ డిజైన్‌ను ఆధునిక టెక్నాలజీతో కలుపుతున్నాం."
+              )}
             </p>
           </motion.div>
 
@@ -56,7 +60,7 @@ export default function Footer() {
                 isDark ? "font-bold text-white" : "font-medium text-[#0f1f1b]"
               }`}
             >
-              Quick Links
+              {tr("Quick Links", "త్వరిత లింకులు")}
             </h4>
             <ul className={`space-y-3 md:space-y-4 ${body} text-sm md:text-base`}>
               <li>
@@ -66,7 +70,7 @@ export default function Footer() {
                     isDark ? "hover:text-white" : "hover:text-[#1a3c34]"
                   }`}
                 >
-                  Services
+                  {tr("Services", "సేవలు")}
                 </a>
               </li>
               <li>
@@ -76,7 +80,7 @@ export default function Footer() {
                     isDark ? "hover:text-white" : "hover:text-[#1a3c34]"
                   }`}
                 >
-                  Portfolio
+                  {tr("Portfolio", "పోర్ట్‌ఫోలియో")}
                 </a>
               </li>
               <li>
@@ -86,7 +90,7 @@ export default function Footer() {
                     isDark ? "hover:text-white" : "hover:text-[#1a3c34]"
                   }`}
                 >
-                  About Us
+                  {tr("About Us", "మా గురించి")}
                 </a>
               </li>
               <li>
@@ -96,7 +100,7 @@ export default function Footer() {
                     isDark ? "hover:text-white" : "hover:text-[#1a3c34]"
                   }`}
                 >
-                  Contact
+                  {tr("Contact", "సంప్రదించండి")}
                 </a>
               </li>
             </ul>
@@ -114,7 +118,7 @@ export default function Footer() {
                 isDark ? "font-bold text-white" : "font-medium text-[#0f1f1b]"
               }`}
             >
-              Connect
+              {tr("Connect", "కనెక్ట్ అవ్వండి")}
             </h4>
 
             <div className="flex gap-3 mb-6">
@@ -168,7 +172,7 @@ export default function Footer() {
                   isDark ? "text-white/70" : "text-[#1a3c34]"
                 }`}
               >
-                Built for premium real estate brands
+                {tr("Built for premium real estate brands", "ప్రీమియం రియల్ ఎస్టేట్ బ్రాండ్ల కోసం రూపొందించబడింది")}
               </span>
             </div>
           </motion.div>
@@ -189,7 +193,7 @@ export default function Footer() {
           `}
         >
           <p className="mb-4 md:mb-0 text-center md:text-left">
-            &copy; {new Date().getFullYear()} WebbHeads. All rights reserved.
+            &copy; {new Date().getFullYear()} WebbHeads. {tr("All rights reserved.", "అన్ని హక్కులు రిజర్వ్.")}
           </p>
 
           <div className="flex gap-6 md:gap-8">
@@ -199,7 +203,7 @@ export default function Footer() {
                 isDark ? "hover:text-white" : "hover:text-[#1a3c34]"
               }`}
             >
-              Privacy Policy
+              {tr("Privacy Policy", "గోప్యతా విధానం")}
             </a>
             <a
               href="#"
@@ -207,7 +211,7 @@ export default function Footer() {
                 isDark ? "hover:text-white" : "hover:text-[#1a3c34]"
               }`}
             >
-              Terms of Service
+              {tr("Terms of Service", "సేవా నిబంధనలు")}
             </a>
           </div>
         </motion.div>

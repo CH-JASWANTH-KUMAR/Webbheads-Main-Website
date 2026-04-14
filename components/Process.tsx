@@ -16,6 +16,7 @@ import { motion, useScroll, useTransform, useSpring, AnimatePresence } from "fra
 import { Search, Crosshair, PenTool, Send, CheckCircle2, ClipboardList } from "lucide-react";
 import { useRef, useState } from "react";
 import { useTheme } from '@/context/ThemeContext';
+import { useLanguage } from "@/context/LanguageContext";
 
 // Process steps with detailed information for popups
 const steps = [
@@ -97,6 +98,7 @@ export default function Process() {
   const sectionRef = useRef<HTMLDivElement>(null);
   const [hoveredStep, setHoveredStep] = useState<number | null>(null);
   const { isDark } = useTheme();
+  const { tr, language } = useLanguage();
   const gradientTextClass = isDark
     ? 'text-transparent bg-clip-text bg-gradient-to-r from-[#f6ff82] via-[#ecfa98] to-[#d8ea7c]'
     : 'text-transparent bg-clip-text bg-gradient-to-r from-[#1a3c34] via-[#155461] to-[#0b6a78]';
@@ -113,7 +115,107 @@ export default function Process() {
     mass: 0.35,
   });
 
-  const visibleSteps = steps.slice(0, 4);
+  const visibleSteps = steps.slice(0, 4).map((step) => {
+    const localizedByTitle = {
+      Discover: {
+        title: tr("Discover", "కనుగొను"),
+        desc: tr("Market scan, comparables & opportunity mapping", "మార్కెట్ స్కాన్, పోలికలు మరియు అవకాశాల మ్యాపింగ్"),
+        details: {
+          heading: tr("Discover", "కనుగొను"),
+          overview: tr("Understand the market before touching the property.", "ప్రాపర్టీపై పని ప్రారంభించే ముందు మార్కెట్‌ను పూర్తిగా అర్థం చేసుకోండి."),
+          deliverable: tr("Opportunity Brief + Market Snapshot", "అవకాశాల బ్రీఫ్ + మార్కెట్ స్నాప్‌షాట్"),
+          duration: tr("3-5 Days", "3-5 రోజులు"),
+          points:
+            language === "te"
+              ? [
+                  "లక్ష్యాలు, పరిమితులు, ఫలితాలపై కిక్ఆఫ్ సమావేశం",
+                  "లోకల్ మార్కెట్ పోలికలు - యాక్టివ్ మరియు ఇటీవల అమ్ముడైనవి",
+                  "బయ్యర్ పర్సోనా మరియు డిమాండ్ సెగ్మెంట్ మ్యాపింగ్",
+                  "ప్లానింగ్‌కు ముందు రిస్క్ మరియు అవకాశాల సమీక్ష",
+                  "క్యాంపెయిన్ ట్రాకింగ్ కోసం బేస్‌లైన్ KPIలు ఫిక్స్ చేయడం",
+                ]
+              : [],
+        },
+      },
+      Define: {
+        title: tr("Define", "నిర్వచించు"),
+        desc: tr("Data-backed pricing, channels & campaign plan", "డేటా ఆధారిత ధరలు, ఛానెల్స్ మరియు క్యాంపెయిన్ ప్లాన్"),
+        details: {
+          heading: tr("Define", "నిర్వచించు"),
+          overview: tr("Convert insights into a locked execution blueprint.", "ఇన్‌సైట్స్‌ను అమలు చేయగల బ్లూప్రింట్‌గా మార్చండి."),
+          deliverable: tr("Go-To-Market Blueprint", "గో-టు-మార్కెట్ బ్లూప్రింట్"),
+          duration: tr("2-4 Days", "2-4 రోజులు"),
+          points:
+            language === "te"
+              ? [
+                  "స్పష్టమైన కారణాలతో ధర పరిధి నిర్ణయం",
+                  "పోర్టల్స్, సోషల్, డైరెక్ట్ రీచ్‌ల ఛానెల్ మిక్స్",
+                  "లాంచ్ సీక్వెన్స్ మరియు మైల్స్‌టోన్స్‌తో టైమ్‌లైన్",
+                  "బడ్జెట్ కేటాయింపు మరియు లీడ్ ప్రొజెక్షన్స్",
+                  "క్లయింట్ సైన్-ఆఫ్‌కు సిద్ధమైన స్ట్రాటజీ డెక్",
+                ]
+              : [],
+        },
+      },
+      Design: {
+        title: tr("Design", "డిజైన్"),
+        desc: tr("Assets built to attract qualified buyers", "నాణ్యమైన కొనుగోలుదారులను ఆకర్షించే అసెట్స్"),
+        details: {
+          heading: tr("Design", "డిజైన్"),
+          overview: tr("Every asset crafted for conversion, not just attention.", "ప్రతి అసెట్ దృష్టి కోసం కాదు, కన్వర్షన్ కోసం రూపొందించబడుతుంది."),
+          deliverable: tr("Listing Asset Kit", "లిస్టింగ్ అసెట్ కిట్"),
+          duration: tr("4-7 Days", "4-7 రోజులు"),
+          points:
+            language === "te"
+              ? [
+                  "టార్గెట్ బయ్యర్‌కు సరిపోయే ఫోటో, వీడియో బ్రీఫ్",
+                  "స్పష్టమైన ఫీచర్ హైరార్కీతో లిస్టింగ్ కథనం",
+                  "వర్చువల్ టూర్ ఫ్లో మ్యాపింగ్",
+                  "ప్రతి ఛానెల్‌కు సరిపడే యాడ్ క్రియేటివ్స్",
+                  "ల్యాండింగ్ పేజ్ కాపీ మరియు ఇన్‌క్వైరీ ఫారమ్ మెరుగుదల",
+                ]
+              : [],
+        },
+      },
+      Deliver: {
+        title: tr("Deliver", "డెలివర్"),
+        desc: tr("Execute, close & feed the next cycle", "అమలు చేసి, క్లోజ్ చేసి, తదుపరి చక్రానికి సిద్ధం చేయండి"),
+        details: {
+          heading: tr("Deliver", "డెలివర్"),
+          overview: tr("Full execution - from first lead to signed contract.", "మొదటి లీడ్ నుండి సైన్ చేసిన కాంట్రాక్ట్ వరకు పూర్తి అమలు."),
+          deliverable: tr("Deal Closure + Performance Review", "డీల్ క్లోజర్ + పనితీరు సమీక్ష"),
+          duration: tr("Through Closure", "క్లోజర్ వరకు"),
+          points:
+            language === "te"
+              ? [
+                  "క్యాంపెయిన్ లాంచ్ మరియు లీడ్ క్యాప్చర్ ఆపరేషన్స్",
+                  "క్వాలిఫికేషన్, ఫాలో-అప్ మరియు CRM అప్డేట్స్",
+                  "ఆఫర్ మేనేజ్‌మెంట్ మరియు నెగోషియేషన్ సపోర్ట్",
+                  "సెటిల్‌మెంట్ మరియు డాక్యుమెంటేషన్ కోఆర్డినేషన్",
+                  "తదుపరి దశ కోసం పోస్ట్-డీల్ రివ్యూ",
+                ]
+              : [],
+        },
+      },
+    } as const;
+
+    const localized = localizedByTitle[step.title as keyof typeof localizedByTitle];
+    return localized
+      ? {
+          ...step,
+          title: localized.title,
+          desc: localized.desc,
+          details: {
+            ...step.details,
+            heading: localized.details.heading,
+            overview: localized.details.overview,
+            deliverable: localized.details.deliverable,
+            duration: localized.details.duration,
+            points: localized.details.points.length > 0 ? localized.details.points : step.details.points,
+          },
+        }
+      : step;
+  });
 
   // Transform scroll progress to step index for visible steps only.
   const progressValue = useTransform(smoothProgress, [0, 1], [0, visibleSteps.length]);
@@ -137,13 +239,16 @@ export default function Process() {
           >
             <div className="inline-flex items-center gap-2 px-4 py-2 bg-[#f6ff82] rounded-full mb-6">
               <span className="w-2 h-2 bg-[#003942] rounded-full" />
-              <span className="text-sm font-medium text-[#003942]">The WebbHeads Method</span>
+              <span className="text-sm font-medium text-[#003942]">{tr("The WebbHeads Method", "WebbHeads విధానం")}</span>
             </div>
             <h2 className={`text-4xl md:text-5xl font-bold mb-4 ${isDark ? 'text-white' : 'text-[#003942]'}`}>
-              Our <span className={gradientTextClass}>4D Process</span>
+              {tr("Our", "మా")} <span className={gradientTextClass}>{tr("4D Process", "4D ప్రక్రియ")}</span>
             </h2>
             <p className={`text-lg max-w-3xl mx-auto ${isDark ? 'text-gray-400' : 'text-[#4a6660]'}`}>
-              Hover over each step to explore it in detail. Discover, Define, Design, Deliver gives you a repeatable system with clear outputs at every stage.
+              {tr(
+                "Hover over each step to explore it in detail. Discover, Define, Design, Deliver gives you a repeatable system with clear outputs at every stage.",
+                "ప్రతి దశపై హోవర్ చేస్తే పూర్తి వివరాలు చూడవచ్చు. ప్రతి దశలో స్పష్టమైన ఫలితాలు ఇచ్చే పునరావృత వ్యవస్థ ఇది."
+              )}
             </p>
           </motion.div>
 
@@ -307,18 +412,18 @@ export default function Process() {
                               <div className="flex items-start gap-2">
                                 <ClipboardList className={`w-3.5 h-3.5 shrink-0 mt-0.5 ${isDark ? 'text-[#f6ff82]' : 'text-[#1a3c34]'}`} />
                                 <span className={`text-xs leading-relaxed font-medium ${isDark ? 'text-white' : 'text-[#1a3c34]'}`}>
-                                  Deliverable: {step.details.deliverable}
+                                  {tr("Deliverable", "డెలివరబుల్")}: {step.details.deliverable}
                                 </span>
                               </div>
                               <p className={`text-xs leading-relaxed ${isDark ? 'text-gray-300' : 'text-[#4a6660]'}`}>
-                                Typical timeline: {step.details.duration}
+                                {tr("Typical timeline", "సాధారణ టైమ్‌లైన్")}: {step.details.duration}
                               </p>
                             </div>
 
                             {/* Key Points - Show first 3 */}
                             <div>
                               <h4 className={`font-semibold mb-2 text-xs uppercase tracking-[0.1em] ${isDark ? 'text-white/85' : 'text-[#003942]'}`}>
-                                What You Get:
+                                {tr("What You Get", "మీకు లభించేవి")}
                               </h4>
                               <ul className="space-y-2">
                                 {step.details.points.slice(0, 3).map((point, idx) => (
@@ -335,7 +440,7 @@ export default function Process() {
                             {/* More Points Indicator */}
                             {step.details.points.length > 3 && (
                               <p className={`text-xs italic ${isDark ? 'text-gray-500' : 'text-gray-400'}`}>
-                                + {step.details.points.length - 3} more included
+                                + {step.details.points.length - 3} {tr("more included", "ఇంకా ఉన్నాయి")}
                               </p>
                             )}
                           </div>

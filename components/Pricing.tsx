@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import { Check, ArrowUpRight, X } from "lucide-react";
 import { motion, useReducedMotion } from "framer-motion";
 import { useTheme } from "@/context/ThemeContext";
+import { useLanguage } from "@/context/LanguageContext";
 
 type Plan = {
   name: string;
@@ -126,6 +127,7 @@ const comparisonRows: ComparisonRow[] = [
 
 export default function Pricing() {
   const { isDark } = useTheme();
+  const { tr } = useLanguage();
   const prefersReducedMotion = useReducedMotion();
   const [isComparisonOpen, setIsComparisonOpen] = useState(false);
 
@@ -170,6 +172,72 @@ export default function Pricing() {
   const priceColor = isDark ? "text-[#f6ff82]" : "text-[#003942]";
   const softCard = isDark ? "opacity-90 hover:opacity-100" : "opacity-95 hover:opacity-100";
 
+  const descMap: Record<string, string> = {
+    "Build local visibility and start receiving consistent property inquiries.": "లోకల్ విజిబిలిటీ పెంచుకుని స్థిరమైన ప్రాపర్టీ ఇన్‌క్వైరీలు పొందడం ప్రారంభించండి.",
+    "Turn your listings into a predictable lead engine with performance tracking.": "పర్ఫార్మెన్స్ ట్రాకింగ్‌తో మీ లిస్టింగ్స్‌ను స్థిరమైన లీడ్ ఇంజిన్‌గా మార్చండి.",
+    "Own your market with a full sales system built for sustained deal velocity.": "దీర్ఘకాలిక డీల్ వేగం కోసం రూపొందించిన పూర్తి సేల్స్ సిస్టమ్‌తో మీ మార్కెట్‌పై ఆధిపత్యం సాధించండి.",
+  };
+
+  const benefitMap: Record<string, string> = {
+    "Launch a conversion-ready 5-page website with 10 listings": "10 లిస్టింగ్స్‌తో కన్వర్షన్‌కు సిద్ధమైన 5-పేజీల వెబ్‌సైట్ ప్రారంభించండి",
+    "Get WhatsApp catalog + click-to-chat for instant buyer response": "త్వరిత బయ్యర్ స్పందన కోసం WhatsApp క్యాటలాగ్ + click-to-chat పొందండి",
+    "Own your Google presence with local SEO and review setup": "లోకల్ SEO మరియు రివ్యూ సెటప్‌తో Google ప్రెజెన్స్‌ను బలోపేతం చేయండి",
+    "Maintain consistent brand visibility with monthly content": "నెలవారీ కంటెంట్‌తో నిరంతర బ్రాండ్ విజిబిలిటీ ఉంచండి",
+    "Capture higher-intent buyers with listing-specific landing pages": "లిస్టింగ్-స్పెసిఫిక్ ల్యాండింగ్ పేజీలతో అధిక ఉద్దేశ్య బయ్యర్లను పొందండి",
+    "Showcase properties better using 360 experiences": "360 అనుభవాలతో ప్రాపర్టీలను మరింత ప్రభావవంతంగా చూపించండి",
+    "Run focused Meta campaigns with monthly optimization": "నెలనెలా ఆప్టిమైజేషన్‌తో లక్ష్యిత Meta క్యాంపెయిన్లు నడపండి",
+    "Automated follow-ups so you never lose a hot lead": "హాట్ లీడ్స్ కోల్పోకుండా ఆటోమేటెడ్ ఫాలో-అప్స్",
+    "Create premium demand with full-funnel visual production": "ఫుల్-ఫన్నెల్ విజువల్ ప్రొడక్షన్‌తో ప్రీమియం డిమాండ్ సృష్టించండి",
+    "Scale acquisition with multi-channel ad and retargeting systems": "మల్టీ-ఛానెల్ యాడ్ మరియు రీటార్గెటింగ్‌తో అక్విజిషన్ పెంచండి",
+    "Close faster using AI scoring, CRM workflows, and lead prioritization": "AI స్కోరింగ్, CRM వర్క్‌ఫ్లోలు, లీడ్ ప్రైయరిటైజేషన్‌తో వేగంగా క్లోజ్ చేయండి",
+    "Receive verified buyer leads through a done-for-you pipeline": "done-for-you పైప్‌లైన్ ద్వారా ధృవీకరించిన బయ్యర్ లీడ్స్ పొందండి",
+  };
+
+  const localizedPlans = plans.map((plan) => ({
+    ...plan,
+    name:
+      {
+        Start: tr("Start", "స్టార్ట్"),
+        Scale: tr("Scale", "స్కేల్"),
+        Dominate: tr("Dominate", "డామినేట్"),
+      }[plan.name] ?? plan.name,
+    badge:
+      {
+        "For New Agents": tr("For New Agents", "కొత్త ఏజెంట్ల కోసం"),
+        "For Growing Agencies": tr("For Growing Agencies", "పెరుగుతున్న ఏజెన్సీల కోసం"),
+        "For Market Leaders": tr("For Market Leaders", "మార్కెట్ లీడర్స్ కోసం"),
+      }[plan.badge] ?? plan.badge,
+    subTitle:
+      {
+        "Local Presence System": tr("Local Presence System", "లోకల్ ప్రెజెన్స్ సిస్టమ్"),
+        "Lead Generation System": tr("Lead Generation System", "లీడ్ జనరేషన్ సిస్టమ్"),
+        "Market Domination System (Elite 360)": tr("Market Domination System (Elite 360)", "మార్కెట్ డామినేషన్ సిస్టమ్ (ఎలైట్ 360)"),
+      }[plan.subTitle] ?? plan.subTitle,
+    description: tr(plan.description, descMap[plan.description] ?? plan.description),
+    ctaLabel:
+      {
+        "Launch My Presence": tr("Launch My Presence", "ప్రారంభించండి"),
+        "Start Getting Leads": tr("Start Getting Leads", "లీడ్స్ ప్రారంభించండి"),
+        "Book Free Demo": tr("Book Free Demo", "ఉచిత డెమో బుక్ చేయండి"),
+      }[plan.ctaLabel] ?? plan.ctaLabel,
+    keyBenefits: plan.keyBenefits.map((benefit) => tr(benefit, benefitMap[benefit] ?? benefit)),
+  }));
+
+  const localizedRows = comparisonRows.map((row) => ({
+    ...row,
+    feature:
+      {
+        "Conversion-focused Website": tr("Conversion-focused Website", "కన్వర్షన్‌కు అనుకూల వెబ్‌సైట్"),
+        "Listing Funnel Pages": tr("Listing Funnel Pages", "లిస్టింగ్ ఫన్నెల్ పేజీలు"),
+        "WhatsApp Lead Capture": tr("WhatsApp Lead Capture", "WhatsApp లీడ్ క్యాప్చర్"),
+        "Meta Ad Campaign Management": tr("Meta Ad Campaign Management", "Meta యాడ్ క్యాంపెయిన్ మేనేజ్‌మెంట్"),
+        "360 Property Experiences": tr("360 Property Experiences", "360 ప్రాపర్టీ అనుభవాలు"),
+        "AI Lead Scoring + CRM Automations": tr("AI Lead Scoring + CRM Automations", "AI లీడ్ స్కోరింగ్ + CRM ఆటోమేషన్స్"),
+        "Retargeting + Multi-Channel Acquisition": tr("Retargeting + Multi-Channel Acquisition", "రీటార్గెటింగ్ + మల్టీ-ఛానెల్ అక్విజిషన్"),
+        "Dedicated Growth Team Support": tr("Dedicated Growth Team Support", "డెడికేటెడ్ గ్రోత్ టీమ్ సపోర్ట్"),
+      }[row.feature] ?? row.feature,
+  }));
+
   const renderAvailability = (isAvailable: boolean) => {
     if (isAvailable) {
       return (
@@ -179,8 +247,8 @@ export default function Pricing() {
               ? "border-[#f6ff82]/60 bg-[#f6ff82]/15 text-[#f6ff82]"
               : "border-[#003942]/30 bg-[#003942]/10 text-[#003942]"
           }`}
-          aria-label="Included"
-          title="Included"
+          aria-label={tr("Included", "ఉంది")}
+          title={tr("Included", "ఉంది")}
         >
           <Check className="h-4.5 w-4.5" strokeWidth={2.6} />
         </span>
@@ -194,8 +262,8 @@ export default function Pricing() {
             ? "border-white/20 bg-white/[0.06] text-white/55"
             : "border-slate-300 bg-slate-100 text-slate-500"
         }`}
-        aria-label="Not included"
-        title="Not included"
+          aria-label={tr("Not included", "లేదు")}
+          title={tr("Not included", "లేదు")}
       >
         <X className="h-4 w-4" strokeWidth={2.4} />
       </span>
@@ -214,7 +282,7 @@ export default function Pricing() {
                 isDark ? "bg-[#f6ff82]" : "bg-[#003942]"
               }`}
             />
-            <span>Investment</span>
+            <span>{tr("Investment", "ఇన్వెస్ట్‌మెంట్")}</span>
           </div>
 
           <h2
@@ -222,20 +290,22 @@ export default function Pricing() {
               isDark ? "text-white" : "text-slate-900"
             }`}
           >
-            3 Levels of Growth{" "}
+            {tr("3 Levels of Growth", "వృద్ధి కోసం 3 స్థాయిలు")}{" "}
             <span className={gradientTextClass}>
-              Systems
+              {tr("Systems", "సిస్టమ్స్")}
             </span>
           </h2>
 
           <p className={`text-base md:text-lg ${headerSub} max-w-3xl mx-auto`}>
-            Choose the system based on your growth stage. Start for visibility,
-            Scale for predictable leads, or Dominate for complete sales control.
+            {tr(
+              "Choose the system based on your growth stage. Start for visibility, Scale for predictable leads, or Dominate for complete sales control.",
+              "మీ వృద్ధి దశను బట్టి సిస్టమ్ ఎంచుకోండి. ప్రారంభానికి Start, స్థిరమైన లీడ్స్‌కు Scale, పూర్తి సేల్స్ నియంత్రణకు Dominate."
+            )}
           </p>
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6 items-stretch">
-          {plans.map((plan, index) => (
+          {localizedPlans.map((plan, index) => (
             <motion.article
               key={index}
               initial={{ opacity: 0, y: 18 }}
@@ -295,7 +365,7 @@ export default function Pricing() {
                           : "bg-[#1a3c34] text-white"
                       }`}
                     >
-                      Most Popular
+                      {tr("Most Popular", "అత్యంత ప్రజాదరణ")}
                     </span>
                   ) : null}
                 </div>
@@ -309,7 +379,7 @@ export default function Pricing() {
 
                 <div className="mb-6">
                   <span className={`text-xs ${isDark ? "text-white/45" : "text-slate-500"}`}>
-                    Starting from
+                    {tr("Starting from", "ప్రారంభ ధర")}
                   </span>
                   <div className="mt-1">
                     <div
@@ -364,7 +434,10 @@ export default function Pricing() {
                 </motion.a>
 
                 <p className={`mt-3 text-xs text-center ${isDark ? "text-white/45" : "text-slate-500"}`}>
-                  No contracts • Cancel anytime • Results-driven strategy
+                  {tr(
+                    "No contracts • Cancel anytime • Results-driven strategy",
+                    "దీర్ఘకాల ఒప్పందం లేదు • ఎప్పుడైనా నిలిపివేయండి • ఫలితాలపై దృష్టి"
+                  )}
                 </p>
               </div>
             </motion.article>
@@ -382,7 +455,7 @@ export default function Pricing() {
                   : "bg-[#003942] text-white hover:bg-[#002a31]"
               } shadow-[0_10px_20px_rgba(0,0,0,0.16)]`}
             >
-              <span>Compare All Plans</span>
+              <span>{tr("Compare All Plans", "అన్ని ప్లాన్‌లను పోల్చండి")}</span>
               <ArrowUpRight className="h-4 w-4" />
             </button>
 
@@ -395,7 +468,7 @@ export default function Pricing() {
                   : "bg-[#003942] text-white hover:bg-[#002a31]"
               } shadow-[0_10px_20px_rgba(0,0,0,0.16)]`}
             >
-              <span>Download Full Package PDF</span>
+              <span>{tr("Download Full Package PDF", "పూర్తి ప్యాకేజ్ PDF డౌన్‌లోడ్")}</span>
               <ArrowUpRight className="h-4 w-4" />
             </a>
           </div>
@@ -407,12 +480,12 @@ export default function Pricing() {
           className="fixed inset-0 z-[120] flex items-center justify-center p-4 md:p-8"
           role="dialog"
           aria-modal="true"
-          aria-label="Plan comparison table"
+          aria-label={tr("Plan comparison table", "ప్లాన్ పోలిక పట్టిక")}
         >
           <button
             type="button"
             className="absolute inset-0 bg-black/60 backdrop-blur-sm"
-            aria-label="Close plan comparison"
+            aria-label={tr("Close plan comparison", "ప్లాన్ పోలిక మూసివేయండి")}
             onClick={() => setIsComparisonOpen(false)}
           />
 
@@ -432,9 +505,12 @@ export default function Pricing() {
               }`}
             >
               <div>
-                <h3 className="text-lg md:text-2xl font-bold">Plan Comparison</h3>
+                <h3 className="text-lg md:text-2xl font-bold">{tr("Plan Comparison", "ప్లాన్ పోలిక")}</h3>
                 <p className={`text-sm md:text-base mt-1 ${isDark ? "text-white/65" : "text-slate-600"}`}>
-                  Quick side-by-side view so visitors can choose faster without scrolling through long sections.
+                  {tr(
+                    "Quick side-by-side view so visitors can choose faster without scrolling through long sections.",
+                    "పొడవైన సెక్షన్స్ స్క్రోల్ చేయకుండా వేగంగా నిర్ణయం తీసుకోవడానికి పక్కపక్కన పోలిక వీక్షణ."
+                  )}
                 </p>
               </div>
               <button
@@ -443,7 +519,7 @@ export default function Pricing() {
                 className={`shrink-0 rounded-full p-2 transition-colors ${
                   isDark ? "bg-white/10 hover:bg-white/15" : "bg-slate-100 hover:bg-slate-200"
                 }`}
-                aria-label="Close comparison modal"
+                aria-label={tr("Close comparison modal", "పోలిక మోడల్ మూసివేయండి")}
               >
                 <X className="h-5 w-5" />
               </button>
@@ -458,21 +534,21 @@ export default function Pricing() {
                 >
                   <tr>
                     <th className="text-left px-5 md:px-7 py-3 text-xs md:text-sm font-semibold uppercase tracking-wider">
-                      Feature
+                      {tr("Feature", "ఫీచర్")}
                     </th>
                     <th className="text-center px-4 md:px-5 py-3 text-xs md:text-sm font-semibold uppercase tracking-wider">
-                      Start
+                      {tr("Start", "స్టార్ట్")}
                     </th>
                     <th className="text-center px-4 md:px-5 py-3 text-xs md:text-sm font-semibold uppercase tracking-wider">
-                      Scale
+                      {tr("Scale", "స్కేల్")}
                     </th>
                     <th className="text-center px-4 md:px-5 py-3 text-xs md:text-sm font-semibold uppercase tracking-wider">
-                      Dominate
+                      {tr("Dominate", "డామినేట్")}
                     </th>
                   </tr>
                 </thead>
                 <tbody>
-                  {comparisonRows.map((row, index) => (
+                  {localizedRows.map((row, index) => (
                     <tr
                       key={row.feature}
                       className={`${
@@ -521,7 +597,7 @@ export default function Pricing() {
                     : "bg-gradient-to-r from-[#003942] to-[#0b6a78] text-white"
                 }`}
               >
-                Choose Your Package
+                {tr("Choose Your Package", "మీ ప్యాకేజ్ ఎంచుకోండి")}
                 <ArrowUpRight className="h-4 w-4" />
               </a>
             </div>
