@@ -227,8 +227,8 @@ export default function CaseStudies() {
   const { tr } = useLanguage();
 
   const gradientTextClass = isDark
-    ? "bg-clip-text text-transparent bg-gradient-to-r from-[#f6ff82] via-[#ecfa98] to-[#d8ea7c]"
-    : "bg-clip-text text-transparent bg-gradient-to-r from-[#1a3c34] via-[#155461] to-[#0b6a78]";
+    ? 'text-[#f6ff82]'
+    : 'text-transparent bg-clip-text bg-gradient-to-r from-[#1a3c34] via-[#155461] to-[#0b6a78]'
   const sectionBg = "bg-transparent";
 
   const heading = isDark ? "text-white" : "text-[#0f1f1b]";
@@ -344,7 +344,7 @@ export default function CaseStudies() {
               <p className={`text-lg ${sub}`}>
                 {tr(
                   "See how we've helped leading real estate agencies transform their digital presence.",
-                  "ప్రമുഖ రియల్ ఎస్టేట్ ఏజెన్సీల డిజిటల్ ప్రెజెన్స్‌ను మేము ఎలా మార్చామో చూడండి."
+                  "ప్రముఖ రియల్ ఎస్టేట్ ఏజెన్సీల డిజిటల్ ప్రెజెన్స్‌ను మేము ఎలా మార్చామో చూడండి."
                 )}
               </p>
             </div>
@@ -443,7 +443,7 @@ export default function CaseStudies() {
                   className={`text-3xl md:text-5xl font-bold mb-4 ${modalText}`}
                 >
                   {tr("All", "అన్ని")}{" "}
-                  <span className={gradientTextClass}>
+                  <span className={`${gradientTextClass} pt-3 pb-4 inline-block`}>
                     {tr("Case Studies", "కేస్ స్టడీస్")}
                   </span>
                 </h2>

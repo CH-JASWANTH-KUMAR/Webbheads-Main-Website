@@ -299,7 +299,7 @@ export default function Pricing() {
           <p className={`text-base md:text-lg ${headerSub} max-w-3xl mx-auto`}>
             {tr(
               "Choose the system based on your growth stage. Start for visibility, Scale for predictable leads, or Dominate for complete sales control.",
-              "మీ వృద్ధి దశను బట్టి సిస్టమ్ ఎంచుకోండి. ప్రారంభానికి Start, స్థిరమైన లీడ్స్‌కు Scale, పూర్తి సేల్స్ నియంత్రణకు Dominate."
+              "మీ వృద్ధి దశను బట్టి సిస్టమ్ ఎంచుకోండి. ప్రారంభానికి స్టార్ట్, స్థిరమైన లీడ్స్‌కు స్కేల్, పూర్తి సేల్స్ నియంత్రణకు డామినేట్."
             )}
           </p>
         </div>

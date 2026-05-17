@@ -242,7 +242,7 @@ export default function Process() {
               <span className="text-sm font-medium text-[#003942]">{tr("The WebbHeads Method", "WebbHeads విధానం")}</span>
             </div>
             <h2 className={`text-4xl md:text-5xl font-bold mb-4 ${isDark ? 'text-white' : 'text-[#003942]'}`}>
-              {tr("Our", "మా")} <span className={gradientTextClass}>{tr("4D Process", "4D ప్రక్రియ")}</span>
+              {tr("Our", "మా")} <span className={gradientTextClass}>{tr("4D Process", "4డి ప్రక్రియ")}</span>
             </h2>
             <p className={`text-lg max-w-3xl mx-auto ${isDark ? 'text-gray-400' : 'text-[#4a6660]'}`}>
               {tr(

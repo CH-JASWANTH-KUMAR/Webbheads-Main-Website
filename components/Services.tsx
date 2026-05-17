@@ -310,9 +310,9 @@ export default function Services() {
     const translated = {
       'Website Development': tr('Website Development', 'వెబ్‌సైట్ డెవలప్‌మెంట్'),
       'App Development': tr('App Development', 'యాప్ డెవలప్‌మెంట్'),
-      'AI Automation': tr('AI Automation', 'AI ఆటోమేషన్'),
+      'AI Automation': tr('AI Automation', 'ఏఐ ఆటోమేషన్'),
       'Booking Systems': tr('Booking Systems', 'బుకింగ్ సిస్టమ్స్'),
-      'CRM & Dashboards': tr('CRM & Dashboards', 'CRM & డాష్‌బోర్డ్స్'),
+      'CRM & Dashboards': tr('CRM & Dashboards', 'సిఆర్ఎం & డాష్‌బోర్డ్స్'),
       'Virtual Staging': tr('Virtual Staging', 'వర్చువల్ స్టేజింగ్'),
     } as Record<string, string>;
 
@@ -358,9 +358,9 @@ export default function Services() {
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
-            className={`text-3xl md:text-4xl lg:text-5xl font-bold mb-4 ${isDark ? 'text-white' : 'text-[#1f4f3a]'}`}
+            className={`text-3xl md:text-4xl lg:text-5xl font-bold mb-4 leading-[1.6] md:leading-[1.8] ${isDark ? 'text-white' : 'text-[#1f4f3a]'}`}
           >
-            {tr('Our Expertise in', 'మా నైపుణ్యం')} <span className={gradientTextClass}>{tr('Real Estate Tech', 'రియల్ ఎస్టేట్ టెక్')}</span>
+            {tr('Our Expertise in', 'మా నైపుణ్యం')} <span className={`${gradientTextClass} pb-2 inline-block`}>{tr('Real Estate Tech', 'రియల్ ఎస్టేట్ టెక్')}</span>
           </motion.h2>
           <motion.p 
             initial={{ opacity: 0, y: 20 }}

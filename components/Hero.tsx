@@ -118,6 +118,7 @@ export default function Hero() {
   const ease = [0.22, 1, 0.36, 1] as const;
   const tapT = { duration: 0.12, ease } as const;
   const tapScale = prefersReducedMotion ? 1 : 0.985;
+  const isTelugu = language === "te";
   const headlineWords =
     language === "te"
       ? ["రియల్", "ఎస్టేట్", "కోసం", "ప్రిమియం", "డిజిటల్", "పరిష్కారాలు"]
@@ -154,23 +155,39 @@ export default function Hero() {
               />
               <span>{tr("ABOUT WEBBHEADS", "WEBBHEADS గురించి")}</span>
             </div>
+            <h1
+              className={`text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold leading-[1.1] mb-6 md:mb-8 tracking-tight max-w-4xl ${
+                isDark ? "text-white" : "text-[#0f1f1b]"
+              }`}
+            >
+              <span
+                className={
+                  isTelugu
+                    ? "flex flex-wrap justify-center lg:justify-start gap-x-4 gap-y-3"
+                    : ""
+                }
+              >
+                {headlineWords.map((word, index) => {
+                  const highlightIndex = isTelugu ? 5 : 2;
+                  const wordClass = index === highlightIndex ? gradientTextClass : "";
 
-            <h1 className={`text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold leading-[1.1] mb-6 md:mb-8 tracking-tight max-w-4xl ${isDark ? "text-white" : "text-[#0f1f1b]"}`}>
-              {headlineWords.map((word, index) => {
-                const highlightIndex = language === "te" ? 5 : 2;
-                const wordClass = index === highlightIndex ? gradientTextClass : "";
-                return (
-                  <span
-                    key={word}
-                    ref={(node) => {
-                      headlineWordRefs.current[index] = node;
-                    }}
-                    className={`inline-block mr-[0.28em] ${wordClass}`}
-                  >
-                    {word}
-                  </span>
-                );
-              })}
+                  return (
+                    <span
+                      key={word}
+                      ref={(node) => {
+                        headlineWordRefs.current[index] = node;
+                      }}
+                      className={
+                        isTelugu
+                          ? `inline-block whitespace-nowrap ${wordClass}`
+                          : `inline-block mr-[0.28em] ${wordClass}`
+                      }
+                    >
+                      {word}
+                    </span>
+                  );
+                })}
+              </span>
             </h1>
 
             <p

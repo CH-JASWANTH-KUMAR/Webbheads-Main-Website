@@ -62,13 +62,13 @@ export default function Education() {
     language === "te"
       ? [
           "ప్రిమియం వెబ్‌సైట్లు",
-          "AI ఆటోమేషన్",
+          "ఏఐ ఆటోమేషన్",
           "లీడ్ జనరేషన్",
-          "CRM ఇంటిగ్రేషన్",
+          "సిఆర్ఎం ఇంటిగ్రేషన్",
           "ప్రాపర్టీ లిస్టింగ్స్",
           "వర్చువల్ టూర్స్",
           "అనలిటిక్స్ డ్యాష్‌బోర్డ్",
-          "SEO ఆప్టిమైజేషన్",
+          "ఎస్ఈఓ ఆప్టిమైజేషన్",
         ]
       : marqueeItems;
 
@@ -110,7 +110,7 @@ export default function Education() {
               <h2
                 className={`text-2xl sm:text-3xl md:text-4xl font-bold leading-tight ${heading}`}
               >
-                Experience{" "}
+                {"ఎక్స్పీరియన్స్"}{" "}
                 <span className={isDark ? "text-[#f6ff82]" : "text-[#003942]"}>
                   {tr("Innovation", "ఇన్నోవేషన్")}
                 </span>
