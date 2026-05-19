@@ -110,7 +110,7 @@ export default function Education() {
               <h2
                 className={`text-2xl sm:text-3xl md:text-4xl font-bold leading-tight ${heading}`}
               >
-                {"ఎక్స్పీరియన్స్"}{" "}
+                {tr("Experience", "ఎక్స్పీరియన్స్")}{" "}
                 <span className={isDark ? "text-[#f6ff82]" : "text-[#003942]"}>
                   {tr("Innovation", "ఇన్నోవేషన్")}
                 </span>

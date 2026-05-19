@@ -5,6 +5,8 @@ import { ArrowUpRight, X } from "lucide-react";
 import { useLayoutEffect, useMemo, useState } from "react";
 import { useTheme } from "@/context/ThemeContext";
 import { useLanguage } from "@/context/LanguageContext";
+import CaseStudyModal from "@/components/CaseStudyModal";
+import { caseStudies, type CaseStudy } from "@/components/case-studies/data";
 
 function ScrollLock() {
   useLayoutEffect(() => {
@@ -30,89 +32,6 @@ function ScrollLock() {
 
   return null;
 }
-
-type CaseStudy = {
-  id: number;
-  title: string;
-  category: string;
-  description: string;
-  image: string;
-};
-
-const caseStudies: CaseStudy[] = [
-  {
-    id: 1,
-    title: "The Grand Estate",
-    category: "Luxury Real Estate Website",
-    description:
-      "Complete digital transformation for a $50M luxury villa portfolio with 3D virtual tours and lead automation.",
-    image:
-      "https://images.unsplash.com/photo-1613490493576-7fde63acd811?auto=format&fit=crop&q=80&w=1200&h=800",
-  },
-  {
-    id: 2,
-    title: "Skyline Towers",
-    category: "Mobile App Development",
-    description:
-      "Premium mobile application for high-rise apartment sales with AR property viewing and instant booking.",
-    image:
-      "https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?auto=format&fit=crop&q=80&w=1200&h=800",
-  },
-  {
-    id: 3,
-    title: "Azure Heights",
-    category: "AI Automation & CRM",
-    description:
-      "End-to-end CRM integration with AI-powered lead scoring and automated follow-up sequences.",
-    image:
-      "https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&q=80&w=1200&h=800",
-  },
-  {
-    id: 4,
-    title: "Palm Residences",
-    category: "Web Development",
-    description:
-      "Luxury beachfront property website with virtual tours and integrated booking system.",
-    image:
-      "https://images.unsplash.com/photo-1512917774080-9991f1c4c750?auto=format&fit=crop&q=80&w=1200&h=800",
-  },
-  {
-    id: 5,
-    title: "Urban Lofts",
-    category: "Virtual Tours",
-    description:
-      "360° interactive property tours with hotspots and integrated floor plans.",
-    image:
-      "https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?auto=format&fit=crop&q=80&w=1200&h=800",
-  },
-  {
-    id: 6,
-    title: "Metro Plaza",
-    category: "Branding & Design",
-    description:
-      "Complete brand identity and marketing collateral for commercial real estate.",
-    image:
-      "https://images.unsplash.com/photo-1545324418-cc1a3fa10c00?auto=format&fit=crop&q=80&w=1200&h=800",
-  },
-  {
-    id: 7,
-    title: "Cedar Ridge",
-    category: "Landing Page + SEO",
-    description:
-      "Conversion-first landing pages and local SEO to drive qualified buyer inquiries.",
-    image:
-      "https://images.unsplash.com/photo-1505693416388-ac5ce068fe85?auto=format&fit=crop&q=80&w=1200&h=800",
-  },
-  {
-    id: 8,
-    title: "Harbor View",
-    category: "Performance Rebuild",
-    description:
-      "Speed-focused rebuild with improved Lighthouse scores and streamlined lead capture.",
-    image:
-      "https://images.unsplash.com/photo-1502005229762-cf1b2da7c5d6?auto=format&fit=crop&q=80&w=1200&h=800",
-  },
-];
 
 const cardHoverVariants = { rest: {}, hover: {} };
 const imageHoverVariants = { rest: { scale: 1 }, hover: { scale: 1.12 } };
@@ -142,17 +61,19 @@ function CaseStudyCard({
   className = "",
   imagePosClass = "object-center",
   isDark = false,
+  onOpen,
 }: {
   study: CaseStudy;
   revealDelay?: number;
   className?: string;
   imagePosClass?: string;
   isDark?: boolean;
+  onOpen?: (study: CaseStudy) => void;
 }) {
   return (
-    <motion.a
-      href="#"
-      onClick={(e) => e.preventDefault()}
+    <motion.button
+      type="button"
+      onClick={() => onOpen?.(study)}
       initial={{ opacity: 0, y: 20 }}
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true, margin: "-50px" }}
@@ -160,12 +81,14 @@ function CaseStudyCard({
       whileHover="hover"
       animate="rest"
       variants={cardHoverVariants}
-      className={`${CARD_SHELL} ${className} ${
+      className={`${CARD_SHELL} text-left ${className} ${
         isDark
           ? "shadow-[0_14px_38px_rgba(0,0,0,0.14)]"
           : "bg-white border border-[#dce8e2] hover:border-[#b8d0c5] hover:shadow-[0_4px_24px_rgba(26,60,52,0.07)] hover:-translate-y-[2px]"
       }`}
       style={{ minHeight: 0 }}
+      aria-label={`Open ${study.title} case study`}
+      aria-haspopup="dialog"
     >
       <div
         className="relative h-full w-full overflow-hidden"
@@ -217,18 +140,19 @@ function CaseStudyCard({
           </p>
         </div>
       </div>
-    </motion.a>
+    </motion.button>
   );
 }
 
 export default function CaseStudies() {
   const [showAll, setShowAll] = useState(false);
+  const [selectedStudy, setSelectedStudy] = useState<CaseStudy | null>(null);
   const { isDark } = useTheme();
   const { tr } = useLanguage();
 
   const gradientTextClass = isDark
-    ? 'text-[#f6ff82]'
-    : 'text-transparent bg-clip-text bg-gradient-to-r from-[#1a3c34] via-[#155461] to-[#0b6a78]'
+    ? "text-[#f6ff82]"
+    : "text-transparent bg-clip-text bg-gradient-to-r from-[#1a3c34] via-[#155461] to-[#0b6a78]";
   const sectionBg = "bg-transparent";
 
   const heading = isDark ? "text-white" : "text-[#0f1f1b]";
@@ -290,6 +214,11 @@ export default function CaseStudies() {
   );
 
   const previewStudies = useMemo(() => localizedStudies.slice(0, 6), [localizedStudies]);
+
+  const handleOpenStudy = (study: CaseStudy) => {
+    setSelectedStudy(study);
+    setShowAll(false);
+  };
 
   const modalBackdrop = isDark ? "bg-black" : "bg-white";
   const modalText = isDark ? "text-white" : "text-[#0f1f1b]";
@@ -386,6 +315,7 @@ export default function CaseStudies() {
                   : "object-center"
               }
               isDark={isDark}
+              onOpen={handleOpenStudy}
             />
           ))}
         </div>
@@ -463,6 +393,7 @@ export default function CaseStudies() {
                     className="aspect-[4/3] min-h-[340px] shadow-xl"
                     imagePosClass="object-center"
                     isDark={isDark}
+                    onOpen={handleOpenStudy}
                   />
                 ))}
               </div>
@@ -470,6 +401,13 @@ export default function CaseStudies() {
           </motion.div>
         )}
       </AnimatePresence>
+
+      <CaseStudyModal
+        study={selectedStudy}
+        isOpen={Boolean(selectedStudy)}
+        isDark={isDark}
+        onClose={() => setSelectedStudy(null)}
+      />
     </section>
   );
 }
