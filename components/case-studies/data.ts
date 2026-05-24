@@ -67,7 +67,7 @@ export const caseStudies: CaseStudy[] = [
   category: "Appointment Automation Platform",
   description:"Premium real estate appointment orchestration platform designed to streamline consultation scheduling, automate customer engagement workflows, and improve lead conversion efficiency.",
   image: "/case-studies/p2.webp",
-  link: "https://example.com",
+  link: "https://appointment-system-five-teal.vercel.app/",
   platform: "Web-Based Consultation Management Platform",
   date: "2026",
   industry: "Real Estate / Consultation Automation",
@@ -173,7 +173,7 @@ export const caseStudies: CaseStudy[] = [
 
   image: "/case-studies/p4.webp",
 
-  link: "https://example.com",
+  link: "https://basic-analytics-report.vercel.app/",
 
   platform: "Interactive Analytics & Reporting Dashboard",
 
@@ -234,7 +234,7 @@ export const caseStudies: CaseStudy[] = [
 
   image: "/case-studies/p5.webp",
 
-  link: "https://example.com",
+  link: "https://adv-property-listing.vercel.app/",
 
   platform: "Real Estate Property Discovery Platform",
 
@@ -338,9 +338,9 @@ export const caseStudies: CaseStudy[] = [
   description:
     "Enterprise-grade real estate CRM and sales operations platform designed to centralize lead management, property inventory, deal tracking, and sales workflows into a single scalable business system.",
 
-  image: "/case-studies/p7.webp",
+  image: "/case-studies/p11.webp",
 
-  link: "https://example.com",
+  link: "https://webbheads-realestate-crm.vercel.app/dashboard",
 
   platform: "Centralized Real Estate Sales Operations Platform",
 
@@ -460,7 +460,7 @@ export const caseStudies: CaseStudy[] = [
   description:
     "Centralized real estate operations platform designed to streamline plot inventory management, project monitoring, customer ownership tracking, document workflows, and business analytics within a unified ecosystem.",
   image: "/case-studies/p9.webp",
-  link: "https://example.com",
+  link: "https://plot-management-kappa.vercel.app/projects",
   platform: "Centralized Real Estate Operations Platform",
   date: "May 2026",
   industry: "Real Estate / Land & Portfolio Management",
@@ -508,7 +508,7 @@ export const caseStudies: CaseStudy[] = [
   description:
     "Centralized real estate sales intelligence platform designed to streamline operational workflows, improve pipeline visibility, automate coordination processes, and enhance business decision-making through real-time analytics.",
   image: "/case-studies/p10.webp",
-  link: "https://example.com",
+  link: "https://webbheads-demo-portal.vercel.app/",
   platform: "Real Estate Operations Intelligence Platform",
   date: "May 2026",
   industry: "Real Estate / Revenue Operations / Sales Intelligence",
@@ -559,7 +559,7 @@ export const caseStudies: CaseStudy[] = [
   description:
     "Modern real estate CRM dashboard designed to centralize lead management, sales pipeline tracking, revenue analytics, and operational workflows within a single intelligent platform.",
 
-  image: "/case-studies/p11.webp",
+  image: "/case-studies/p7.webp",
 
   link: "https://crm-dashboard-mocha.vercel.app",
 
