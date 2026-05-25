@@ -28,11 +28,19 @@ export default function LanguageToggle() {
         ${btnSurface} ${iconColor}
         focus:outline-none focus-visible:ring-2 ${focusRing}
       `}
-      aria-label={tr("Switch to Telugu", "ఇంగ్లీష్ కి మార్చండి")}
-      title={tr("Switch to Telugu", "ఇంగ్లీష్ కి మార్చండి")}
+      aria-label={
+        isTelugu
+          ? tr("Switch to English", "ఇంగ్లీష్ కి మార్చండి")
+          : tr("Switch to Telugu", "తెలుగుకి మార్చండి")
+      }
+      title={
+        isTelugu
+          ? tr("Switch to English", "ఇంగ్లీష్ కి మార్చండి")
+          : tr("Switch to Telugu", "తెలుగుకి మార్చండి")
+      }
     >
       <span className="text-xs font-semibold tracking-wide">
-        {isTelugu ? "తెలుగు" : "EN"}
+        {isTelugu ? "EN" : "తెలుగు"}
       </span>
     </motion.button>
   );

@@ -23,7 +23,7 @@ const TEAM_MEMBERS: TeamMember[] = [
     name: "DJ Kushal",
     role: "Founder and CEO",
     bio: "A curious learner with a positive mindset and a strong work ethic, always eager to grow",
-    detailDescription: "Kushal didn't wait for the right moment — he built it. A GITAM graduate who spent the last two to three years deep inside the real estate industry, he understands the business from both sides of the table. He knows how deals are won, where agencies lose leads, and exactly what a property brand needs to compete digitally. Add a natural ability to negotiate and a vision for what real estate tech should look like — WebbHeads is the result of all of it coming together.",
+    detailDescription: "Kushal didn't wait for the right moment - he built it. A GITAM graduate who spent the last two to three years deep inside the real estate industry, he understands the business from both sides of the table. He knows how deals are won, where agencies lose leads, and exactly what a property brand needs to compete digitally. Add a natural ability to negotiate and a vision for what real estate tech should look like - WebbHeads is the result of all of it coming together.",
     photoUrl: "/team/Kushal.jpeg",
     linkedinUrl: "https://www.linkedin.com/in/menda-srividhya-662450345?utm_source=share_via&utm_content=profile&utm_medium=member_ios",
   },
@@ -32,7 +32,7 @@ const TEAM_MEMBERS: TeamMember[] = [
     name: "Ch Jaswanth Kumar",
     role: "Full stack Developer",
     bio: "Ships clean, thinks in systems, and never leaves a bug for tomorrow.",
-    detailDescription: "Second year at College and already deep in the stack. Jaswanth is the kind of developer who doesn't stop at it works — he asks why it works and how to make it faster. Drawn to the full picture of how products are built, he found his way to WebbHeads to work on something that actually ships. Real estate tech wasn't on his radar until he saw the gap — now he can't unsee it.",
+    detailDescription: "Second year at College and already deep in the stack. Jaswanth is the kind of developer who doesn't stop at it works - he asks why it works and how to make it faster. Drawn to the full picture of how products are built, he found his way to WebbHeads to work on something that actually ships. Real estate tech wasn't on his radar until he saw the gap - now he can't unsee it.",
     photoUrl: "/team/JASWANTH-KUMAR-CHETTUPALLI.png",
     linkedinUrl: "https://linkedin.com/in/jaswanth-kumar-chettupalli-7b0809333",
   },
@@ -40,8 +40,8 @@ const TEAM_MEMBERS: TeamMember[] = [
     id: "member-3",
     name: "Ch Pavan Kumar",
     role: "Full stack Developer",
-    bio: "Equally comfortable on the front and the back — the kind of dev who reads error logs for fun",
-    detailDescription:"Pavan came into his second year at College knowing he wanted to build things that matter — not just assignments, but real products with real users. At WebbHeads he's doing exactly that, writing code that powers live client experiences. He moves fast, thinks in systems, and is quietly one of the most reliable people on the team when a deadline is real.",
+    bio: "Equally comfortable on the front and the back - the kind of dev who reads error logs for fun",
+    detailDescription:"Pavan came into his second year at College knowing he wanted to build things that matter - not just assignments, but real products with real users. At WebbHeads he's doing exactly that, writing code that powers live client experiences. He moves fast, thinks in systems, and is quietly one of the most reliable people on the team when a deadline is real.",
     photoUrl: "/team/Pavan.jpeg",
     linkedinUrl: "https://www.linkedin.com/in/cherukuripavankumar369/",
   },
@@ -49,8 +49,8 @@ const TEAM_MEMBERS: TeamMember[] = [
     id: "member-4",
     name: "Revanth Peethala",
     role: "Web Developer",
-    bio: "Four years of learning distilled into one thing — building web experiences that actually work.",
-    detailDescription: "Four years at GITAM means Revanth has seen how most developers think — and decided to think differently. With more experience than most interns walk in with, he brings a maturity to his code that shows up in the details: clean structure, thoughtful decisions, nothing sloppy. At WebbHeads he's not just building pages, he's building his last chapter at university into something worth talking about after graduation.",
+    bio: "Four years of learning distilled into one thing - building web experiences that actually work.",
+    detailDescription: "Four years at GITAM means Revanth has seen how most developers think - and decided to think differently. With more experience than most interns walk in with, he brings a maturity to his code that shows up in the details: clean structure, thoughtful decisions, nothing sloppy. At WebbHeads he's not just building pages, he's building his last chapter at university into something worth talking about after graduation.",
     photoUrl: "/team/REVANTH.jpeg",
     linkedinUrl: "www.linkedin.com/in/revanthpeethala",
   },
@@ -59,7 +59,7 @@ const TEAM_MEMBERS: TeamMember[] = [
     name: "Menda Srividhya",
     role: "Sales and marketing",
     bio: "A curious learner with a positive mindset and a strong work ethic, always eager to grow",
-    detailDescription: "Srividhya is the voice of WebbHeads to the world. With a background in sales and marketing, she knows how to connect with people and tell stories that resonate. She's not just about selling — she's about building relationships and creating a brand that stands for something. At WebbHeads, she's crafting the narrative that will make us more than just another real estate tech company.",
+    detailDescription: "Srividhya is the voice of WebbHeads to the world. With a background in sales and marketing, she knows how to connect with people and tell stories that resonate. She's not just about selling - she's about building relationships and creating a brand that stands for something. At WebbHeads, she's crafting the narrative that will make us more than just another real estate tech company.",
     photoUrl: "/team/MENDA-SRIVIDHYA.jpeg",
     linkedinUrl: "https://www.linkedin.com/in/menda-srividhya-662450345?utm_source=share_via&utm_content=profile&utm_medium=member_ios",
   },
@@ -80,8 +80,8 @@ export default function AboutUs() {
     ? "bg-white/10 border border-white/20 text-white hover:bg-white/15"
     : "bg-white border border-[#dce8e2] text-[#0f1f1b] hover:border-[#b8d0c5]";
   const cardClass = isDark
-    ? "bg-white/[0.04] border border-white/15"
-    : "bg-white border border-[#dce8e2] hover:border-[#b8d0c5] hover:shadow-[0_4px_24px_rgba(26,60,52,0.07)]";
+    ? "bg-white/[0.05] border border-white/15 shadow-[0_18px_40px_rgba(0,0,0,0.35)]"
+    : "bg-white border border-[#dce8e2] shadow-[0_12px_30px_rgba(17,40,31,0.08)] hover:border-[#b8d0c5] hover:shadow-[0_18px_40px_rgba(17,40,31,0.12)]";
   const roleColor = isDark ? "text-white/50" : "text-[#8aaba3]";
   const bioColor = isDark ? "text-white/55" : "text-[#4a6660]";
   const mutedSurface = isDark ? "bg-white/10" : "bg-[#edf1ee]";
@@ -116,8 +116,8 @@ export default function AboutUs() {
   const bioMap: Record<string, string> = {
     "A curious learner with a positive mindset and a strong work ethic, always eager to grow": "ధనాత్మక దృక్పథం మరియు బలమైన పని నైతికతతో ఎప్పుడూ నేర్చుకోవడానికి సిద్ధంగా ఉండే వ్యక్తి.",
     "Ships clean, thinks in systems, and never leaves a bug for tomorrow.": "శుభ్రమైన కోడ్, వ్యవస్థాత్మక ఆలోచన, మరియు సమస్యలను వెంటనే పరిష్కరించే అభ్యాసం.",
-    "Equally comfortable on the front and the back — the kind of dev who reads error logs for fun": "ఫ్రంట్ ఎండ్, బ్యాక్ ఎండ్ రెండింటిలోనూ సమాన నైపుణ్యం కలిగిన డెవలపర్.",
-    "Four years of learning distilled into one thing — building web experiences that actually work.": "నాలుగు సంవత్సరాల అభ్యాసాన్ని నిజంగా పనిచేసే వెబ్ అనుభవాలుగా మార్చిన అభివృద్ధి కర్త.",
+    "Equally comfortable on the front and the back - the kind of dev who reads error logs for fun": "ఫ్రంట్ ఎండ్, బ్యాక్ ఎండ్ రెండింటిలోనూ సమాన నైపుణ్యం కలిగిన డెవలపర్.",
+    "Four years of learning distilled into one thing - building web experiences that actually work.": "నాలుగు సంవత్సరాల అభ్యాసాన్ని నిజంగా పనిచేసే వెబ్ అనుభవాలుగా మార్చిన అభివృద్ధి కర్త.",
   };
   const detailMap: Record<string, string> = {
     "member-1": "కుశల్ సరైన సమయం కోసం వేచి చూడలేదు - అతను దాన్ని తానే నిర్మించాడు. రెండు నుండి మూడు సంవత్సరాలు రియల్ ఎస్టేట్ పరిశ్రమలో లోతుగా పని చేసిన కాలేజీలో గ్రాడ్యుయేట్, అతను వ్యాపారాన్ని రెండు వైపుల నుండి అర్థం చేసుకుంటాడు. డీల్స్ ఎలా గెలుస్తాయో, ఏజెన్సీలు లీడ్స్ ఎక్కడ కోల్పోతాయో, ప్రాపర్టీ బ్రాండ్‌కు డిజిటల్‌గా పోటీ పడాలంటే ఏమి కావాలో అతనికి తెలుసు. సహజమైన చర్చల నైపుణ్యం మరియు రియల్ ఎస్టేట్ టెక్ ఎలా ఉండాలనే దృష్టితో - వెబ్హెడ్స్ అన్నీ కలిసి వచ్చిన ఫలితం.",
@@ -180,7 +180,7 @@ export default function AboutUs() {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true, amount: 0.15 }}
                 transition={{ duration: 0.4, delay: index * 0.03 }}
-                className={`mx-auto flex h-[430px] w-full max-w-[340px] flex-col sm:max-w-none rounded-3xl p-4 transition-all duration-200 ease-out hover:-translate-y-[2px] ${cardClass}`}
+                className={`mx-auto flex h-[430px] w-full max-w-[340px] flex-col sm:max-w-none rounded-3xl p-4 sm:p-5 transition-all duration-200 ease-out hover:-translate-y-[2px] ${cardClass}`}
               >
                 <div
                   className={`relative overflow-hidden rounded-2xl aspect-[4/4] ${mutedSurface}`}
@@ -212,14 +212,14 @@ export default function AboutUs() {
                   ) : null}
                 </div>
 
-                <div className="mt-4 min-h-[98px] space-y-1.5">
+                <div className="mt-4 min-h-[120px] space-y-2.5 sm:space-y-2">
                   <h3 className={`text-xl md:text-[1.35rem] font-semibold leading-snug tracking-[-0.01em] ${titleColor}`}>
                     {member.name}
                   </h3>
                   <p className={`text-xs font-semibold uppercase tracking-[0.14em] ${roleColor}`}>
                     {tr(member.role, roleMap[member.role] ?? member.role)}
                   </p>
-                  <p className={`pt-1 text-sm leading-relaxed line-clamp-2 ${bioColor}`}>
+                  <p className={`pt-2 text-sm leading-relaxed line-clamp-2 ${bioColor}`}>
                     {tr(member.bio, bioMap[member.bio] ?? member.bio)}
                   </p>
                 </div>
@@ -229,7 +229,7 @@ export default function AboutUs() {
                     type="button"
                     onClick={() => setSelectedMemberId(member.id)}
                     aria-label={tr(`Show details for ${member.name}`, `${member.name} వివరాలు చూపండి`)}
-                    className={`mt-auto inline-flex items-center gap-1 rounded-full px-3 py-1.5 text-xs font-semibold transition-colors ${
+                    className={`mt-3 inline-flex items-center gap-1 rounded-full px-3 py-2.5 text-xs font-semibold transition-colors ${
                       isDark
                         ? "bg-white/10 text-white/80 hover:bg-white/15"
                         : "bg-[#f1f6f3] text-[#4a6660] hover:bg-[#e8f2ed]"

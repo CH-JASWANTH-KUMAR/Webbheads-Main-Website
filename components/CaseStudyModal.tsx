@@ -3,6 +3,7 @@
 import { AnimatePresence, motion } from "framer-motion";
 import { ArrowUpRight, Check, Sparkles, Timer, TrendingUp, X } from "lucide-react";
 import { useEffect, useMemo } from "react";
+import { useLanguage } from "@/context/LanguageContext";
 import type { CaseStudy } from "@/components/case-studies/data";
 
 const EASE_SMOOTH = [0.22, 1, 0.36, 1] as const;
@@ -20,6 +21,7 @@ export default function CaseStudyModal({
   isDark,
   onClose,
 }: CaseStudyModalProps) {
+  const { tr } = useLanguage();
   const modalTheme = useMemo(
     () =>
       isDark
@@ -32,6 +34,7 @@ export default function CaseStudyModal({
             badge: "bg-white/10 text-white/80",
             button:
               "bg-white text-slate-900 hover:bg-white/90 shadow-[0_18px_45px_rgba(0,0,0,0.4)]",
+            closeButton: "bg-white/10 hover:bg-white/20 text-white",
           }
         : {
             backdrop: "bg-slate-900/50",
@@ -42,6 +45,7 @@ export default function CaseStudyModal({
             badge: "bg-slate-900/10 text-slate-700",
             button:
               "bg-slate-900 text-white hover:bg-slate-800 shadow-[0_18px_45px_rgba(15,23,42,0.25)]",
+            closeButton: "bg-black/5 hover:bg-black/10 text-slate-900",
           },
     [isDark]
   );
@@ -97,17 +101,18 @@ export default function CaseStudyModal({
             transition={{ duration: 0.45, ease: EASE_SMOOTH }}
             onClick={(event) => event.stopPropagation()}
           >
+            <button
+              type="button"
+              onClick={onClose}
+              className={`absolute right-4 top-4 sm:right-6 sm:top-6 z-30 h-11 w-11 rounded-full ${modalTheme.closeButton} flex items-center justify-center transition-colors shadow-lg`}
+              aria-label={tr("Close case study", "కేస్ స్టడీ మూసివేయండి")}
+            >
+              <X className="h-5 w-5" />
+            </button>
+
             <div
               className={`relative max-h-[calc(100vh-72px)] overflow-y-auto rounded-[36px] border ${modalTheme.surface}`}
             >
-              <button
-                type="button"
-                onClick={onClose}
-                className={`absolute right-6 top-6 z-20 h-11 w-11 rounded-full ${modalTheme.soft} flex items-center justify-center transition-colors`}
-                aria-label="Close case study"
-              >
-                <X className="h-5 w-5" />
-              </button>
 
               <div className="px-6 pb-10 pt-8 sm:px-10">
                 <motion.div
@@ -142,7 +147,7 @@ export default function CaseStudyModal({
                     rel="noreferrer"
                     className={`inline-flex w-fit items-center gap-2 rounded-full px-6 py-3 text-sm font-semibold transition-transform hover:-translate-y-0.5 ${modalTheme.button}`}
                   >
-                    View Live Demo
+                    {tr("View Live Demo", "లైవ్ డెమో చూడండి")}
                     <ArrowUpRight className="h-4 w-4" />
                   </a>
                 </div>
@@ -150,7 +155,7 @@ export default function CaseStudyModal({
                 <section className="mt-8 space-y-3">
                   <div className="flex items-center gap-2 text-xs font-semibold uppercase tracking-[0.2em]">
                     <Sparkles className="h-4 w-4" />
-                    <span>Overview</span>
+                    <span>{tr("Overview", "అవలోకనం")}</span>
                   </div>
                   <p className={`${modalTheme.muted} max-w-2xl text-sm sm:text-base leading-relaxed`}>
                     {study.overview}
@@ -160,7 +165,7 @@ export default function CaseStudyModal({
                 <section className="mt-8 space-y-3">
                   <div className="flex items-center gap-2 text-xs font-semibold uppercase tracking-[0.2em]">
                     <Check className="h-4 w-4" />
-                    <span>Key Features</span>
+                    <span>{tr("Key Features", "ప్రధాన ఫీచర్లు")}</span>
                   </div>
                   <ul className="grid gap-2 sm:grid-cols-2">
                     {study.features.slice(0, 4).map((feature) => (
@@ -175,7 +180,7 @@ export default function CaseStudyModal({
                 <section className="mt-8 space-y-3">
                   <div className="flex items-center gap-2 text-xs font-semibold uppercase tracking-[0.2em]">
                     <Timer className="h-4 w-4" />
-                    <span>Tech Stack</span>
+                    <span>{tr("Tech Stack", "టెక్ స్టాక్")}</span>
                   </div>
                   <p className={`${modalTheme.muted} text-sm`}>
                     {study.technologies.join(" • ")}
@@ -185,7 +190,7 @@ export default function CaseStudyModal({
                 <section className="mt-8 space-y-3">
                   <div className="flex items-center gap-2 text-xs font-semibold uppercase tracking-[0.2em]">
                     <TrendingUp className="h-4 w-4" />
-                    <span>Results</span>
+                    <span>{tr("Results", "ఫలితాలు")}</span>
                   </div>
                   <div className="grid gap-3 sm:grid-cols-2">
                     {study.results.slice(0, 4).map((result) => (

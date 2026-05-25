@@ -71,7 +71,7 @@ export default function ThemeToggle() {
       </span>
 
       <span className={`text-xs font-semibold tracking-wide ${labelColor}`}>
-        {isDark ? tr("Dark", "డార్క్") : tr("Light", "లైట్")}
+        {isDark ? tr("Light", "లైట్") : tr("Dark", "డార్క్")}
       </span>
     </motion.button>
   );

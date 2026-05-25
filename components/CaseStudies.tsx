@@ -2,11 +2,12 @@
 
 import { motion, AnimatePresence } from "framer-motion";
 import { ArrowUpRight, X } from "lucide-react";
-import { useLayoutEffect, useMemo, useState } from "react";
+import { useEffect, useLayoutEffect, useMemo, useState } from "react";
 import { useTheme } from "@/context/ThemeContext";
 import { useLanguage } from "@/context/LanguageContext";
 import CaseStudyModal from "@/components/CaseStudyModal";
 import { caseStudies, type CaseStudy } from "@/components/case-studies/data";
+import { caseStudyTranslations } from "@/components/case-studies/translations";
 
 function ScrollLock() {
   useLayoutEffect(() => {
@@ -105,7 +106,7 @@ function CaseStudyCard({
         />
 
         {/* Gradient Overlay */}
-        <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent" />
+        <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-black/60 via-black/15 to-transparent" />
 
         {/* Top Badges */}
         <div className="absolute left-4 top-4 right-4 flex items-start justify-between">
@@ -120,23 +121,28 @@ function CaseStudyCard({
           </div>
 
           <div
-            className={`w-7 h-7 sm:w-8 sm:h-8 rounded-full flex items-center justify-center shadow-[0_8px_18px_rgba(0,0,0,0.12)] backdrop-blur-md ${
-              isDark ? "bg-gray-800/80" : "bg-[#003942]/90"
+            className={`w-7 h-7 sm:w-8 sm:h-8 rounded-full flex items-center justify-center shadow-[0_10px_22px_rgba(0,0,0,0.22)] backdrop-blur-md ring-1 ${
+              isDark
+                ? "bg-white/15 ring-white/30"
+                : "bg-white/85 ring-white/60"
             }`}
           >
-            <ArrowUpRight className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-white" />
+            <ArrowUpRight
+              className={`w-3.5 h-3.5 sm:w-4 sm:h-4 ${
+                isDark ? "text-white" : "text-[#003942]"
+              }`}
+            />
           </div>
         </div>
 
         {/* Bottom Content */}
         <div className="absolute left-5 right-5 bottom-5">
-          {/* Reduced font size to text-xl for better fit in shorter cards */}
-          <h3 className="text-xl font-bold leading-tight text-white mb-2 drop-shadow-md line-clamp-2">
+          <h3 className="text-lg sm:text-xl font-bold leading-snug text-white mb-2 drop-shadow-md">
             {study.title}
           </h3>
 
-          <p className="text-sm leading-snug text-white/90 mb-0 drop-shadow-sm line-clamp-2 opacity-90">
-            {study.description}
+          <p className="text-sm leading-relaxed text-white/90 mb-0 drop-shadow-sm opacity-90 line-clamp-2">
+            {study.description} <span className="text-white/85">More...</span>
           </p>
         </div>
       </div>
@@ -148,7 +154,7 @@ export default function CaseStudies() {
   const [showAll, setShowAll] = useState(false);
   const [selectedStudy, setSelectedStudy] = useState<CaseStudy | null>(null);
   const { isDark } = useTheme();
-  const { tr } = useLanguage();
+  const { tr, isTelugu } = useLanguage();
 
   const gradientTextClass = isDark
     ? "text-[#f6ff82]"
@@ -160,60 +166,33 @@ export default function CaseStudies() {
 
   const localizedStudies = useMemo(
     () =>
-      caseStudies.map((study) => ({
-        ...study,
-        title: tr(study.title, study.title),
-        category:
-          {
-            "Luxury Real Estate Website": tr("Luxury Real Estate Website", "లగ్జరీ రియల్ ఎస్టేట్ వెబ్‌సైట్"),
-            "Mobile App Development": tr("Mobile App Development", "మొబైల్ యాప్ డెవలప్‌మెంట్"),
-            "AI Automation & CRM": tr("AI Automation & CRM", "AI ఆటోమేషన్ & CRM"),
-            "Web Development": tr("Web Development", "వెబ్ డెవలప్‌మెంట్"),
-            "Virtual Tours": tr("Virtual Tours", "వర్చువల్ టూర్స్"),
-            "Branding & Design": tr("Branding & Design", "బ్రాండింగ్ & డిజైన్"),
-            "Landing Page + SEO": tr("Landing Page + SEO", "ల్యాండింగ్ పేజ్ + SEO"),
-            "Performance Rebuild": tr("Performance Rebuild", "పర్ఫార్మెన్స్ రీబిల్డ్"),
-          }[study.category] ?? study.category,
-        description:
-          {
-            "Complete digital transformation for a $50M luxury villa portfolio with 3D virtual tours and lead automation.": tr(
-              "Complete digital transformation for a $50M luxury villa portfolio with 3D virtual tours and lead automation.",
-              "3D వర్చువల్ టూర్స్ మరియు లీడ్ ఆటోమేషన్‌తో లగ్జరీ విల్లా పోర్ట్‌ఫోలియోకు పూర్తి డిజిటల్ మార్పు."
-            ),
-            "Premium mobile application for high-rise apartment sales with AR property viewing and instant booking.": tr(
-              "Premium mobile application for high-rise apartment sales with AR property viewing and instant booking.",
-              "AR ప్రాపర్టీ వ్యూయింగ్ మరియు ఇన్‌స్టంట్ బుకింగ్‌తో హై-రైజ్ అపార్ట్మెంట్ సేల్స్ కోసం ప్రిమియం మొబైల్ యాప్."
-            ),
-            "End-to-end CRM integration with AI-powered lead scoring and automated follow-up sequences.": tr(
-              "End-to-end CRM integration with AI-powered lead scoring and automated follow-up sequences.",
-              "AI ఆధారిత లీడ్ స్కోరింగ్ మరియు ఆటోమేటెడ్ ఫాలో-అప్స్‌తో ఎండ్-టు-ఎండ్ CRM ఇంటిగ్రేషన్."
-            ),
-            "Luxury beachfront property website with virtual tours and integrated booking system.": tr(
-              "Luxury beachfront property website with virtual tours and integrated booking system.",
-              "వర్చువల్ టూర్స్ మరియు ఇంటిగ్రేటెడ్ బుకింగ్ సిస్టమ్‌తో లగ్జరీ బీచ్‌ఫ్రంట్ ప్రాపర్టీ వెబ్‌సైట్."
-            ),
-            "360° interactive property tours with hotspots and integrated floor plans.": tr(
-              "360° interactive property tours with hotspots and integrated floor plans.",
-              "హాట్‌స్పాట్స్ మరియు ఇంటిగ్రేటెడ్ ఫ్లోర్ ప్లాన్స్‌తో 360° ఇంటరాక్టివ్ ప్రాపర్టీ టూర్స్."
-            ),
-            "Complete brand identity and marketing collateral for commercial real estate.": tr(
-              "Complete brand identity and marketing collateral for commercial real estate.",
-              "కమర్షియల్ రియల్ ఎస్టేట్ కోసం పూర్తి బ్రాండ్ ఐడెంటిటీ మరియు మార్కెటింగ్ మెటీరియల్."
-            ),
-            "Conversion-first landing pages and local SEO to drive qualified buyer inquiries.": tr(
-              "Conversion-first landing pages and local SEO to drive qualified buyer inquiries.",
-              "నాణ్యమైన కొనుగోలుదారుల ఇన్‌క్వైరీలను పెంచడానికి కన్వర్షన్-ఫోకస్ ల్యాండింగ్ పేజీలు మరియు లోకల్ SEO."
-            ),
-            "Speed-focused rebuild with improved Lighthouse scores and streamlined lead capture.": tr(
-              "Speed-focused rebuild with improved Lighthouse scores and streamlined lead capture.",
-              "మెరుగైన Lighthouse స్కోర్లు మరియు వేగవంతమైన లీడ్ క్యాప్చర్‌తో స్పీడ్-ఫోకస్ రీబిల్డ్."
-            ),
-          }[study.description] ?? study.description,
-      })),
-    [tr]
+      caseStudies.map((study) => {
+        const te = caseStudyTranslations[study.id]?.te;
+
+        return {
+          ...study,
+          title: tr(study.title, te?.title ?? study.title),
+          category: tr(study.category, te?.category ?? study.category),
+          description: tr(study.description, te?.description ?? study.description),
+          overview: tr(study.overview, te?.overview ?? study.overview),
+          features: isTelugu && te?.features ? te.features : study.features,
+          results: isTelugu && te?.results ? te.results : study.results,
+        };
+      }),
+    [isTelugu, tr]
   );
 
-  const previewStudies = useMemo(() => localizedStudies.slice(0, 6), [localizedStudies]);
+  const previewStudies = useMemo(
+    () => localizedStudies.slice(0, 6),
+    [localizedStudies]
+  );
+
+  useEffect(() => {
+    if (!showAll && !selectedStudy) {
+      document.body.style.overflow = "";
+      document.body.style.paddingRight = "";
+    }
+  }, [selectedStudy, showAll]);
 
   const handleOpenStudy = (study: CaseStudy) => {
     setSelectedStudy(study);
@@ -264,7 +243,7 @@ export default function CaseStudies() {
               <h2
                 className={`text-3xl md:text-4xl lg:text-5xl font-bold mb-4 ${heading}`}
               >
-                {tr("Case", "కేస్")}{" "}
+                {tr("Case", "కేస్")} {" "}
                 <span className={gradientTextClass}>
                   {tr("Studies", "స్టడీస్")}
                 </span>
@@ -299,10 +278,9 @@ export default function CaseStudies() {
 
         {/* 
            MASONRY GRID 
-           - auto-rows reduced to [180px] on mobile and [200px] on md+ 
-           - Effectively half the height of previous layout
+           - auto-rows increased to fit longer Telugu labels
         */}
-        <div className="grid grid-cols-12 auto-rows-[140px] md:auto-rows-[160px] gap-4 md:gap-6 grid-flow-row-dense">
+        <div className="grid grid-cols-12 auto-rows-[170px] md:auto-rows-[200px] gap-4 md:gap-6 grid-flow-row-dense">
           {previewStudies.map((study, idx) => (
             <CaseStudyCard
               key={study.id}
@@ -372,7 +350,7 @@ export default function CaseStudies() {
                 <h2
                   className={`text-3xl md:text-5xl font-bold mb-4 ${modalText}`}
                 >
-                  {tr("All", "అన్ని")}{" "}
+                  {tr("All", "అన్ని")} {" "}
                   <span className={`${gradientTextClass} pt-3 pb-4 inline-block`}>
                     {tr("Case Studies", "కేస్ స్టడీస్")}
                   </span>
