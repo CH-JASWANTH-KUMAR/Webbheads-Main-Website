@@ -1,7 +1,7 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { Quote } from "lucide-react";
+import { Quote, Star } from "lucide-react";
 import { useTheme } from "@/context/ThemeContext";
 import { useLanguage } from "@/context/LanguageContext";
 
@@ -75,7 +75,7 @@ function TestimonialCard({
   return (
     // Updated width to be responsive: 300px on mobile, 400px on md+
     <div
-      className={`flex-shrink-0 w-[300px] md:w-[400px] rounded-2xl p-5 md:p-6 backdrop-blur mx-3 transition-all duration-200 ease-out hover:-translate-y-[2px] ${cardBase}`}
+      className={`flex flex-col flex-shrink-0 w-[300px] md:w-[400px] rounded-2xl p-5 md:p-6 backdrop-blur mx-3 transition-all duration-200 ease-out hover:-translate-y-[2px] ${cardBase}`}
     >
       <div className="mb-4 text-black/10 dark:text-white/10">
         <Quote size={28} className="md:w-8 md:h-8" fill="currentColor" />
@@ -87,41 +87,29 @@ function TestimonialCard({
         &ldquo;{testimonial.text}&rdquo;
       </p>
 
-      <div className="pt-4">
-        <div className={`h-px w-full ${dividerBg}`} />
-      </div>
-
-      <div className="flex items-center gap-4 pt-4">
-        <div className={`rounded-full p-[2px] ${brandGradient}`}>
-          <div
-            className={`w-10 h-10 md:w-12 md:h-12 rounded-full overflow-hidden ${
-              isDark ? "bg-black/30" : "bg-white"
-            }`}
-          >
-            <img
-              src={testimonial.image}
-              alt={testimonial.name}
-              className="w-full h-full object-cover"
-            />
-          </div>
+      <div className="mt-auto">
+        <div className="pt-4">
+          <div className={`h-px w-full ${dividerBg}`} />
         </div>
 
-        <div className="min-w-0">
-          <h4
-            className={`font-semibold ${
-              isDark ? "text-white" : "text-[#0f1f1b]"
-            } text-sm truncate`}
-          >
-            {testimonial.name}
-          </h4>
-          <p className={`${textMuted} text-xs truncate`}>{testimonial.role}</p>
-          <p
-            className={`${
-              isDark ? "text-white/70" : "text-[#4a6660]"
-            } text-xs font-medium truncate`}
-          >
-            {testimonial.company}
-          </p>
+        <div className="flex items-center gap-4 pt-4">
+          <div className="min-w-0">
+            <h4
+              className={`font-semibold ${
+                isDark ? "text-white" : "text-[#0f1f1b]"
+              } text-sm truncate`}
+            >
+              {testimonial.name}
+            </h4>
+            <p className={`${textMuted} text-xs truncate`}>{testimonial.role}</p>
+            <p
+              className={`${
+                isDark ? "text-white/70" : "text-[#4a6660]"
+              } text-xs font-medium truncate`}
+            >
+              {testimonial.company}
+            </p>
+          </div>
         </div>
       </div>
     </div>
@@ -141,13 +129,6 @@ export default function Testimonials() {
     ? "bg-white/5 text-white/80"
     : "bg-[#f6ff82] text-[#1a3c34]";
 
-  // Bottom avatars: first 3 same, 4th replaced with Robert (testimonials[5])
-  const bottomAvatars = [
-    testimonials[0],
-    testimonials[1],
-    testimonials[2],
-    testimonials[4],
-  ];
 
   const localizedTestimonials = doubledTestimonials.map((item) => {
     const textMap: Record<string, string> = {
@@ -249,21 +230,13 @@ export default function Testimonials() {
       {/* Avatar-group + gradient stat */}
       <div className="container mx-auto px-6 md:px-12 lg:px-20">
         <div className="flex flex-col sm:flex-row items-center justify-center gap-3 md:gap-0">
-          <div className="flex -space-x-2 sm:pr-4">
-            {bottomAvatars.map((t, idx) => (
-              <div
+          <div className="flex gap-1 sm:pr-4 mb-2 sm:mb-0">
+            {[...Array(5)].map((_, idx) => (
+              <Star
                 key={idx}
-                className={`
-                  w-8 h-8 md:w-10 md:h-10 rounded-full overflow-hidden
-                  ${isDark ? "ring-2 ring-black/40" : "ring-2 ring-white"}
-                `}
-              >
-                <img
-                  src={t.image}
-                  alt={t.name}
-                  className="w-full h-full object-cover"
-                />
-              </div>
+                size={18}
+                className="text-yellow-400 fill-yellow-400"
+              />
             ))}
           </div>
 

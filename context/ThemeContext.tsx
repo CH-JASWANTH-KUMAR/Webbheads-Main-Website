@@ -24,23 +24,23 @@ interface ThemeContextType {
 }
 
 const ThemeContext = createContext<ThemeContextType>({
-  theme: 'light',
+  theme: 'dark',
   toggleTheme: () => {},
-  isDark: false,
+  isDark: true,
 });
 
 export function ThemeProvider({ children }: { children: ReactNode }) {
-  const [theme, setTheme] = useState<Theme>('light');
+  const [theme, setTheme] = useState<Theme>('dark');
   const [mounted, setMounted] = useState(false);
 
-  // On mount, check localStorage or system preference
+  // On mount, check localStorage
   useEffect(() => {
     setMounted(true);
-    const savedTheme = localStorage.getItem('webbheads-theme') as Theme | null;
+    const savedTheme = localStorage.getItem('webbheads-theme-pref') as Theme | null;
     
     if (savedTheme) {
       setTheme(savedTheme);
-    } else if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
+    } else {
       setTheme('dark');
     }
   }, []);
@@ -56,7 +56,7 @@ export function ThemeProvider({ children }: { children: ReactNode }) {
         root.classList.remove('dark');
       }
       
-      localStorage.setItem('webbheads-theme', theme);
+      localStorage.setItem('webbheads-theme-pref', theme);
     }
   }, [theme, mounted]);
 

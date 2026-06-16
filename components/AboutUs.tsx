@@ -142,7 +142,7 @@ export default function AboutUs() {
               <h2
                 className={`text-3xl leading-[1.02] font-bold tracking-[-0.03em] md:text-5xl ${titleColor}`}
               >
-                {tr("Meet the Builders Behind", "వెనుక ఉన్న సృష్టికర్తలను కలవండి")}
+                {tr("Meet the Team Behind", "వెనుక ఉన్న బృందాన్ని కలవండి")}
                 <br />
                 WebbHeads
               </h2>
